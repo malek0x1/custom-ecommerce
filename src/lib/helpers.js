@@ -1,9 +1,18 @@
 import axios from "axios";
-import commerce from "./commerce"
-import jwt from 'jsonwebtoken';
-import client from "../lib/sanity"
+import commerce from "./commerce";
+import client from "../lib/sanity";
 
 const BASE_URL = 'https://api.chec.io/v1';
+
+/*
+1- create customer -> SignUp Page -> store the email in localstorage 
+2- get Token from email (which is stored in localstorage if not loggedin)
+3- login commerce.customer.getToken(token)
+
+-- END --
+on Logout commerce.customer.logout() + remove email from localstorage
+
+*/
 
 // 1- Function to create a customer
 export async function createCustomer(customerData) {
