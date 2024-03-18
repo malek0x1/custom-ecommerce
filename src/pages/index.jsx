@@ -1,4 +1,6 @@
+import Hero from "@/components/Hero";
 import Layout from "@/components/Layout";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
 
@@ -7,8 +9,7 @@ export default function Home() {
       title="test"
       description="test"
     >
-
-
+      <Hero />
     </Layout>
   );
 }

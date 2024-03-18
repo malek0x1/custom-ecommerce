@@ -13,10 +13,7 @@ import CartItem from "./CartItem"
 
 const Cart = ({ isOpen, setIsOpen }) => {
     return (
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            {/* <SheetTrigger asChild>
-                <Button variant="outline">Open</Button>
-            </SheetTrigger> */}
+        <Sheet open={isOpen} onOpenChange={setIsOpen} >
             <SheetContent className="w-full flex flex-col ">
                 <SheetHeader className="text-left">
                     <SheetTitle>Cart</SheetTitle>
@@ -27,8 +24,8 @@ const Cart = ({ isOpen, setIsOpen }) => {
 
                 <div className="overflow-y-auto flex-1">
                     <div className="grid gap-4 py-4 ">
-                        {[1, 2, 3, 4, 5, 6, 7, 8].map(item => (
-                            <CartItem key={item} />
+                        {[1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
+                            <CartItem index={index} key={item} />
                         ))}
                     </div>
                 </div>

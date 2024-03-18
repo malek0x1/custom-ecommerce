@@ -1,30 +1,58 @@
 import Image from 'next/image'
-import Hamburger from 'hamburger-react'
 import { useState } from 'react'
 import { CiSearch, CiShoppingCart } from 'react-icons/ci'
 import Link from 'next/link'
+import { CiMenuFries } from "react-icons/ci"
+import MobileNav from './MobileNav'
+import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+} from "@/components/ui/hover-card"
 
-const Navbar = ({ isCartOpened, setIsCartOpened }) => {
+const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
     return (
         <div className=''>
+            <MobileNav isOpen={isMobileNavOpen} setIsOpen={setIsMobileNavOpen} />
             <div className="bg-white container w-full p-2  sm:p-4 flex justify-between items-center">
                 <div className="sm:w-0 sm:overflow-hidden block">
-                    <Hamburger className="" size={20} toggled={isMobileNavOpen} toggle={setIsMobileNavOpen} />
+                    <CiMenuFries size={20} onClick={() => {
+                        setIsMobileNavOpen(prev => !prev)
+                    }} />
                 </div>
                 <div className="">
-                    <Image src="/assets/images/logo.png" width="150" height="150" />
+                    <Image className='' src="/assets/images/logo.png" width="150" height="150" />
                 </div>
                 <div className="flex items-center gap-1">
-                    <CiSearch size={20} />
+                    <CiSearch size={20}
+                        onClick={() => {
+                            if (setIsSearchOpened) {
+                                setIsSearchOpened(true)
+                            } else {
+                                alert("NO")
+                            }
+                        }}
+                    />
                     <CiShoppingCart size={20} onClick={() => {
                         setIsCartOpened(prev => !prev)
                     }} />
-                    <CiSearch size={20} />
                 </div>
             </div>
-            <div className="bg-gray-50 hidden sm:flex shadow-sm overflow-x-auto p-2 w-full  justify-center gap-3">
-                {["New", "Curated", "Designers", "Clothing", "Shoes & Bags", "Accessories"].map(item => (
+            <div className="border-t-gray-200 border-t hidden sm:flex shadow-sm overflow-x-auto p-2 w-full items-center  justify-center gap-3">
+                <HoverCard openDelay={3}>
+                    <HoverCardTrigger>Hover</HoverCardTrigger>
+                    <HoverCardContent className="p-0">
+                        <div className="grid gap-1">
+                            {["New", "Curated", "Designers", "Clothing", "Shoes & Bags", "Accessories"].map(item => (
+                                <Link key={item} href="#" className='p-2'>
+                                    {item}
+                                </Link>
+                            ))}
+                        </div>
+                    </HoverCardContent>
+                </HoverCard>
+                {["Home", "About us", "Contact us"].map(item => (
                     <Link key={item} href="#" className='p-2'>
                         {item}
                     </Link>

@@ -11,7 +11,9 @@
   "dependencies": {
     "@chec/commerce.js": "^2.8.0",
     "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-hover-card": "^1.0.7",
     "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-slot": "^1.0.2",
     "@sanity/client": "^6.15.5",
     "@sanity/image-url": "^1.0.2",
@@ -19,6 +21,8 @@
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "embla-carousel-react": "^8.0.0",
+    "framer-motion": "^11.0.14",
     "hamburger-react": "^2.5.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.358.0",

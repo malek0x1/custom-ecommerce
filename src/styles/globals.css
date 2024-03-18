@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.mobileNavbar button.absolute svg {
+    width: 0px;
+}
+
+.loader {
+    border: 2px solid rgba(0, 0, 0, .1);
+    border-radius: 50%;
+    border-left-color: transparent;
+    width: 17px;
+    height: 17px;
+    animation: spin89345 1s linear infinite;
+}
+
+@keyframes spin89345 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
