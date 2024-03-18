@@ -24,3 +24,12 @@
         transform: rotate(360deg);
     }
 }
+
+.infinite-scroll-component {
+    overflow: unset !important;
+}
+
+.custom-container {
+    max-width: 1200px;
+    margin: auto;
+}

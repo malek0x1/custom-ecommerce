@@ -3,94 +3,111 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { CiFilter } from "react-icons/ci";
 import commerce from "../../lib/commerce";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
-import Image from 'next/image';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Card from '@/components/Card';
+import Filter from '@/components/Filter';
+import SkeletonCard from '@/components/Card/SkeletonCard';
 
 const Collection = () => {
-    const [isLoading, setIsLoading] = useState(true)
-    const [products, setProducts] = useState(true)
+    const NUMBER_TO_FETCH = 8
+    const [products, setProducts] = useState([])
     const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
     const [totalProducts, setTotalProducts] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
+    const [chosenFilter, setChosenFilter] = useState({})
+    const [isFilterOpened, setIsFilterOpened] = useState(false)
+    const [isFullLoading, setIsFullLoading] = useState(true)
+
     const router = useRouter()
+
     useEffect(() => {
         const handleInitialProducts = async () => {
+            setIsFullLoading(true)
             if (router.query.collection) {
                 fetchProductsByCollection(router.query.collection)
-
             }
         }
         handleInitialProducts()
-    }, [router.query])
-    const fetchProductsByCollection = async (collection) => {
+    }, [router.query, chosenFilter])
+
+    const fetchProductsByCollection = async () => {
         try {
+            const addFilters = chosenFilter.name ? { sortBy: chosenFilter.sortBy, sortOrder: chosenFilter.sortOrder } : {}
+            console.log(addFilters);
             const { data, meta } = await commerce.products.list({
-                category_slug: [collection],
-                limit: 4,
+                category_slug: [router.query.collection],
+                limit: NUMBER_TO_FETCH,
                 page: page,
+                ...addFilters
             });
-            setProducts(data);
-            setTotalPages(meta.pagination.total_pages);
-            setTotalProducts(meta.pagination.total);
+
+            setIsFullLoading(false)
+            if (data) {
+                setTotalProducts(meta.pagination.total)
+                setProducts((prev) => [...prev, ...data]);
+                setPage(page + 1);
+                return
+            } else {
+
+                setHasMore(false);
+            }
         } catch (error) {
             console.error('Error fetching products:', error);
         }
     };
-    const handlePageChange = (newPage) => {
-        setPage(newPage);
-    };
+
+
     return (
         <Layout >
-            <div className="container p-1">
-                <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-2">
+            <Filter isOpen={isFilterOpened} setIsOpen={setIsFilterOpened} chosenFilter={chosenFilter} setChosenFilter={setChosenFilter} />
+            <div className="custom-container">
+                <div className="flex justify-between items-center sm:my-4 p-1">
+                    <div
+                        onClick={() => {
+                            setIsFilterOpened(true)
+                        }}
+                        className="flex items-center gap-2 cursor-pointer">
                         <CiFilter size={20} />
                         <p className="text-xs font-light !text-gray-900">Filter and sort </p>
                     </div>
                     <p className="text-xs font-light text-gray-900">{`${totalProducts} Products`}</p>
                 </div>
 
-
-                <div className="wrapper">
-                    {products.length > 0 && products.map((product) => (
-                        <div key={product.id}>
-
-                            <Image width={400} height={400} src={product.image.url} />
-                            <p>{product.price.formatted_with_symbol}</p>
-                        </div>
-                    ))}
-                </div>
-                <Pagination>
-                    <PaginationContent>
-
-                        {page !== 1 &&
-                            <PaginationItem>
-                                <PaginationPrevious
-                                    href="#"
-                                    onClick={() => handlePageChange(page - 1)}
-                                />
-                            </PaginationItem>
-                        }
-
-                        {Array.from({ length: totalPages }, (_, index) => (
-                            <PaginationItem key={index} active={page === index + 1}>
-                                <PaginationLink href="#" onClick={() => handlePageChange(index + 1)}>
-                                    {index + 1}
-                                </PaginationLink>
-                            </PaginationItem>
+                {isFullLoading ? (
+                    <div className="flex flex-wrap">
+                        {[1, 2, 3, 4, 6, 7, 8, 9].map(_ => (
+                            <div className="w-1/2 sm:w-1/3 md:w-1/4 px-1">
+                                <SkeletonCard />
+                            </div>
                         ))}
-                        {page !== totalPages && (
-                            <PaginationItem >
-                                <PaginationNext
-                                    href="#"
-                                    onClick={() => handlePageChange(page + 1)}
-                                />
-                            </PaginationItem>
-                        )}
-
-                    </PaginationContent>
-                </Pagination>
-
+                    </div>
+                ) : (
+                    <div className="">
+                        <InfiniteScroll
+                            dataLength={products.length}
+                            next={fetchProductsByCollection}
+                            hasMore={hasMore}
+                            loader={
+                                <div className="flex flex-wrap">
+                                    {[1, 2, 3, 4].map(_ => (
+                                        <div className="w-1/2 sm:w-1/3 md:w-1/4 px-1">
+                                            <SkeletonCard />
+                                        </div>
+                                    ))}
+                                </div>
+                            }
+                        >
+                            <div className="flex flex-wrap">
+                                {products.length > 0 &&
+                                    products.map((product) => (
+                                        <div className="w-1/2 sm:w-1/3 md:w-1/4">
+                                            <Card product={product} key={product.id} />
+                                        </div>
+                                    ))}
+                            </div>
+                        </InfiniteScroll>
+                    </div>
+                )}
             </div>
         </Layout>
     )

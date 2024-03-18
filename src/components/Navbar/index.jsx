@@ -39,21 +39,21 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                     }} />
                 </div>
             </div>
-            <div className="border-t-gray-200 border-t hidden sm:flex shadow-sm overflow-x-auto p-2 w-full items-center  justify-center gap-3">
-                <HoverCard openDelay={3}>
+            <div className=" hidden sm:flex border-b border-b-gray-100   overflow-x-auto p-2 w-full items-center  justify-center gap-3">
+                {/* <HoverCard openDelay={3}>
                     <HoverCardTrigger>Hover</HoverCardTrigger>
                     <HoverCardContent className="p-0">
                         <div className="grid gap-1">
                             {["New", "Curated", "Designers", "Clothing", "Shoes & Bags", "Accessories"].map(item => (
-                                <Link key={item} href="#" className='p-2'>
+                                <Link key={item} href="#" className='p-2 text-xs text-gray-700'>
                                     {item}
                                 </Link>
                             ))}
                         </div>
                     </HoverCardContent>
-                </HoverCard>
-                {["Home", "About us", "Contact us"].map(item => (
-                    <Link key={item} href="#" className='p-2'>
+                </HoverCard> */}
+                {["Home", "Shop", "About us", "Contact us"].map(item => (
+                    <Link key={item} href="#" className='p-2 text-xs text-gray-700 uppercase tracking-wider'>
                         {item}
                     </Link>
                 ))}
