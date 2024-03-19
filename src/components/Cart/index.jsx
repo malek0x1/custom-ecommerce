@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import {
     Sheet,
     SheetClose,
@@ -9,6 +8,7 @@ import {
     SheetTitle
 } from "@/components/ui/sheet"
 import CartItem from "./CartItem"
+import Button from "../Button"
 
 
 const Cart = ({ isOpen, setIsOpen }) => {
@@ -24,14 +24,14 @@ const Cart = ({ isOpen, setIsOpen }) => {
 
                 <div className="overflow-y-auto flex-1">
                     <div className="grid gap-4 py-4 ">
-                        {[1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
+                        {[1, 2, 3, 4].map((item, index) => (
                             <CartItem index={index} key={item} />
                         ))}
                     </div>
                 </div>
                 <SheetFooter>
                     <SheetClose asChild>
-                        <Button className="w-full" type="submit">Checkout</Button>
+                        <Button className="w-full bg-black" type="submit" label="Checkout" />
                     </SheetClose>
                 </SheetFooter>
             </SheetContent>

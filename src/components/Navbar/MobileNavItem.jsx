@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { HiOutlineChevronRight } from "react-icons/hi2";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 const MobileNavItem = ({ label, link, index }) => {
     return (
@@ -12,7 +12,7 @@ const MobileNavItem = ({ label, link, index }) => {
                 delay: 0.1 * index
             }}
         >
-            <Link href={link} className="flex items-center justify-between  py-4 cursor-pointer rounded-sm">
+            <Link prefetch={false} href={link} className="flex items-center justify-between  py-4 cursor-pointer rounded-sm">
                 <h4 className="font-medium uppercase leading-none">{label}</h4>
                 <HiOutlineChevronRight size={14} />
             </Link>

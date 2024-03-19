@@ -10,53 +10,78 @@ import {
     HoverCardTrigger,
 } from "@/components/ui/hover-card"
 
+
 const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
     return (
         <div className=''>
             <MobileNav isOpen={isMobileNavOpen} setIsOpen={setIsMobileNavOpen} />
-            <div className="bg-white container w-full p-2  sm:p-4 flex justify-between items-center">
-                <div className="sm:w-0 sm:overflow-hidden block">
+            <div className="bg-white sm:px-10 container w-full p-2  sm:p-2 flex justify-between items-center ">
+                <div className="sm:w-0 sm:overflow-hidden block sm:hidden">
                     <CiMenuFries size={20} onClick={() => {
                         setIsMobileNavOpen(prev => !prev)
                     }} />
                 </div>
-                <div className="">
-                    <Image className='' src="/assets/images/logo.png" width="150" height="150" />
+
+                <div className="flex-1 justify-center sm:justify-normal flex">
+                    <Link prefetch={false} href="/">
+                        <Image className='' src="/assets/images/logo.png" width="150" height="150" />
+                    </Link>
                 </div>
-                <div className="flex items-center gap-1">
-                    <CiSearch size={20}
+                <div className="justify-center hidden sm:flex-1 sm:flex overflow-x-auto p-2 items-center  gap-3">
+                    {["Home", "Shop", "About us", "Contact us"].map(item => {
+
+                        if (item !== "Shop") {
+                            return (
+                                <Link prefetch={false} key={item} href="#"
+                                    style={{
+                                        fontSize: "13px"
+                                    }}
+                                    className='nav-link p-2 text-black font-light uppercase tracking-wider'>
+                                    {item}
+                                </Link>
+                            )
+                        } else {
+                            return (
+                                <HoverCard openDelay={3} >
+                                    <HoverCardTrigger className=''>
+                                        <p
+                                            style={{
+                                                fontSize: '13px'
+                                            }}
+                                            className='p-2 nav-link text-black font-light uppercase tracking-wider text-xs cursor-pointer'>
+                                            {item}
+
+                                        </p>
+
+                                    </HoverCardTrigger>
+                                    <HoverCardContent className="p-0 ml-10">
+                                        <div className="grid gap-1 p-3">
+                                            {["New", "Curated", "Designers", "Clothing", "Shoes & Bags", "Accessories"].map(item => (
+                                                <Link prefetch={false} key={item} href="/collection/apple" className='p-2 text-xs text-gray-700'>
+                                                    {item}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </HoverCardContent>
+                                </HoverCard>
+                            )
+                        }
+                    })
+                    }
+                </div>
+                <div className="flex items-center gap-1 sm:flex-1 justify-end">
+                    <CiSearch size={22}
                         onClick={() => {
                             if (setIsSearchOpened) {
                                 setIsSearchOpened(true)
-                            } else {
-                                alert("NO")
                             }
                         }}
                     />
-                    <CiShoppingCart size={20} onClick={() => {
+                    <CiShoppingCart size={22} onClick={() => {
                         setIsCartOpened(prev => !prev)
                     }} />
                 </div>
-            </div>
-            <div className=" hidden sm:flex border-b border-b-gray-100   overflow-x-auto p-2 w-full items-center  justify-center gap-3">
-                {/* <HoverCard openDelay={3}>
-                    <HoverCardTrigger>Hover</HoverCardTrigger>
-                    <HoverCardContent className="p-0">
-                        <div className="grid gap-1">
-                            {["New", "Curated", "Designers", "Clothing", "Shoes & Bags", "Accessories"].map(item => (
-                                <Link key={item} href="#" className='p-2 text-xs text-gray-700'>
-                                    {item}
-                                </Link>
-                            ))}
-                        </div>
-                    </HoverCardContent>
-                </HoverCard> */}
-                {["Home", "Shop", "About us", "Contact us"].map(item => (
-                    <Link key={item} href="#" className='p-2 text-xs text-gray-700 uppercase tracking-wider'>
-                        {item}
-                    </Link>
-                ))}
             </div>
         </div>
     )

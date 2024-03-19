@@ -18,3 +18,5 @@ export const SORTBY_OPTIONS = [
     { id: 4, name: "Price high to low", sortOrder: "desc", sortBy: "price" },
 ]
 export const FILTERS_OPTIONS = []
+
+export const HOME_ICONS_FEATURES = []

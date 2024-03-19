@@ -3,14 +3,17 @@ import Link from 'next/link';
 
 const ProductCard = ({ product }) => {
     return (
-        <div className="bg-white rounded-lg border-separate border-red-500 overflow-hidden">
-            <Link href={`/product/${product.id}`}>
+        <div className={`bg-white overflow-hidden`}>
+            <Link prefetch={false} href={`/product/${product.id}`}>
                 <div className="relative">
                     <Image
-                        width={800}
-                        height={800}
-                        className="h-44 object-contain"
-                        src={product.image.url}
+                        width={1300}
+                        height={1300}
+                        // className="h-44 lg:h-60 object-contain"
+                        // src={product.image.url}
+                        src="https://media-cdn.paulandshark.com/ecom/site/M/24411570-050-af-v.jpg"
+                        // src="https://ayushinvienna.com/cdn/shop/files/Dolana_dress_walk.webp?v=1685908056&width=180 180w 225h"
+                        // src={'https://cdn.chec.io/merchants/56289/assets/MXcJNajhN9FDUWW0|06bde6529ecec91eca430963c5fbea9bbeca6834-600x600.jpg'}
                         unoptimized
                         loading="lazy"
                         alt=""
@@ -18,9 +21,9 @@ const ProductCard = ({ product }) => {
 
                 </div>
             </Link>
-            <div className="p-4">
-                <Link href={`/product/${product.id}`}>
-                    <p className="block text-gray-600 font-light text-lg mb-2 text-xs hover:text-gray-900">
+            <div className="py-3">
+                <Link prefetch={false} href={`/product/${product.id}`}>
+                    <p className="block text-gray-600 font-light  mb-2 text-xs hover:text-gray-900">
                         {product.name}
                     </p>
                 </Link>

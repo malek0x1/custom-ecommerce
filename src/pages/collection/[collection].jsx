@@ -61,7 +61,7 @@ const Collection = () => {
         <Layout >
             <Filter isOpen={isFilterOpened} setIsOpen={setIsFilterOpened} chosenFilter={chosenFilter} setChosenFilter={setChosenFilter} />
             <div className="custom-container">
-                <div className="flex justify-between items-center sm:my-4 p-1">
+                <div className="flex justify-between items-center sm:my-4 p-1 my-2">
                     <div
                         onClick={() => {
                             setIsFilterOpened(true)
@@ -97,10 +97,10 @@ const Collection = () => {
                                 </div>
                             }
                         >
-                            <div className="flex flex-wrap">
+                            <div className="flex flex-wrap ">
                                 {products.length > 0 &&
                                     products.map((product) => (
-                                        <div className="w-1/2 sm:w-1/3 md:w-1/4">
+                                        <div className="w-1/2 sm:w-1/3 md:w-1/4 px-0.5">
                                             <Card product={product} key={product.id} />
                                         </div>
                                     ))}

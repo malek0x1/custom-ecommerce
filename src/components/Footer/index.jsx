@@ -20,14 +20,14 @@ const Footer = () => {
 
                     <FooterCol title="Usefull Links">
                         {["Login", "Signup", "About us", "Privacy Polics", "Return Policy"].map(item =>
-                            <Link key={item} href="#" className='text-xs underline block mb-2'>
+                            <Link prefetch={false} key={item} href="#" className='text-xs underline block mb-2'>
                                 {item}
                             </Link>
                         )}
                     </FooterCol>
                     <FooterCol title="Social Media" >
                         {["Tiktok", "Instagram", "Facebook", "Twitter"].map(item =>
-                            <Link key={item} href="#" className='text-xs underline block mb-2'>
+                            <Link prefetch={false} key={item} href="#" className='text-xs underline block mb-2'>
                                 {item}
                             </Link>
                         )}
