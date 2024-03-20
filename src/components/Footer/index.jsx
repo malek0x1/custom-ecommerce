@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const Footer = () => {
     return (
-        <div className='bg-gray-50 pb-10 pt-5'>
+        <div className='bg-gray-50 pb-10 pt-5 mt-24'>
             <div className="container">
                 <div
                     style={{ maxWidth: "500px" }}
