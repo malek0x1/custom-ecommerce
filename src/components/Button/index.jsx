@@ -1,9 +1,9 @@
 import { Button as ShadCnButton } from "../ui/button"
 
-const Button = ({ className = "", label, ...rest }) => {
+const Button = ({ className = "", label, defaultStyle = true, ...rest }) => {
     return (
         <ShadCnButton
-            className={`w-full rounded-none py-5 ${className}`}  {...rest}>
+            className={`w-full ${defaultStyle && "bg-black text-white"} rounded-none py-5 ${className}`}  {...rest}>
             {label}
         </ShadCnButton>
     );

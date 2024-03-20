@@ -1,6 +1,6 @@
 export const SIGN_UP_FIELDS = [
-    { id: 1, placeholder: "First Name", type: "text", required: true, name: "fname" },
-    { id: 2, placeholder: "Last Name", type: "text", required: true, name: "lname" },
+    { id: 1, placeholder: "First Name", type: "text", required: true, name: "firstname" },
+    { id: 2, placeholder: "Last Name", type: "text", required: true, name: "lastname" },
     { id: 3, placeholder: "Email", type: "email", required: true, name: "email" },
     { id: 4, placeholder: "Password", type: "password", required: true, name: "password" },
 ]
@@ -18,5 +18,9 @@ export const SORTBY_OPTIONS = [
     { id: 4, name: "Price high to low", sortOrder: "desc", sortBy: "price" },
 ]
 export const FILTERS_OPTIONS = []
+export const LOGIN_PAGE_FIELDS = [
+    { id: 1, name: "email", placeholder: "Email Adress", required: true, type: "text" },
+    { id: 2, name: "password", placeholder: "Password", required: true, type: "password" },
+]
 
 export const HOME_ICONS_FEATURES = []

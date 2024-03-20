@@ -25,7 +25,7 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
 
                 <div className="flex-1 justify-center sm:justify-normal flex">
                     <Link prefetch={false} href="/">
-                        <Image className='' src="/assets/images/logo.png" width="150" height="150" />
+                        <Image alt="logo" className='' src="/assets/images/logo.png" width="150" height="150" />
                     </Link>
                 </div>
                 <div className="justify-center hidden sm:flex-1 sm:flex overflow-x-auto p-2 items-center  gap-3">
@@ -43,7 +43,7 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                             )
                         } else {
                             return (
-                                <HoverCard openDelay={3} >
+                                <HoverCard key={item} openDelay={3} >
                                     <HoverCardTrigger className=''>
                                         <p
                                             style={{

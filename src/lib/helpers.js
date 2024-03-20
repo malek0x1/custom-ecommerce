@@ -1,6 +1,7 @@
 import axios from "axios";
 import commerce from "./commerce";
-import client from "../lib/sanity";
+import { client } from "../lib/sanity";
+import bcrypt from 'bcryptjs';
 
 const BASE_URL = 'https://api.chec.io/v1';
 
@@ -15,7 +16,7 @@ on Logout commerce.customer.logout() + remove email from localstorage
 */
 
 // 1- Function to create a customer
-export async function createCustomer(customerData) {
+export async function createCustomerCommerceJs(customerData) {
 
     // const customerData = {
     //     email: 'email@gmail.com',
@@ -34,7 +35,8 @@ export async function createCustomer(customerData) {
         });
         return response.data;
     } catch (error) {
-        throw new Error('Error creating customer: ' + error.response.data.errors[0].detail);
+        console.log(error.response.data.error.message);
+        throw new Error('Error creating customer: ');
     }
 }
 
@@ -115,7 +117,8 @@ export const checkUserCredentials = async (email, password) => {
                 return true
             } else {
                 // Passwords don't match, authentication failed
-                throw new Error('Invalid email or password');
+                // throw new Error('Invalid email or password');
+                return false
             }
         } else {
             return false;
@@ -132,7 +135,7 @@ export const hashPassword = async (password) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     return hashedPassword;
 };
-export const submitUserData = async (userData) => {
+export const createUserSanity = async (userData) => {
     try {
         const response = await client.create({ _type: "user", ...userData });
         return response;

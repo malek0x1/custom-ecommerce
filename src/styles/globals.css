@@ -22,9 +22,7 @@ body {
 }
 
 .loader {
-    border: 2px solid rgba(0, 0, 0, .1);
     border-radius: 50%;
-    border-left-color: transparent;
     width: 17px;
     height: 17px;
     animation: spin89345 1s linear infinite;
