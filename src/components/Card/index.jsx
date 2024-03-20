@@ -2,16 +2,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const ProductCard = ({ product }) => {
-    console.log(product.image);
     return (
         <div className={`bg-white overflow-hidden `}>
-            <Link prefetch={false} href={`/product/${product.id}`}>
+            <Link target='_blank' prefetch={false} href={`/product/${product.permalink}`}>
                 <div className="relative">
                     <Image
                         width={product.image.image_dimensions.width}
                         height={product.image.image_dimensions.height}
                         src={product.image.url}
-                        // unoptimized
+                        unoptimized
                         loading="lazy"
                         alt=""
                     />

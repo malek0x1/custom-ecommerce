@@ -75,3 +75,21 @@ body {
     width: 100%;
     background-position: center;
 }
+
+.variant-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-width: 4.5em;
+    min-height: 48px;
+    margin: 10px 10px 0 0;
+    padding: 11px 15px;
+    border: 1px rgb(201, 197, 193) solid;
+    background-color: #fff;
+    color: #251605;
+}
+
+.variant-item.active {
+    border: 1px solid black;
+}

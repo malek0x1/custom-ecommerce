@@ -29,7 +29,6 @@ const Login = () => {
         try {
             setIsLoading(true)
             const check = await checkUserCredentials(data.email, data.password)
-            console.log(check);
             setIsLoading(false)
         }
         catch (e) {

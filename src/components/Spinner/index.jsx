@@ -4,7 +4,7 @@ const Spinner = ({ color }) => {
         <div
 
             style={{
-                border: `2px solid ${color}`,
+                border: `1px solid ${color}`,
                 borderLeftColor: "transparent"
             }}
             className='loader border-l-transparent' />
