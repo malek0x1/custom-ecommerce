@@ -76,7 +76,7 @@ const Collection = () => {
                 {isFullLoading ? (
                     <div className="flex flex-wrap">
                         {[1, 2, 3, 4, 6, 7, 8, 9].map(_ => (
-                            <div className="w-1/2 sm:w-1/3 md:w-1/4 px-1">
+                            <div key={_} className="w-1/2 sm:w-1/3 md:w-1/4 px-1">
                                 <SkeletonCard />
                             </div>
                         ))}
@@ -90,7 +90,7 @@ const Collection = () => {
                             loader={
                                 <div className="flex flex-wrap">
                                     {[1, 2, 3, 4].map(_ => (
-                                        <div className="w-1/2 sm:w-1/3 md:w-1/4 px-1">
+                                        <div key={_} className="w-1/2 sm:w-1/3 md:w-1/4 px-1">
                                             <SkeletonCard />
                                         </div>
                                     ))}
@@ -100,7 +100,7 @@ const Collection = () => {
                             <div className="flex flex-wrap ">
                                 {products.length > 0 &&
                                     products.map((product) => (
-                                        <div className="w-1/2 sm:w-1/3 md:w-1/4 px-0.5">
+                                        <div key={ptoduct.id} className="w-1/2 sm:w-1/3 md:w-1/4 px-0.5">
                                             <Card product={product} key={product.id} />
                                         </div>
                                     ))}

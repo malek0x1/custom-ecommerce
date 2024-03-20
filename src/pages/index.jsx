@@ -22,6 +22,7 @@ export default function Home() {
             <Image
               src="https://cdn.chec.io/merchants/56289/assets/MXcJNajhN9FDUWW0|06bde6529ecec91eca430963c5fbea9bbeca6834-600x600.jpg"
               height={800}
+              alt=""
               width={800}
             />
           </div>
