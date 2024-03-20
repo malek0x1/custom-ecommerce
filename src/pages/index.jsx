@@ -21,9 +21,10 @@ export default function Home() {
           <div className="">
             <Image
               src="https://cdn.chec.io/merchants/56289/assets/MXcJNajhN9FDUWW0|06bde6529ecec91eca430963c5fbea9bbeca6834-600x600.jpg"
-              height={800}
+              height={600}
+              loading="lazy"
               alt=""
-              width={800}
+              width={600}
             />
           </div>
           <div className="flex p-8 md:p-10 flex-col justify-between bg-black w-full text-white gap-8">
