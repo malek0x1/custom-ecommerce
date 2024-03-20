@@ -4,14 +4,14 @@ import Link from 'next/link';
 const ProductCard = ({ product }) => {
     console.log(product.image);
     return (
-        <div className={`bg-white overflow-hidden`}>
+        <div className={`bg-white overflow-hidden `}>
             <Link prefetch={false} href={`/product/${product.id}`}>
                 <div className="relative">
                     <Image
                         width={product.image.image_dimensions.width}
                         height={product.image.image_dimensions.height}
                         src={product.image.url}
-                        unoptimized
+                        // unoptimized
                         loading="lazy"
                         alt=""
                     />

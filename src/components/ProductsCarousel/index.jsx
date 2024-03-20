@@ -43,7 +43,7 @@ const ProductsCarousel = ({ collection }) => {
                     </div>
                 )
             }
-            <CarouselContent className="ml-1 gap-1 pt-4">
+            <CarouselContent className="ml-1 gap-1 pt-4 items-center">
                 {isLoading ?
                     [1, 2, 3, 4].map(item => (
                         <CarouselItem key={item} className="lg:basis-1/4 pl-0 basis-1/2">
@@ -52,7 +52,7 @@ const ProductsCarousel = ({ collection }) => {
                     ))
                     : products.length > 0 &&
                     products.map(item => (
-                        <CarouselItem key={item.id} className="lg:basis-1/4 pl-0 basis-1/2">
+                        <CarouselItem key={item.id} className="lg:basis-1/4 pl-0 basis-1/2 ">
                             <ProductCard product={item} />
                         </CarouselItem>
                     ))
