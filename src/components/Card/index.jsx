@@ -2,18 +2,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const ProductCard = ({ product }) => {
+    console.log(product.image);
     return (
         <div className={`bg-white overflow-hidden`}>
             <Link prefetch={false} href={`/product/${product.id}`}>
                 <div className="relative">
                     <Image
-                        width={1300}
-                        height={1300}
-                        // className="h-44 lg:h-60 object-contain"
+                        width={product.image.image_dimensions.width}
+                        height={product.image.image_dimensions.height}
                         src={product.image.url}
-                        // src="https://media-cdn.paulandshark.com/ecom/site/M/24411570-050-af-v.jpg"
-                        // src="https://ayushinvienna.com/cdn/shop/files/Dolana_dress_walk.webp?v=1685908056&width=180 180w 225h"
-                        // src={'https://cdn.chec.io/merchants/56289/assets/MXcJNajhN9FDUWW0|06bde6529ecec91eca430963c5fbea9bbeca6834-600x600.jpg'}
                         unoptimized
                         loading="lazy"
                         alt=""
