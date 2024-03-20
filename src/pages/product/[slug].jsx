@@ -72,7 +72,7 @@ const Product = () => {
                                 priority="true"
                                 alt=""
                             />
-                            <div className="">
+                            <div className=" grid gap-6">
                                 <p className="uppercase tracking-widest">{product.name}</p>
                                 <p className="uppercase tracking-widest mt-4">{product.price.formatted_with_symbol}</p>
 
