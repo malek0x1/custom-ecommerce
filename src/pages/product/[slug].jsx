@@ -69,7 +69,7 @@ const Product = () => {
                                 height={product.image.image_dimensions.height}
                                 src={product.image.url}
                                 // unoptimized
-                                priority="high"
+                                priority="true"
                                 alt=""
                             />
                             <div className="">
