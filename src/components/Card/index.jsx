@@ -10,8 +10,8 @@ const ProductCard = ({ product }) => {
                         width={1300}
                         height={1300}
                         // className="h-44 lg:h-60 object-contain"
-                        // src={product.image.url}
-                        src="https://media-cdn.paulandshark.com/ecom/site/M/24411570-050-af-v.jpg"
+                        src={product.image.url}
+                        // src="https://media-cdn.paulandshark.com/ecom/site/M/24411570-050-af-v.jpg"
                         // src="https://ayushinvienna.com/cdn/shop/files/Dolana_dress_walk.webp?v=1685908056&width=180 180w 225h"
                         // src={'https://cdn.chec.io/merchants/56289/assets/MXcJNajhN9FDUWW0|06bde6529ecec91eca430963c5fbea9bbeca6834-600x600.jpg'}
                         unoptimized
