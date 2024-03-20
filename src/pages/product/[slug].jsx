@@ -7,6 +7,7 @@ import Image from "next/image"
 import Variant from "@/components/Variant"
 import Button from "@/components/Button"
 import Layout from "@/components/Layout"
+import Skeleton from "react-loading-skeleton"
 
 const Product = () => {
     const [product, setproduct] = useState([])
@@ -56,7 +57,10 @@ const Product = () => {
             description="test"
         >
             <div>
-                {isFullLoading ? <div className="m-10"><Spinner color="black" /></div> : (
+                {isFullLoading ? <div className="m-10 ">
+                    <Skeleton count={1} className="w-full" height={600} />
+
+                </div> : (
                     <div className="container">
                         <div className="flex gap-10 flex-wrap">
                             <Image
