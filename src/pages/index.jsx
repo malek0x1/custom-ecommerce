@@ -54,7 +54,7 @@ export default function Home() {
           <div key={item} className="flex-1 text-center flex px-3 justify-center items-center gap-3 flex-col">
             <CiShoppingBasket size={40} color="black" />
             <p className="text-lg uppercase">Free Shipping</p>
-            <p className="text-xs text-gray-400 w-10/12" >We Offer Free shipping on all Us orders and all internatiols orders over 150$.</p>
+            <p className="text-xs text-gray-800 w-10/12" >We Offer Free shipping on all Us orders and all internatiols orders over 150$.</p>
           </div>
         ))}
 

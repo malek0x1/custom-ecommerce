@@ -48,7 +48,6 @@ const Product = () => {
         const { id } = product;
         const formatVariants = handleChosenVariants(chosenVariants);
         const res = await commerce.cart.add(id, 1, formatVariants);
-        console.log("Added to cart:", res); // Check the response
         updateCart(res);
         setIsLoading(false);
         setIsCartOpened(true);
