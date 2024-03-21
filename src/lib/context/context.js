@@ -1,5 +1,5 @@
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import commerce from "../commerce";
 
 const EcommerceContext = createContext();
@@ -11,16 +11,41 @@ export function ContextProvider({ children }) {
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
     const [cartItems, setCartItems] = useState({
         line_items: [],
-        loading: false
+        loading: true
     })
+
+
+
+    useEffect(() => {
+        const fetchCart = async () => {
+            try {
+                const cart = await commerce.cart.retrieve();
+                setCartItems(cart);
+            } catch (error) {
+                console.error("Error fetching cart:", error);
+            } finally {
+                setCartItems((prevCart) => ({ ...prevCart, loading: false }));
+            }
+        };
+        fetchCart();
+    }, []);
+
+
+
 
     // FUNCTIONS
 
     const clearCartState = async () => await commerce.cart.refresh()
 
-    const updateCart = async (newCart) => {
-        await setCartItems(newCart)
-    }
+    const updateCart = (newCart) => {
+        setCartItems((prevCart) => ({
+            ...prevCart,
+            line_items: [...newCart.line_items], // Ensure immutability
+        }));
+    };
+
+
+
 
     const EcommerceContextValue = {
         clearCartState,

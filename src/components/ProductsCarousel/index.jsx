@@ -29,7 +29,7 @@ const ProductsCarousel = ({ collection }) => {
                         <Skeleton duration={0.8} count={1} height={20} width={50} />
                     </div>
                 ) : (
-                    <div className="relative flex justify-between px-2 items-center">
+                    <div className="relative flex justify-between px-2 pt-4 items-center">
                         <p className="text-left text-lg uppercase tracking-wider">Apple Collection</p>
                         <div
                             style={{

@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { motion } from "framer-motion"
 import commerce from "../../lib/commerce"
+import { useEcommerceContext } from "@/lib/context/context"
 
 const CartItem = ({ image, title, price, index, quantity, selected_options, id }) => {
     const handleShowVariants = () => {
@@ -10,10 +11,11 @@ const CartItem = ({ image, title, price, index, quantity, selected_options, id }
         })
         return chosenVariant
     }
+    const { cartItems, setCartItems } = useEcommerceContext()
     const handleRemoveItem = async () => {
-        await commerce.cart.remove(id)
-
-        // update cart
+        const line_items = cartItems.line_items.filter(item => item.id !== id)
+        setCartItems(prev => ({ ...prev, line_items }))
+        const out = await commerce.cart.remove(id)
     }
     return (
         <motion.div

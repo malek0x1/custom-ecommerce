@@ -44,14 +44,16 @@ const Product = () => {
     }, [router.query.slug])
 
     const handleAddToCart = async () => {
-        setIsLoading(true)
-        const { id } = product
-        const formatVariants = handleChosenVariants(chosenVariants)
+        setIsLoading(true);
+        const { id } = product;
+        const formatVariants = handleChosenVariants(chosenVariants);
         const res = await commerce.cart.add(id, 1, formatVariants);
-        updateCart(res)
-        setIsLoading(false)
-        setIsCartOpened(true)
-    }
+        console.log("Added to cart:", res); // Check the response
+        updateCart(res);
+        setIsLoading(false);
+        setIsCartOpened(true);
+    };
+
 
 
     return (
