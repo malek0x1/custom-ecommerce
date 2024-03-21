@@ -15,8 +15,8 @@ import Skeleton from "react-loading-skeleton"
 
 const Cart = ({ isOpen, setIsOpen }) => {
     const { cartItems } = useEcommerceContext()
-    console.log("Cart items IN CART:", cartItems); // Check the cartItems data
 
+    console.log(cartItems);
 
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen} >

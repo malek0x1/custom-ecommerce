@@ -36,7 +36,7 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
 
                         if (item !== "Shop") {
                             return (
-                                <Link prefetch={false} key={item} href="#"
+                                <Link prefetch={false} key={item} href="/"
                                     style={{
                                         fontSize: "13px"
                                     }}
