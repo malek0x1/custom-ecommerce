@@ -9,10 +9,11 @@ import {
     HoverCardContent,
     HoverCardTrigger,
 } from "@/components/ui/hover-card"
+import { useEcommerceContext } from '@/lib/context/context'
 
 
 const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
-    const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
+    const { isMobileNavOpen, setIsMobileNavOpen } = useEcommerceContext()
     return (
         <div className=''>
             <MobileNav isOpen={isMobileNavOpen} setIsOpen={setIsMobileNavOpen} />
@@ -25,7 +26,7 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
 
                 <div className="flex-1 justify-center sm:justify-normal flex">
                     <Link prefetch={false} href="/">
-                        <Image alt="logo" className='' src="/assets/images/logo.png" width="150" height="150" />
+                        <Image unoptimized alt="logo" className='' src="/assets/images/logo.png" width="150" height="150" />
                     </Link>
                 </div>
                 <div className="justify-center hidden sm:flex-1 sm:flex overflow-x-auto p-2 items-center  gap-3">

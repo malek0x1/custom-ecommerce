@@ -33,7 +33,6 @@ const Collection = () => {
     const fetchProductsByCollection = async () => {
         try {
             const addFilters = chosenFilter.name ? { sortBy: chosenFilter.sortBy, sortOrder: chosenFilter.sortOrder } : {}
-            console.log(addFilters);
             const { data, meta } = await commerce.products.list({
                 category_slug: [router.query.collection],
                 limit: NUMBER_TO_FETCH,

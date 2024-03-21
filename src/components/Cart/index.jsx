@@ -12,10 +12,12 @@ import Button from "../Button"
 import { useEffect, useState } from "react"
 import commerce from "../../lib/commerce"
 import Spinner from "../Spinner"
+import { useEcommerceContext } from "@/lib/context/context"
+import Skeleton from "react-loading-skeleton"
 
 
 const Cart = ({ isOpen, setIsOpen }) => {
-    const [cartItems, setCartItems] = useState([])
+    const { cartItems, setCartItems } = useEcommerceContext()
     const [isLoading, setIsLoading] = useState(true)
 
 
@@ -27,6 +29,7 @@ const Cart = ({ isOpen, setIsOpen }) => {
         }
         handleFetchCart()
     }, [])
+
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen} >
             <SheetContent className="w-full flex flex-col ">
@@ -42,15 +45,17 @@ const Cart = ({ isOpen, setIsOpen }) => {
                 <div className="overflow-y-auto flex-1">
                     <div className="grid gap-4 py-4 ">
                         {
-                            isLoading ? <Spinner color="black" /> : cartItems.line_items.length > 0 && cartItems.line_items.map((item, index) => (
-                                <CartItem key={`${item}-${JSON.stringify(item.selected_options)}`} selected_options={item.selected_options} image={item.image.url} index={index} price={item.price.formatted_with_symbol} title={item.name} quantity={item.quantity} />
+                            isLoading ? <Skeleton duration={0.7} className="w-full mb-2" height={100} count={2} /> : cartItems.line_items.length > 0 && cartItems.line_items.map((item, index) => (
+                                <CartItem id={item.id} key={`${item}-${JSON.stringify(item.selected_options)}`} selected_options={item.selected_options} image={item.image.url} index={index} price={item.price.formatted_with_symbol} title={item.name} quantity={item.quantity} />
                             ))
                         }
                     </div>
                 </div>
                 <SheetFooter>
                     <SheetClose asChild>
-                        <Button className="w-full bg-black" type="submit" label="Checkout" />
+                        {!isLoading && cartItems.line_items.length != 0 && (
+                            <Button className="w-full bg-black" type="submit" label="Checkout" />
+                        )}
                     </SheetClose>
                 </SheetFooter>
             </SheetContent>

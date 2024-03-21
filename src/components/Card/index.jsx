@@ -13,6 +13,11 @@ const ProductCard = ({ product }) => {
                         unoptimized
                         loading="lazy"
                         alt=""
+                        className='object-contain'
+                        style={{
+                            minHeight: "290px",
+                            height: '100%'
+                        }}
                     />
 
                 </div>
