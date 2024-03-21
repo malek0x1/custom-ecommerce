@@ -29,7 +29,7 @@ const ProductsCarousel = ({ collection }) => {
                         <Skeleton duration={0.8} count={1} height={20} width={50} />
                     </div>
                 ) : (
-                    <div className="relative flex justify-between px-2 pt-4 items-center">
+                    <div className="relative flex  justify-between px-2 pt-4 items-center">
                         <p className="text-left text-lg uppercase tracking-wider">Apple Collection</p>
                         <div
                             style={{
@@ -43,7 +43,7 @@ const ProductsCarousel = ({ collection }) => {
                     </div>
                 )
             }
-            <CarouselContent className="ml-1 gap-1 items-center">
+            <CarouselContent className="ml-1 gap-1 mt-4 items-center">
                 {isLoading ?
                     [1, 2, 3, 4].map(item => (
                         <CarouselItem key={item} className="lg:basis-1/4 pl-0 basis-1/2">

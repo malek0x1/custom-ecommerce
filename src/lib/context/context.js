@@ -40,7 +40,7 @@ export function ContextProvider({ children }) {
     const updateCart = (newCart) => {
         setCartItems((prevCart) => ({
             ...prevCart,
-            line_items: [...newCart.line_items], // Ensure immutability
+            ...newCart
         }));
     };
 
