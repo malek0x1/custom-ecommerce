@@ -23,7 +23,7 @@ const ProductCard = ({ product }) => {
                 </div>
             </Link>
             <div className="py-3">
-                <Link prefetch={false} href={`/product/${product.id}`}>
+                <Link aria-label={product.name} prefetch={false} href={`/product/${product.id}`}>
                     <p className="block text-gray-600 font-light  mb-2 text-xs hover:text-gray-900">
                         {product.name}
                     </p>
