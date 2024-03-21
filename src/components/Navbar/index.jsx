@@ -26,7 +26,9 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
 
                 <div className="flex-1 justify-center sm:justify-normal flex">
                     <Link prefetch={false} href="/">
-                        <Image unoptimized alt="logo" className='' src="/assets/images/logo.png" width="150" height="69" />
+                        <Image unoptimized
+                            loading='eager'
+                            alt="logo" className='' src="/assets/images/logo.png" width="150" height="69" />
                     </Link>
                 </div>
                 <div className="justify-center hidden sm:flex-1 sm:flex overflow-x-auto p-2 items-center  gap-3">
