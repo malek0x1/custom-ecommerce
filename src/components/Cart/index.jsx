@@ -11,6 +11,7 @@ import CartItem from "./CartItem"
 import Button from "../Button"
 import { useEcommerceContext } from "@/lib/context/context"
 import Skeleton from "react-loading-skeleton"
+import Link from "next/link"
 
 
 const Cart = ({ isOpen, setIsOpen }) => {
@@ -39,7 +40,9 @@ const Cart = ({ isOpen, setIsOpen }) => {
                 <SheetFooter>
                     <SheetClose asChild>
                         {!cartItems.loading && cartItems.line_items.length != 0 && (
-                            <Button className="w-full bg-black" type="submit" label="Checkout" />
+                            <Link className="w-full" prefetch={false} href="/checkout">
+                                <Button className="w-full bg-black" type="submit" label="Checkout" />
+                            </Link>
                         )}
                     </SheetClose>
                 </SheetFooter>
