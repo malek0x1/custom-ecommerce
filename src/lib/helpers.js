@@ -296,3 +296,101 @@ export const BodyScrollControl = (action) => {
 //     addCustomerAddress(cid, data)
 //   }
 
+
+/*
+
+CHECKOUT;
+1- generateToken from Cart
+2-fetch countries
+3- fetch cities for countries
+
+*/
+
+export const generateCheckoutToken = async (cartId) => {
+    try {
+        const data = await commerce.checkout.generateToken(cartId, { type: 'cart' });
+        return data
+    } catch (error) {
+        console.log(error);
+        return null
+    }
+}
+
+export const fetchShippingCountries = async (checkoutTokenId) => {
+    commerce.services.localeListShippingCountries(checkoutTokenId)
+        .then((response) => {
+            if (response && response.countries) {
+                return {
+                    countries: response.countries,
+                }
+            } else {
+                console.log('Invalid response received while fetching shipping countries');
+                return null
+            }
+        })
+        .catch((error) => {
+            console.error('Error fetching shipping countries:', error);
+        });
+}
+
+export const fetchSubdivisions = (countryCode) => {
+    commerce.services.localeListSubdivisions(countryCode).then((subdivisions) => {
+        return subdivisions.subdivisions
+    }).catch((error) => {
+        return null
+        console.log('There was an error fetching the subdivisions', error);
+    });
+};
+export const fetchShippingOptions = (checkoutTokenId, country, stateProvince = null) => {
+    commerce.checkout.getShippingOptions(checkoutTokenId,
+        {
+            country: country,
+            region: stateProvince
+        }).then((options) => {
+            // Pre-select the first available method
+            const shippingOption = options[0] || null;
+            return {
+                shippingOption: shippingOption,
+                shippingOptions: options
+            }
+        }).catch((error) => {
+            console.log('There was an error fetching the shipping methods', error);
+        });
+};
+
+
+export const handleCaptureCheckout = (cart, formData) => {
+    const orderData = {
+        line_items: cart.line_items,
+        customer: {
+            firstname: formData.firstName,
+            lastname: formData.lastName,
+            email: formData.email
+        },
+        shipping: {
+            name: formData.shippingName,
+            street: formData.shippingStreet,
+            town_city: formData.shippingCity,
+            county_state: formData.shippingStateProvince,
+            postal_zip_code: formData.shippingPostalZipCode,
+            country: formData.shippingCountry,
+        },
+        fulfillment: {
+            shipping_method: formData.shippingOption.id
+        },
+        payment: {
+            gateway: "test_gateway",
+            card: {
+                number: formData.cardNum,
+                expiry_month: formData.expMonth,
+                expiry_year: formData.expYear,
+                cvc: formData.ccv,
+                postal_zip_code: formData.shippingPostalZipCode
+            }
+        }
+    };
+    // this.props.onCaptureCheckout(cart.checkoutToken.id, orderData);
+    // this.props.history.push('/confirmation');
+};
+
+// ------------------

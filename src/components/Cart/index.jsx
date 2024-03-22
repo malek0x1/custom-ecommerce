@@ -15,9 +15,6 @@ import Skeleton from "react-loading-skeleton"
 
 const Cart = ({ isOpen, setIsOpen }) => {
     const { cartItems } = useEcommerceContext()
-
-    console.log(cartItems);
-
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen} >
             <SheetContent className="w-full flex flex-col ">
