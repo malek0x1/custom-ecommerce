@@ -11,9 +11,12 @@ import Skeleton from 'react-loading-skeleton';
 
 const Collection = () => {
     const NUMBER_TO_FETCH = 8
+    // to reset
     const [products, setProducts] = useState([])
     const [page, setPage] = useState(1);
     const [totalProducts, setTotalProducts] = useState(0);
+
+
     const [hasMore, setHasMore] = useState(true);
     const [chosenFilter, setChosenFilter] = useState({})
     const [isFilterOpened, setIsFilterOpened] = useState(false)
@@ -25,27 +28,27 @@ const Collection = () => {
         const handleInitialProducts = async () => {
             setIsFullLoading(true)
             if (router.query.collection) {
-                fetchProductsByCollection(router.query.collection)
+                fetchProductsByCollection(true)
             }
         }
         handleInitialProducts()
     }, [router.query, chosenFilter])
 
-    const fetchProductsByCollection = async () => {
+    const fetchProductsByCollection = async (initial) => {
         try {
-            const addFilters = chosenFilter.name ? { sortBy: chosenFilter.sortBy, sortOrder: chosenFilter.sortOrder } : {}
+            const addFilters = chosenFilter.name ? { sortBy: chosenFilter.sortBy, sortDirection: chosenFilter.sortOrder } : {}
             const { data, meta } = await commerce.products.list({
                 category_slug: [router.query.collection],
                 limit: NUMBER_TO_FETCH,
-                page: page,
+                page: initial ? 1 : page,
                 ...addFilters
             });
 
             setIsFullLoading(false)
             if (data) {
                 setTotalProducts(meta.pagination.total)
-                setProducts((prev) => [...prev, ...data]);
-                setPage(page + 1);
+                setProducts((prev) => (initial ? [...data] : [...prev, ...data]));
+                setPage(initial ? 2 : page + 1);
                 return
             } else {
                 setHasMore(false);
@@ -83,7 +86,7 @@ const Collection = () => {
 
                 {isFullLoading ? (
                     <div className="flex flex-wrap">
-                        {[1, 2, 3, 4, 6, 7, 8, 9].map(_ => (
+                        {Array.from({ length: NUMBER_TO_FETCH }, () => Math.random()).map(_ => (
                             <div key={_} className="w-1/2 sm:w-1/3 md:w-1/4 px-1">
                                 <SkeletonCard />
                             </div>
