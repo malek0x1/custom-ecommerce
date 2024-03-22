@@ -13,9 +13,9 @@ const ProductCard = ({ product }) => {
                         unoptimized
                         loading="lazy"
                         alt=""
-                        className='object-contain'
+                        className=''
                         style={{
-                            minHeight: "290px",
+                            // minHeight: "290px",
                             height: '100%'
                         }}
                     />
@@ -23,7 +23,7 @@ const ProductCard = ({ product }) => {
                 </div>
             </Link>
             <div className="py-3">
-                <Link aria-label={product.name} prefetch={false} href={`/product/${product.id}`}>
+                <Link aria-label={product.name} prefetch={false} href={`/product/${product.permalink}`}>
                     <p className="block text-gray-600 font-light  mb-2 text-xs hover:text-gray-900">
                         {product.name}
                     </p>

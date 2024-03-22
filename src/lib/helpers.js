@@ -129,6 +129,17 @@ export const checkUserCredentials = async (email, password) => {
     }
 };
 
+export const getSanitySchema = async (schema) => {
+    try {
+        const query = `*[_type == $schema]`;
+        const params = { schema };
+        const matchingUsers = await client.fetch(query, params);
+        return matchingUsers
+    } catch (error) {
+        console.error("Error Fetching schema:", error);
+    }
+};
+
 
 export const hashPassword = async (password) => {
     const saltRounds = 10;

@@ -5,6 +5,7 @@ import commerce from "../../lib/commerce";
 import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
 import Link from "next/link";
+import SearchItem from "./SearchItem";
 
 const Search = ({ isOpen, setIsOpen }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -52,16 +53,9 @@ const Search = ({ isOpen, setIsOpen }) => {
                     <div className="text-gray-500">No results found.</div>
                 )}
                 {!isLoading && searchResults.length > 0 && (
-                    <div className="grid gap-8">
-                        {/* Display search results here */}
+                    <div className="grid gap-8 overflow-y-auto">
                         {searchResults.map((product) => (
-                            <Link onClick={() => { setIsOpen(false) }} href={`/product/${product.id}`} className="flex gap-2 items-center" key={product.id}>
-                                <Image unoptimized alt="asd" src={product.image.url || "/assets/images/demo.jpg"} width="100" height="50" className="w-20 object-cover object-cover" />
-                                <div className="">
-                                    <p className="text-thin text-xs text-gray-700">{product.name}</p>
-                                    <p className="text-thin text-xs text-gray-700">{product.price.formatted_with_symbol}</p>
-                                </div>
-                            </Link>
+                            <SearchItem product={product} setIsOpen={setIsOpen} key={product.id} />
                         ))}
                     </div>
                 )}

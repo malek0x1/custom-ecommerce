@@ -9,6 +9,12 @@ export function ContextProvider({ children }) {
     const [isSearchOpened, setIsSearchOpened] = useState(false)
     const [isCartOpened, setIsCartOpened] = useState(false)
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
+    const [categories, setCategories] = useState(
+        {
+            categories: [],
+            loading: true
+        }
+    )
     const [cartItems, setCartItems] = useState({
         line_items: [],
         loading: true
@@ -30,6 +36,21 @@ export function ContextProvider({ children }) {
         fetchCart();
     }, []);
 
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const categoriesData = await commerce.categories.list()
+                setCategories({ categories: categoriesData.data, loading: false });
+            } catch (error) {
+                setCategories({ categories: [], loading: false });
+                console.error("Error fetching Categories:", error);
+            }
+        };
+        if (categories.categories.length == 0) {
+            fetchCategories();
+        }
+    }, []);
 
 
 
@@ -57,7 +78,8 @@ export function ContextProvider({ children }) {
         setIsMobileNavOpen,
         cartItems,
         setCartItems,
-        updateCart
+        updateCart,
+        categories,
     };
 
     return (

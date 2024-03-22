@@ -27,7 +27,15 @@ const CartItem = ({ image, title, price, index, quantity, selected_options, id }
             }}
         >
             <div className="flex gap-4">
-                <Image unoptimized alt="asd" src={image || "/assets/images/demo.jpg"} width="100" height="50" className="w-32 object-cover" />
+                <Image unoptimized alt="asd"
+                    src={image || "/assets/images/demo.jpg"}
+                    width="100"
+                    height="100"
+                    className="object-cover h-full "
+                    style={{
+                        maxWidth: "100px",
+                    }}
+                />
                 <div className="">
                     <p className="text-sm mb-3">{title}</p>
                     <p className="text-thin text-xs text-gray-700">{`x${quantity} ${handleShowVariants()}`}</p>

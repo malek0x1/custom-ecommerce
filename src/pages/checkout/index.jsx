@@ -106,7 +106,7 @@ const Checkout = () => {
                     </div>
                 )}
 
-                {Object.keys(countryStates).length > 0 ? <select
+                {chosenCountry ? Object.keys(countryStates).length > 0 ? <select
                     onChange={(e) => { setChosenCountryState(e.target.value) }}
                     className="p-2.5 w-full" name="state">
                     <option value="">-- Choose State --</option>
@@ -119,31 +119,35 @@ const Checkout = () => {
                         <div className="w-full">
                             <Skeleton duration={0.8} count={1} className="w-full" height={35} />
                         </div>
-                    )
+                    ) : <></>
                 }
 
-                {shippingOptions.length > 0 ? (
-                    <select
-                        onChange={(e) => { setChosenShippingOption(e.target.value) }}
-                        className="p-2.5 w-full" name="country">
-                        {shippingOptions.map(item => (
-                            <option key={item.id} value={item.id}>
-                                <div className="flex items-center justify-between gap-10 p-2 w-full">
-                                    <p className="hidden">
-                                        {item.description}
-                                    </p>
-                                    <p>
-                                        {item.price.formatted_with_symbol}
-                                    </p>
-                                </div>
-                            </option>
-                        ))}
-                    </select>
-                ) : (
-                    <div className="w-full">
-                        <Skeleton duration={0.8} count={1} className="w-full" height={35} />
-                    </div>
-                )
+                {
+                    chosenCountryState ?
+                        shippingOptions.length > 0 ? (
+                            <select
+                                onChange={(e) => { setChosenShippingOption(e.target.value) }}
+                                className="p-2.5 w-full" name="country">
+                                {shippingOptions.map(item => (
+                                    <option key={item.id} value={item.id}>
+                                        <div className="flex items-center justify-between gap-10 p-2 w-full">
+                                            <p className="hidden">
+                                                {item.description}
+                                            </p>
+                                            <p>
+                                                {item.price.formatted_with_symbol}
+                                            </p>
+                                        </div>
+                                    </option>
+                                ))}
+                            </select>
+                        ) : (
+                            <div className="w-full">
+                                <Skeleton duration={0.8} count={1} className="w-full" height={35} />
+                            </div>
+                        )
+                        : <>
+                        </>
                 }
 
                 <Button label="Submit" className="w-full" />

@@ -1,9 +1,12 @@
+import { useEcommerceContext } from "@/lib/context/context";
 import { Sheet, SheetClose, SheetContent, SheetHeader } from "../ui/sheet"
 import MobileNavItem from "./MobileNavItem"
 import { TfiClose } from "react-icons/tfi";
+import Skeleton from "react-loading-skeleton";
 
 
 const MobileNav = ({ isOpen, setIsOpen }) => {
+    const { categories } = useEcommerceContext()
 
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen} >
@@ -15,12 +18,17 @@ const MobileNav = ({ isOpen, setIsOpen }) => {
                 </SheetHeader>
                 <div className="overflow-y-auto flex-1">
                     <div className="space-y-2 pt-8">
-                        {["New", "Curated", "Designers", "Clothing", "Shoes & Bags", "Accessories", "Login", "Pricing"].map((item, index) => (
-                            <div key={item} onClick={() => { setIsOpen(false) }} className="">
+                        {
+                            !categories.loading ?
 
-                                <MobileNavItem index={index} label={item} link={'/collection/apple'} />
-                            </div>
-                        ))}
+                                categories.categories.length > 0 && categories.categories.map((item, index) => (
+                                    <div key={item.id} onClick={() => { setIsOpen(false) }} className="">
+                                        <MobileNavItem index={index} label={item.name} link={`/collection/${item.slug}`} />
+                                    </div>
+                                ))
+                                :
+                                <Skeleton className="gap-5" duration={0.8} count={8} height={20} />
+                        }
                     </div>
                 </div>
             </SheetContent>

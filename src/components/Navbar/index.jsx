@@ -10,10 +10,11 @@ import {
     HoverCardTrigger,
 } from "@/components/ui/hover-card"
 import { useEcommerceContext } from '@/lib/context/context'
+import Skeleton from 'react-loading-skeleton'
 
 
 const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
-    const { isMobileNavOpen, setIsMobileNavOpen } = useEcommerceContext()
+    const { isMobileNavOpen, setIsMobileNavOpen, categories } = useEcommerceContext()
     return (
         <div className=''>
             <MobileNav isOpen={isMobileNavOpen} setIsOpen={setIsMobileNavOpen} />
@@ -31,9 +32,10 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                             alt="logo" className='' src="/assets/images/logo.png" width="150" height="69" />
                     </Link>
                 </div>
-                <div className="justify-center hidden sm:flex-1 sm:flex overflow-x-auto p-2 items-center  gap-3">
+                <div
+                    style={{ flex: "2" }}
+                    className="justify-center hidden sm:flex-1 sm:flex  p-2 items-center gap-3">
                     {["Home", "Shop", "About us", "Contact us"].map(item => {
-
                         if (item !== "Shop") {
                             return (
                                 <Link prefetch={false} key={item} href="/"
@@ -60,11 +62,14 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                                     </HoverCardTrigger>
                                     <HoverCardContent href="#ad" className="p-0 ml-10">
                                         <div className="grid gap-1 p-3">
-                                            {["New", "Curated", "Designers", "Clothing", "Shoes & Bags", "Accessories"].map(item => (
-                                                <Link prefetch={false} key={item} href="/collection/apple" className='p-2 text-xs text-gray-700'>
-                                                    {item}
+                                            {!categories.loading ? categories.categories.map(item => (
+                                                <Link prefetch={false} key={item.id} href={`/collection/${item.slug}`} className='p-2 text-xs text-gray-700'>
+                                                    {item.name}
                                                 </Link>
-                                            ))}
+                                            )) :
+                                                (
+                                                    <Skeleton className="gap-10" duration={0.8} count={8} height={20} />
+                                                )}
                                         </div>
                                     </HoverCardContent>
                                 </HoverCard>

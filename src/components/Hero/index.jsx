@@ -1,4 +1,3 @@
-import React from 'react'
 import { Carousel, CarouselContent, CarouselItem } from '../ui/carousel'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -18,9 +17,6 @@ const Hero = ({ isLoading = true }) => {
                             style={{ height: `calc(100vh - 200px)` }}
                             count={1}
                         />
-                        {/* <Skeleton className="w-full lg:basis-full pl-0 animate-in animate-pulse" >
-                            <div style={{ height: `calc(100vh - 200px)` }} className="w-full"></div>
-                        </Skeleton> */}
                     </CarouselItem>
 
                 )}

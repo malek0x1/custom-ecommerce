@@ -27,9 +27,9 @@ export const CHECKOUT_PAGE_FIELDS = [
     { id: 2, placeholder: "Last Name", type: "text", required: true, name: "lastname" },
     { id: 3, placeholder: "Email", type: "email", required: true, name: "email" },
     { id: 5, placeholder: "Street Address", type: "text", required: true, name: "street_address" },
+    { id: 6, placeholder: "City", type: "text", required: true, name: "city" },
     { id: 8, placeholder: "Post/Zip Code", type: "text", required: true, name: "zip" },
     // { id: 4, placeholder: "Country", type: "select", required: true, name: "country" },
-    // { id: 6, placeholder: "City", type: "select", required: true, name: "city" },
     // { id: 7, placeholder: "State/Province", type: "select", required: true, name: "state" },
 
 ]
