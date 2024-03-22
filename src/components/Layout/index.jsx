@@ -1,6 +1,5 @@
 import { Gideon_Roman } from "next/font/google";
 import MetaData from "../MetaData/index";
-import Footer from '@/components/Footer';
 import Cart from '@/components/Cart';
 import Navbar from '@/components/Navbar';
 import Search from '../Search';
