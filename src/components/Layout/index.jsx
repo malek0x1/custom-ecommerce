@@ -4,9 +4,11 @@ import Footer from '@/components/Footer';
 import Cart from '@/components/Cart';
 import Navbar from '@/components/Navbar';
 import Search from '../Search';
-import { ContextProvider, useEcommerceContext } from "../../lib/context/context";
+import { useEcommerceContext } from "../../lib/context/context";
+import dynamic from "next/dynamic";
 
 const font = Gideon_Roman({ subsets: ["latin"], weight: "400" });
+const Footer = dynamic(() => import("@/components/Footer"));
 
 const Layout = ({ title, description, keywords, children }) => {
 
