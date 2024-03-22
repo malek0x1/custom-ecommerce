@@ -16,7 +16,10 @@ const MobileNav = ({ isOpen, setIsOpen }) => {
                 <div className="overflow-y-auto flex-1">
                     <div className="space-y-2 pt-8">
                         {["New", "Curated", "Designers", "Clothing", "Shoes & Bags", "Accessories", "Login", "Pricing"].map((item, index) => (
-                            <MobileNavItem index={index} label={item} link={'/collection/apple'} key={item} />
+                            <div onClick={() => { setIsOpen(false) }} className="">
+
+                                <MobileNavItem index={index} label={item} link={'/collection/apple'} key={item} />
+                            </div>
                         ))}
                     </div>
                 </div>

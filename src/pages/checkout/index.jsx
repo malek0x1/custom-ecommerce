@@ -6,31 +6,30 @@ import { useEffect, useState } from "react"
 import { useEcommerceContext } from "@/lib/context/context"
 import { generateCheckoutToken } from "@/lib/helpers"
 import commerce from '../../lib/commerce'
+import Skeleton from "react-loading-skeleton"
+
 const Checkout = () => {
     const { cartItems } = useEcommerceContext()
-    const [countries, setCountries] = useState({})
     const [checkoutData, setCheckoutData] = useState({})
 
     const [chosenCountry, setChosenCountry] = useState("")
-    const [countryStates, setCountryStates] = useState({})
-    const [shippingOptions, setShippingOptions] = useState([])
     const [chosenCountryState, setChosenCountryState] = useState("")
     const [chosenShippingOption, setChosenShippingOption] = useState("")
+
+
+    const [countries, setCountries] = useState({})
+    const [shippingOptions, setShippingOptions] = useState([])
+    const [countryStates, setCountryStates] = useState({})
 
     useEffect(() => {
         if (cartItems.id) {
             const handleCheckout = async () => {
-                console.log(1);
                 try {
-                    console.log(2);
                     const res = await generateCheckoutToken(cartItems.id)
                     setCheckoutData(res)
-                    console.log(res);
-                    console.log(3);
                     if (res && res.id) {
                         // TODO: make it function with error handling
                         commerce.services.localeListShippingCountries(res.id).then((response) => {
-                            console.log(response);
                             setCountries(response.countries)
                         });
 
@@ -52,9 +51,7 @@ const Checkout = () => {
                 commerce.services.localeListSubdivisions(chosenCountry).then((response) => {
                     setCountryStates(response.subdivisions)
                 });
-
             }
-
         }
         handleStates()
     }, [chosenCountry])
@@ -67,7 +64,6 @@ const Checkout = () => {
                     country: chosenCountry,
                     region: chosenCountryState,
                 }).then((response) => {
-                    console.log(response);
                     setShippingOptions(response)
                 });
 
@@ -97,42 +93,58 @@ const Checkout = () => {
 
 
 
-                <select
+                {Object.keys(countries).length > 0 ? <select
                     onChange={(e) => { setChosenCountry(e.target.value) }}
                     className="p-2.5 w-full" name="country">
                     <option value="">-- Choose Country --</option>
                     {Object.keys(countries).length > 0 && Object.keys(countries).map(cntry => (
                         <option key={cntry} value={cntry}>{countries[cntry]}</option>
                     ))}
-                </select>
+                </select> : (
+                    <div className="w-full">
+                        <Skeleton duration={0.8} count={1} className="w-full" height={35} />
+                    </div>
+                )}
 
-                <select
+                {Object.keys(countryStates).length > 0 ? <select
                     onChange={(e) => { setChosenCountryState(e.target.value) }}
                     className="p-2.5 w-full" name="state">
                     <option value="">-- Choose State --</option>
 
-                    {Object.keys(countryStates).length > 0 && Object.keys(countryStates).map(countryStateItem => (
+                    {Object.keys(countryStates).map(countryStateItem => (
                         <option key={countryStateItem} value={countryStateItem}>{countryStates[countryStateItem]}</option>
                     ))}
                 </select>
+                    : (
+                        <div className="w-full">
+                            <Skeleton duration={0.8} count={1} className="w-full" height={35} />
+                        </div>
+                    )
+                }
 
-                <select
-                    onChange={(e) => { setChosenShippingOption(e.target.value) }}
-                    className="p-2.5 w-full" name="country">
-                    {shippingOptions.map(item => (
-                        <option key={item.id} value={item.id}>
-                            <div className="flex items-center justify-between gap-10 p-2 w-full">
-                                <p className="hidden">
-                                    {item.description}
-                                </p>
-                                <p>
-                                    {item.price.formatted_with_symbol}
-                                </p>
-                            </div>
-                        </option>
-
-                    ))}
-                </select>
+                {shippingOptions.length > 0 ? (
+                    <select
+                        onChange={(e) => { setChosenShippingOption(e.target.value) }}
+                        className="p-2.5 w-full" name="country">
+                        {shippingOptions.map(item => (
+                            <option key={item.id} value={item.id}>
+                                <div className="flex items-center justify-between gap-10 p-2 w-full">
+                                    <p className="hidden">
+                                        {item.description}
+                                    </p>
+                                    <p>
+                                        {item.price.formatted_with_symbol}
+                                    </p>
+                                </div>
+                            </option>
+                        ))}
+                    </select>
+                ) : (
+                    <div className="w-full">
+                        <Skeleton duration={0.8} count={1} className="w-full" height={35} />
+                    </div>
+                )
+                }
 
                 <Button label="Submit" className="w-full" />
 
