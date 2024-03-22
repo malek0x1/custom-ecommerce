@@ -7,6 +7,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Card from '@/components/Card';
 import Filter from '@/components/Filter';
 import SkeletonCard from '@/components/Card/SkeletonCard';
+import Skeleton from 'react-loading-skeleton';
 
 const Collection = () => {
     const NUMBER_TO_FETCH = 8
@@ -47,7 +48,6 @@ const Collection = () => {
                 setPage(page + 1);
                 return
             } else {
-
                 setHasMore(false);
             }
         } catch (error) {
@@ -61,15 +61,24 @@ const Collection = () => {
             <Filter isOpen={isFilterOpened} setIsOpen={setIsFilterOpened} chosenFilter={chosenFilter} setChosenFilter={setChosenFilter} />
             <div className="custom-container">
                 <div className="flex justify-between items-center sm:my-4 p-1 my-2">
-                    <div
-                        onClick={() => {
-                            setIsFilterOpened(true)
-                        }}
-                        className="flex items-center gap-2 cursor-pointer">
-                        <CiFilter size={20} />
-                        <p className="text-xs font-light !text-gray-900">Filter and sort </p>
-                    </div>
-                    <p className="text-xs font-light text-gray-900">{`${totalProducts} Products`}</p>
+                    {isFullLoading ? (
+                        <Skeleton width={105} height={20} />
+                    ) : (
+                        <div
+                            onClick={() => {
+                                setIsFilterOpened(true)
+                            }}
+                            className="flex items-center gap-2 cursor-pointer">
+                            <CiFilter size={20} />
+                            <p className="text-xs font-light !text-gray-900">Filter and sort </p>
+                        </div>
+                    )}
+                    {isFullLoading ? (
+                        <Skeleton width={60} height={20} />
+                    ) : (
+
+                        <p className="text-xs font-light text-gray-900">{`${totalProducts} Products`}</p>
+                    )}
                 </div>
 
                 {isFullLoading ? (

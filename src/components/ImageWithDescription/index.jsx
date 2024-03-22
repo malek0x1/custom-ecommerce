@@ -3,7 +3,7 @@ import Button from '../Button'
 
 const ImageWithDescription = () => {
     return (
-        <div className="flex justify-between w-full flex-wrap-reverse md:flex-nowrap">
+        <div className="flex justify-between w-full flex-wrap-reverse md:flex-nowrap my-4">
             <div className="">
                 <Image
                     src="https://cdn.chec.io/merchants/56289/assets/MXcJNajhN9FDUWW0|06bde6529ecec91eca430963c5fbea9bbeca6834-600x600.jpg"
