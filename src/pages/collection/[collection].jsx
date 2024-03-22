@@ -34,7 +34,7 @@ const Collection = () => {
         handleInitialProducts()
     }, [router.query, chosenFilter])
 
-    const fetchProductsByCollection = async (initial) => {
+    const fetchProductsByCollection = async (initial = false) => {
         try {
             const addFilters = chosenFilter.name ? { sortBy: chosenFilter.sortBy, sortDirection: chosenFilter.sortOrder } : {}
             const { data, meta } = await commerce.products.list({
@@ -43,14 +43,18 @@ const Collection = () => {
                 page: initial ? 1 : page,
                 ...addFilters
             });
-
+            console.log(meta);
             setIsFullLoading(false)
             if (data) {
                 setTotalProducts(meta.pagination.total)
                 setProducts((prev) => (initial ? [...data] : [...prev, ...data]));
                 setPage(initial ? 2 : page + 1);
+                if (products.length < meta.pagination.total) {
+                    setHasMore(true)
+                }
                 return
             } else {
+                // console.log(data);
                 setHasMore(false);
             }
         } catch (error) {
