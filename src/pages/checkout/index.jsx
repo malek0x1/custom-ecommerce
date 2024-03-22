@@ -1,7 +1,7 @@
 import Button from "@/components/Button"
 import Layout from "@/components/Layout"
 import TextField from "@/components/TextField"
-import { CHECKOUT_PAGE_FIELDS, SORTBY_OPTIONS } from "@/lib/data"
+import { CHECKOUT_PAGE_FIELDS } from "@/lib/data"
 import { useEffect, useState } from "react"
 import { useEcommerceContext } from "@/lib/context/context"
 import { generateCheckoutToken } from "@/lib/helpers"
