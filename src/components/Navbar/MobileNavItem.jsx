@@ -13,7 +13,7 @@ const MobileNavItem = ({ label, link, index }) => {
             }}
         >
             <Link prefetch={false} href={link} className="flex items-center justify-between  py-4 cursor-pointer rounded-sm">
-                <h4 className="font-medium uppercase leading-none">{label}</h4>
+                <p className="font-medium uppercase leading-none">{label}</p>
                 <HiOutlineChevronRight size={14} />
             </Link>
         </motion.div>

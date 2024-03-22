@@ -29,27 +29,4 @@ const MobileNav = ({ isOpen, setIsOpen }) => {
 }
 
 
-// <Popover open={isOpen} onOpenChange={() => {
-//     setIsOpen(false)
-// }}>
-//     <PopoverTrigger className="hidden">
-//     </PopoverTrigger>
-//     <PopoverContent className="w-screen h-screen">
-
-//         <div className="flex w-full justify-end">
-//             <Hamburger className="" size={20} toggled={isOpen} toggle={setIsOpen} />
-
-//         </div>
-
-//         <div className="grid gap-4 ">
-//             <div className="space-y-2">
-//                 {["New", "Curated", "Designers", "Clothing", "Shoes & Bags", "Accessories", "Login", "Pricing"].map(item => (
-//                     <MobileNavItem label={item} link="#" key={item} />
-//                 ))}
-//             </div>
-//         </div>
-//     </PopoverContent>
-// </Popover >
-
-
 export default MobileNav

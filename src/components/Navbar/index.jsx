@@ -58,7 +58,7 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                                         </p>
 
                                     </HoverCardTrigger>
-                                    <HoverCardContent className="p-0 ml-10">
+                                    <HoverCardContent href="#ad" className="p-0 ml-10">
                                         <div className="grid gap-1 p-3">
                                             {["New", "Curated", "Designers", "Clothing", "Shoes & Bags", "Accessories"].map(item => (
                                                 <Link prefetch={false} key={item} href="/collection/apple" className='p-2 text-xs text-gray-700'>
