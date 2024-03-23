@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { useState } from 'react'
 import { CiSearch, CiShoppingCart } from 'react-icons/ci'
 import Link from 'next/link'
 import { CiMenuFries } from "react-icons/ci"
@@ -11,9 +10,12 @@ import {
 } from "@/components/ui/hover-card"
 import { useEcommerceContext } from '@/lib/context/context'
 import Skeleton from 'react-loading-skeleton'
+import { useSession } from 'next-auth/react'
 
 
 const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
+    const session = useSession()
+
     const { isMobileNavOpen, setIsMobileNavOpen, categories } = useEcommerceContext()
     return (
         <div className=''>
@@ -26,19 +28,21 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                 </div>
 
                 <div className="flex-1 justify-center sm:justify-normal flex">
-                    <Link prefetch={false} href="/">
+                    {session.status}
+                    {/* <Link prefetch={false} href="/">
                         <Image unoptimized
                             loading='eager'
                             alt="logo" className='' src="/assets/images/logo.png" width="150" height="69" />
-                    </Link>
+                    </Link> */}
                 </div>
                 <div
                     style={{ flex: "2" }}
                     className="justify-center hidden sm:flex-1 sm:flex  p-2 items-center gap-3">
-                    {["Home", "Shop", "About us", "Contact us"].map(item => {
+
+                    {["Home", "Shop", "aboutus", "contact-us", "logout", "login", "sign-up"].map(item => {
                         if (item !== "Shop") {
                             return (
-                                <Link prefetch={false} key={item} href="/"
+                                <Link prefetch={false} key={item} href={`/${item}`}
                                     style={{
                                         fontSize: "13px"
                                     }}

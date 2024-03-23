@@ -1,35 +1,46 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-
+import { checkUserCredentials } from "../../../lib/helpers";
 
 const options = {
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. "Sign in with...")
-      name: "Credentials",
-      // `credentials` is used to generate a form on the sign in page.
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, username, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
+      strategy: "jwt",
+      name: "Login",
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "Username" },
-        password: { label: "Password", type: "password", placeholder: "Password" }
+        email: { label: "email", type: "text", placeholder: "email", name: "email" },
+        password: { label: "Password", type: "password", placeholder: "Password", name: "password" }
       },
       async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
-        const user = { id: "1", name: "J Smith", email: "jsmith@example.com" }
-
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user
+        const check = await checkUserCredentials(credentials.email, credentials.password)
+        if (check) {
+          return {
+            email: credentials.email,
+          }
         } else {
-          // If you return null then an error will be displayed advising the user to check their details.
           return null
-
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
       }
-    })
+    }),
+    // CredentialsProvider({
+    //   strategy: "jwt",
+    //   id: "signup",
+    //   name: "SignUp",
+
+    //   credentials: {
+    //     email: { label: "email", type: "text", placeholder: "email", name: "email" },
+    //   },
+    //   async authorize(credentials, req) {
+    //     if (credentials.email) {
+    //       return {
+    //         email: credentials.email,
+    //       }
+    //     } else {
+    //       return null
+    //     }
+    //   }
+    // }),
   ]
 }
 

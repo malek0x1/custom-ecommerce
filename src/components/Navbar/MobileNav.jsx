@@ -20,7 +20,6 @@ const MobileNav = ({ isOpen, setIsOpen }) => {
                     <div className="space-y-2 pt-8">
                         {
                             !categories.loading ?
-
                                 categories.categories.length > 0 && categories.categories.map((item, index) => (
                                     <div key={item.id} onClick={() => { setIsOpen(false) }} className="">
                                         <MobileNavItem index={index} label={item.name} link={`/collection/${item.slug}`} />
@@ -29,6 +28,12 @@ const MobileNav = ({ isOpen, setIsOpen }) => {
                                 :
                                 <Skeleton className="gap-5" duration={0.8} count={8} height={20} />
                         }
+
+                        {!categories.loading && ["/login", "/sign-up", "/logout"].map((item, index) => (
+                            <div key={item} onClick={() => { setIsOpen(false) }} className="">
+                                <MobileNavItem index={index} label={item} link={`${item}`} />
+                            </div>
+                        ))}
                     </div>
                 </div>
             </SheetContent>

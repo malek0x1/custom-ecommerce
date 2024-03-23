@@ -4,84 +4,79 @@ import TextField from "@/components/TextField"
 import { CHECKOUT_PAGE_FIELDS } from "@/lib/data"
 import { useEffect, useState } from "react"
 import { useEcommerceContext } from "@/lib/context/context"
-import { generateCheckoutToken } from "@/lib/helpers"
-import commerce from '../../lib/commerce'
-import Skeleton from "react-loading-skeleton"
+import { fetchShippingCountries, fetchShippingOptions, fetchSubdivisions, generateCheckoutToken } from "@/lib/helpers"
+import SelectSkeleton from "@/components/Pages/Checkout/SelectSkeleton"
 
 const Checkout = () => {
     const { cartItems } = useEcommerceContext()
     const [checkoutData, setCheckoutData] = useState({})
-
-    const [chosenCountry, setChosenCountry] = useState("")
-    const [chosenCountryState, setChosenCountryState] = useState("")
-    const [chosenShippingOption, setChosenShippingOption] = useState("")
-
-
+    const [formData, setFormData] = useState({
+        chosenCountry: "",
+        chosenCountryState: "",
+        chosenShippingOption: ""
+    })
+    const [isLoading, setIsLoading] = useState({
+        countries: true,
+        states: true,
+        shipping: true
+    })
     const [countries, setCountries] = useState({})
-    const [shippingOptions, setShippingOptions] = useState([])
     const [countryStates, setCountryStates] = useState({})
+    const [shippingOptions, setShippingOptions] = useState([])
 
     useEffect(() => {
-        if (cartItems.id) {
-            const handleCheckout = async () => {
-                try {
+        const fetchData = async () => {
+            try {
+                if (cartItems.id) {
                     const res = await generateCheckoutToken(cartItems.id)
                     setCheckoutData(res)
                     if (res && res.id) {
-                        // TODO: make it function with error handling
-                        commerce.services.localeListShippingCountries(res.id).then((response) => {
-                            setCountries(response.countries)
-                        });
-
+                        const countriesData = await fetchShippingCountries(res.id)
+                        setCountries(countriesData || {})
+                        setIsLoading(prev => ({ ...prev, countries: false }))
                     }
-
-
-                } catch (error) {
-                    console.log(error);
                 }
-
+            } catch (error) {
+                console.error('Error fetching checkout data:', error);
             }
-            handleCheckout()
         }
+        fetchData();
     }, [cartItems])
 
     useEffect(() => {
-        const handleStates = () => {
-            if (chosenCountry) {
-                commerce.services.localeListSubdivisions(chosenCountry).then((response) => {
-                    setCountryStates(response.subdivisions)
-                });
+        const fetchStates = async () => {
+            if (formData.chosenCountry) {
+                const subdivisions = await fetchSubdivisions(formData.chosenCountry)
+                setCountryStates(subdivisions || {})
+                setIsLoading(prev => ({ ...prev, states: false }))
+
             }
         }
-        handleStates()
-    }, [chosenCountry])
-
+        fetchStates();
+    }, [formData.chosenCountry])
 
     useEffect(() => {
-        const handleShippingOptions = () => {
-            if (chosenCountryState && checkoutData.id) {
-                commerce.checkout.getShippingOptions(checkoutData.id, {
-                    country: chosenCountry,
-                    region: chosenCountryState,
-                }).then((response) => {
-                    setShippingOptions(response)
-                });
-
+        const fetchShipping = async () => {
+            if (formData.chosenCountryState && checkoutData.id) {
+                const options = await fetchShippingOptions(checkoutData.id, formData.chosenCountry, formData.chosenCountryState)
+                setShippingOptions(options || [])
+                setIsLoading(prev => ({ ...prev, shipping: false }))
             }
-
         }
-        handleShippingOptions()
-    }, [chosenCountryState])
+        fetchShipping();
+    }, [formData.chosenCountryState, checkoutData.id])
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    }
 
     return (
         <Layout
-            title="test"
-            description="test"
+            title="Checkout"
+            description="Complete your purchase"
         >
-            <div
-                style={{ maxWidth: "500px", minHeight: "70vh" }}
-                className="container w-full px-4  flex justify-center items-center gap-3 flex-col">
+            <div className="container grid gap-3 mx-auto max-w-md px-4 py-8">
                 {CHECKOUT_PAGE_FIELDS.map(field =>
                     <TextField
                         key={field.id}
@@ -90,70 +85,62 @@ const Checkout = () => {
                         type={field.type}
                     />
                 )}
-
-
-
-                {Object.keys(countries).length > 0 ? <select
-                    onChange={(e) => { setChosenCountry(e.target.value) }}
-                    className="p-2.5 w-full" name="country">
-                    <option value="">-- Choose Country --</option>
-                    {Object.keys(countries).length > 0 && Object.keys(countries).map(cntry => (
-                        <option key={cntry} value={cntry}>{countries[cntry]}</option>
-                    ))}
-                </select> : (
-                    <div className="w-full">
-                        <Skeleton duration={0.8} count={1} className="w-full" height={35} />
-                    </div>
-                )}
-
-                {chosenCountry ? Object.keys(countryStates).length > 0 ? <select
-                    onChange={(e) => { setChosenCountryState(e.target.value) }}
-                    className="p-2.5 w-full" name="state">
-                    <option value="">-- Choose State --</option>
-
-                    {Object.keys(countryStates).map(countryStateItem => (
-                        <option key={countryStateItem} value={countryStateItem}>{countryStates[countryStateItem]}</option>
-                    ))}
-                </select>
-                    : (
-                        <div className="w-full">
-                            <Skeleton duration={0.8} count={1} className="w-full" height={35} />
-                        </div>
-                    ) : <></>
+                {isLoading.countries && Object.keys(countries).length == 0 ? (
+                    <SelectSkeleton />
+                ) :
+                    <select
+                        onChange={handleInputChange}
+                        value={formData.chosenCountry}
+                        name="chosenCountry"
+                        className="p-2.5 w-full"
+                    >
+                        <option value="">-- Choose Country --</option>
+                        {Object.keys(countries).map(cntry => (
+                            <option key={cntry} value={cntry}>{countries[cntry]}</option>
+                        ))}
+                    </select>
                 }
-
                 {
-                    chosenCountryState ?
-                        shippingOptions.length > 0 ? (
-                            <select
-                                onChange={(e) => { setChosenShippingOption(e.target.value) }}
-                                className="p-2.5 w-full" name="country">
-                                {shippingOptions.map(item => (
-                                    <option key={item.id} value={item.id}>
-                                        <div className="flex items-center justify-between gap-10 p-2 w-full">
-                                            <p className="hidden">
-                                                {item.description}
-                                            </p>
-                                            <p>
-                                                {item.price.formatted_with_symbol}
-                                            </p>
-                                        </div>
-                                    </option>
+                    formData.chosenCountry ?
+                        isLoading.states ? (<SelectSkeleton />) :
+                            (<select
+                                onChange={handleInputChange}
+                                value={formData.chosenCountryState}
+                                name="chosenCountryState"
+                                className="p-2.5 w-full"
+                            >
+                                <option value="">-- Choose State --</option>
+                                {Object.keys(countryStates).map(countryStateItem => (
+                                    <option key={countryStateItem} value={countryStateItem}>{countryStates[countryStateItem]}</option>
                                 ))}
-                            </select>
-                        ) : (
-                            <div className="w-full">
-                                <Skeleton duration={0.8} count={1} className="w-full" height={35} />
-                            </div>
-                        )
-                        : <>
-                        </>
+                            </select>)
+                        : <></>
                 }
-
-                <Button label="Submit" className="w-full" />
-
+                {
+                    formData.chosenCountryState ?
+                        isLoading.shipping
+                            ? (<SelectSkeleton />) :
+                            (
+                                <select
+                                    onChange={handleInputChange}
+                                    value={formData.chosenShippingOption}
+                                    name="chosenShippingOption"
+                                    className="p-2.5 w-full"
+                                >
+                                    <option value="">-- Choose Shipping Option --</option>
+                                    {shippingOptions.map(item => (
+                                        <option key={item.id} value={item.id}>
+                                            {item.price.formatted_with_symbol}
+                                        </option>
+                                    ))}
+                                </select>
+                            )
+                        : <></>
+                }
+                <Button
+                    disabled={formData.chosenCountry || formData.chosenCountryState || formData.chosenShippingOption}
+                    label="Submit" className="w-full" />
             </div>
-
         </Layout>
     )
 }

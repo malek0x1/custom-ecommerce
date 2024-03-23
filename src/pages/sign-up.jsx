@@ -14,10 +14,14 @@ import Button from "@/components/Button";
 import { SIGNUP_SCHEMA } from "../lib/YupSchemas";
 import { useState } from "react";
 import Spinner from "@/components/Spinner";
-import { createCustomerCommerceJs, createUserSanity, hashPassword } from "@/lib/helpers";
+import axios from "axios";
+import { signIn } from "next-auth/react";
+import { handLoginByToken } from "../lib/helpers";
+import { useRouter } from "next/router";
 
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
     const form = useForm({
         resolver: zodResolver(SIGNUP_SCHEMA),
         defaultValues: {
@@ -27,27 +31,28 @@ const Login = () => {
             password: ""
         },
     });
+    const router = useRouter()
     const onSubmit = async (data) => {
         setIsLoading(true)
-        const encryptPwd = await hashPassword(data.password)
-        // TODO: to check if already signed up
-        const commerceJsData = {
-            email: data.email,
-            firstname: data.firstname,
-            lastname: data.lastname,
-        };
+
         try {
-            // TODO: to make it from backend to hide the api keys cause its editor
-            createCustomerCommerceJs(commerceJsData).then(async (i) => {
-                await createUserSanity({ ...data, password: encryptPwd })
-            }).finally(() => {
-                setIsLoading(false)
-            })
+            setErrorMessage("")
+            const res = await axios.post("/api/authv2/register", data);
+            if (res.status == 200 && res.data.token) {
+                await handLoginByToken(res.data.token)
+                await signIn("credentials", {
+                    email: data.email,
+                    password: data.password,
+                    callbackUrl: "/"
+                });
+
+            }
         }
         catch (e) {
-            // TODO: something went wrong toast
-            console.log(e);
+            console.log(e.response.data.message);
+            setErrorMessage(e.response.data.message)
         }
+        setIsLoading(false)
     }
     return (
         <Layout
@@ -81,6 +86,9 @@ const Login = () => {
                                 )}
                             />
                         ))}
+                        {errorMessage ? <p className="text-thin text-xs text-red-500">
+                            {errorMessage}
+                        </p> : <></>}
                         <Button disabled={isLoading} label={isLoading ? <Spinner color="white" /> : "Submit"} />
                     </form>
                 </Form>

@@ -11,13 +11,17 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LOGIN_PAGE_FIELDS } from "@/lib/data";
 import Button from "@/components/Button";
-import { LOGIN_SCHEMA } from "../lib/YupSchemas"
-import { checkUserCredentials } from "@/lib/helpers";
+import { LOGIN_SCHEMA } from "../lib/YupSchemas";
 import { useState } from "react";
 import Spinner from "@/components/Spinner";
+import { useRouter } from "next/router";
+import { signIn } from 'next-auth/react';
+import { getUserToken, handLoginByToken } from "@/lib/helpers";
 
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
+    const router = useRouter()
     const form = useForm({
         resolver: zodResolver(LOGIN_SCHEMA),
         defaultValues: {
@@ -26,10 +30,23 @@ const Login = () => {
         },
     });
     const onSubmit = async (data) => {
+        setIsLoading(true)
         try {
-            setIsLoading(true)
-            const check = await checkUserCredentials(data.email, data.password)
+
+            const result = await signIn("credentials", {
+                email: data.email,
+                password: data.password,
+                callbackUrl: "/"
+            });
             setIsLoading(false)
+            if (!result.error) {
+                setErrorMessage("")
+                // const token = await getUserToken(data.email);
+                // await handLoginByToken(token) // loginWith CommerceJs
+                return
+            } else {
+                setErrorMessage("Incorrect email or password.")
+            }
         }
         catch (e) {
             console.log(e);
@@ -68,6 +85,9 @@ const Login = () => {
                                 )}
                             />
                         ))}
+                        {errorMessage ? <p className="text-thin text-xs text-red-500">
+                            {errorMessage}
+                        </p> : <></>}
                         <Button disabled={isLoading} label={isLoading ? <Spinner color="white" /> : "Submit"} />
                     </form>
                 </Form>

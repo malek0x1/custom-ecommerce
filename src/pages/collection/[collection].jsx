@@ -92,10 +92,10 @@ const Collection = () => {
                     scrollThreshold={0.5}
                     dataLength={products.length}
                     next={loadMore}
-                    hasMore={hasMore}
+                    hasMore={isFullLoading ? true : hasMore}
                     loader={
                         <div className="flex flex-wrap" >
-                            {[1, 2, 3, 4].map(_ => (
+                            {[1, 2, 3, 4, 5, 6, 7, 8].map(_ => (
                                 <div key={_} className="w-1/2 sm:w-1/3 md:w-1/4 px-1">
                                     <SkeletonCard />
                                 </div>

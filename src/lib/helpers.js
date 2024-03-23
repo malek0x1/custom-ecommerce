@@ -105,9 +105,26 @@ export const handleChosenVariants = (chosenVariants) => {
 
 // SANITY
 
+
+export const isEmailAlreadyExist = async (email) => {
+    try {
+        const query = `*[_type == "users" && email == $email]`;
+        const params = { email };
+        const matchingUsers = await client.fetch(query, params);
+        if (matchingUsers.length > 0) {
+            return true
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error("Error checking user :", error);
+        throw new Error("Failed to check user:");
+    }
+};
+
 export const checkUserCredentials = async (email, password) => {
     try {
-        const query = `*[_type == "user" && email == $email]`;
+        const query = `*[_type == "users" && email == $email]`;
         const params = { email };
         const matchingUsers = await client.fetch(query, params);
         if (matchingUsers.length > 0) {
@@ -148,7 +165,7 @@ export const hashPassword = async (password) => {
 };
 export const createUserSanity = async (userData) => {
     try {
-        const response = await client.create({ _type: "user", ...userData });
+        const response = await client.create({ _type: "users", ...userData });
         return response;
     } catch (error) {
         console.error("Error submitting user data:", error);
@@ -344,29 +361,45 @@ export const generateCheckoutToken = async (cartId) => {
 //         });
 // }
 
-// export const fetchSubdivisions = (countryCode) => {
-//     commerce.services.localeListSubdivisions(countryCode).then((subdivisions) => {
-//         return subdivisions.subdivisions
-//     }).catch((error) => {
-//         return null
-//     });
-// };
-// export const fetchShippingOptions = (checkoutTokenId, country, stateProvince = null) => {
-//     commerce.checkout.getShippingOptions(checkoutTokenId,
-//         {
-//             country: country,
-//             region: stateProvince
-//         }).then((options) => {
-//             // Pre-select the first available method
-//             const shippingOption = options[0] || null;
-//             return {
-//                 shippingOption: shippingOption,
-//                 shippingOptions: options
-//             }
-//         }).catch((error) => {
-//             console.log('There was an error fetching the shipping methods', error);
-//         });
-// };
+export const fetchShippingCountries = async (checkoutTokenId) => {
+    return commerce.services.localeListShippingCountries(checkoutTokenId)
+        .then((response) => {
+            if (response && response.countries) {
+                return response.countries
+            } else {
+                console.log('Invalid response received while fetching shipping countries');
+                return null
+            }
+        });
+}
+
+export const fetchSubdivisions = (countryCode) => {
+    return commerce.services.localeListSubdivisions(countryCode).then((subdivisions) => {
+        if (subdivisions && subdivisions.subdivisions) {
+            return subdivisions.subdivisions
+        } else {
+            return null
+        }
+    }).catch((error) => {
+        return null
+    });
+};
+export const fetchShippingOptions = (checkoutTokenId, country, stateProvince = null) => {
+    return commerce.checkout.getShippingOptions(checkoutTokenId,
+        {
+            country: country,
+            region: stateProvince
+        }).then((options) => {
+            // Pre-select the first available method
+            if (options && options.length > 0) {
+                return options
+            } else {
+                return null
+            }
+        }).catch((error) => {
+            console.log('There was an error fetching the shipping methods', error);
+        });
+};
 
 
 // export const handleCaptureCheckout = (cart, formData) => {
@@ -404,3 +437,5 @@ export const generateCheckoutToken = async (cartId) => {
 // };
 
 // // ------------------
+
+

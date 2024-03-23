@@ -89,7 +89,7 @@ const Product = () => {
                             <div className="flex gap-10 flex-wrap sm:flex-nowrap ">
                                 <Image
                                     style={{
-                                        maxWidth: "400px",
+                                        maxWidth: "600px",
                                         objectFit: "cover",
                                         width: "100%"
                                     }}

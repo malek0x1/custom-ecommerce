@@ -13,7 +13,9 @@ const ProductsCarousel = ({ collection }) => {
         const handleProducts = async () => {
             const productsData = await commerce.products.list({
                 category_slug: [collection],
-                limit: 6
+                limit: 6,
+                sortBy: "created",
+                sortDirection: "desc"
             })
             setProducts(productsData.data)
             setIsLoading(false)
