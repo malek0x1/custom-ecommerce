@@ -34,6 +34,7 @@ const Collection = () => {
 
     const fetchProducts = async (pageNumber) => {
         try {
+            alert("FETCHED1")
             const addFilters = chosenFilter.name ? { sortBy: chosenFilter.sortBy, sortDirection: chosenFilter.sortOrder } : {};
             const { data, meta } = await commerce.products.list({
                 category_slug: [router.query.collection],
@@ -88,7 +89,7 @@ const Collection = () => {
 
 
                 <InfiniteScroll
-                    scrollThreshold={0.6}
+                    scrollThreshold={0.5}
                     dataLength={products.length}
                     next={loadMore}
                     hasMore={hasMore}
