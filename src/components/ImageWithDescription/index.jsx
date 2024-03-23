@@ -8,7 +8,7 @@ const ImageWithDescription = () => {
                 <Image
                     src="https://cdn.chec.io/merchants/56289/assets/MXcJNajhN9FDUWW0|06bde6529ecec91eca430963c5fbea9bbeca6834-600x600.jpg"
                     height={600}
-                    loading="lazy"
+                    loading="eager"
                     alt=""
                     width={600}
                 />

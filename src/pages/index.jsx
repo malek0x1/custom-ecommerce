@@ -14,11 +14,11 @@ export default function Home() {
       description="test"
     >
       <Hero />
-      <ProductsCarousel collection="apple" />
-
       <div className="">
         <ImageWithDescription />
       </div>
+      <ProductsCarousel collection="apple" />
+
       <ProductsCarousel collection="laptops" />
       <div className="flex flex-wrap sm:flex-nowrap gap-4 justify-between sm:container w-full items-center">
         <MainCategory />
