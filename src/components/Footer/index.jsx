@@ -1,8 +1,13 @@
 import FooterCol from './FooterCol'
 import TextField from '../TextField'
 import Link from 'next/link'
+import { CircleArrowRight } from 'lucide-react'
 
 const Footer = () => {
+    const handleNewsLetter = () => {
+        alert("SUBMITED")
+
+    }
     return (
         <div className='bg-gray-50 pb-10 pt-5 mt-24'>
             <div className="container">
@@ -10,7 +15,13 @@ const Footer = () => {
                     style={{ maxWidth: "500px" }}
                     className="flex py-4 m-auto justify-center w-full flex-col gap-3">
                     <p className='text-center text-md mb-2'>Join Our Newsletter</p>
-                    <TextField type='email' placeholder='Email Address' />
+                    <div className="flex w-full relative">
+                        <TextField type='email' placeholder='Email Address' />
+                        <div className="absolute right-3 top-3 cursor-pointer" onClick={handleNewsLetter}>
+                            <CircleArrowRight size={20} />
+                        </div>
+
+                    </div>
                 </div>
 
                 <div className="mt-8 flex flex-wrap justify-between gap-6">
