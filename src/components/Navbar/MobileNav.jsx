@@ -29,7 +29,7 @@ const MobileNav = ({ isOpen, setIsOpen }) => {
                                 <Skeleton className="gap-5" duration={0.8} count={8} height={20} />
                         }
 
-                        {!categories.loading && ["/login", "/sign-up", "/logout"].map((item, index) => (
+                        {!categories.loading && ["/", "/login", "/sign-up", "/logout"].map((item, index) => (
                             <div key={item} onClick={() => { setIsOpen(false) }} className="">
                                 <MobileNavItem index={index} label={item} link={`${item}`} />
                             </div>
