@@ -102,8 +102,8 @@ const Collection = () => {
                         hasMore={hasMore}
                         loader={
                             <div className="flex flex-wrap">
-                                {[...Array(NUMBER_TO_FETCH)].map((_, index) => (
-                                    <div key={index} className="w-1/2 sm:w-1/3 md:w-1/4 px-1">
+                                {[1, 2, 3, 4].map(_ => (
+                                    <div key={_} className="w-1/2 sm:w-1/3 md:w-1/4 px-1">
                                         <SkeletonCard />
                                     </div>
                                 ))}
