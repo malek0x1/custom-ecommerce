@@ -34,7 +34,7 @@ const Collection = () => {
 
     const fetchProducts = async (pageNumber) => {
         try {
-            alert("FETCHED1")
+            alert(`FETCHED ${pageNumber}`)
             const addFilters = chosenFilter.name ? { sortBy: chosenFilter.sortBy, sortDirection: chosenFilter.sortOrder } : {};
             const { data, meta } = await commerce.products.list({
                 category_slug: [router.query.collection],
