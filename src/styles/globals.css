@@ -44,7 +44,7 @@ body {
 
 .custom-container {
     max-width: 1200px;
-    margin: auto;
+    margin: 0px auto;
 }
 
 .nav-link {

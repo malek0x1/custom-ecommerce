@@ -34,6 +34,7 @@ const Collection = () => {
 
     const fetchProducts = async (pageNumber) => {
         try {
+            alert("FETCH")
             const addFilters = chosenFilter.name ? { sortBy: chosenFilter.sortBy, sortDirection: chosenFilter.sortOrder } : {};
             const { data, meta } = await commerce.products.list({
                 category_slug: [router.query.collection],
@@ -87,38 +88,30 @@ const Collection = () => {
                     )}
                 </div>
 
-                {isFullLoading ? (
-                    <div className="flex flex-wrap">
-                        {Array.from({ length: NUMBER_TO_FETCH }, (_, index) => (
-                            <div key={index} className="w-1/2 sm:w-1/3 md:w-1/4 px-1">
-                                <SkeletonCard />
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <InfiniteScroll
-                        dataLength={products.length}
-                        next={loadMore}
-                        hasMore={hasMore}
-                        loader={
-                            <div className="flex flex-wrap">
-                                {[1, 2, 3, 4].map(_ => (
-                                    <div key={_} className="w-1/2 sm:w-1/3 md:w-1/4 px-1">
-                                        <SkeletonCard />
-                                    </div>
-                                ))}
-                            </div>
-                        }
-                    >
-                        <div className="flex flex-wrap">
-                            {products.map(product => (
-                                <div key={product.id} className="w-1/2 sm:w-1/3 md:w-1/4 px-0.5">
-                                    <Card product={product} />
+
+                <InfiniteScroll
+                    scrollThreshold={0.5}
+                    dataLength={products.length}
+                    next={loadMore}
+                    hasMore={hasMore}
+                    loader={
+                        <div className="flex flex-wrap" >
+                            {[1, 2, 3, 4].map(_ => (
+                                <div key={_} className="w-1/2 sm:w-1/3 md:w-1/4 px-1">
+                                    <SkeletonCard />
                                 </div>
                             ))}
                         </div>
-                    </InfiniteScroll>
-                )}
+                    }
+                >
+                    <div className="flex flex-wrap">
+                        {products.map(product => (
+                            <div key={product.id} className="w-1/2 sm:w-1/3 md:w-1/4 px-0.5">
+                                <Card product={product} />
+                            </div>
+                        ))}
+                    </div>
+                </InfiniteScroll>
             </div>
         </Layout>
     );
