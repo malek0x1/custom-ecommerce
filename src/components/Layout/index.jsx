@@ -7,7 +7,6 @@ import { useEcommerceContext } from "../../lib/context/context";
 import Footer from "../Footer";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
-import commerce from "../../lib/commerce"
 
 const font = Gideon_Roman({ subsets: ["latin"], weight: "400" });
 
@@ -23,7 +22,7 @@ const Layout = ({ title, description, keywords, children }) => {
     const session = useSession()
 
     useEffect(() => {
-        console.log("<-NextAuth Auth->", session.status);
+        console.log("<-NextAuth Auth->", session);
         // console.log("commerceJS AUTH", commerce.customer.isLoggedIn());
     }, [session])
 

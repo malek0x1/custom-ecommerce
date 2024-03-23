@@ -33,16 +33,18 @@ const Login = () => {
         setIsLoading(true)
         try {
 
-            const result = await signIn("credentials", {
+            const result = await signIn("login", {
                 email: data.email,
                 password: data.password,
-                callbackUrl: "/"
+                callbackUrl: "/",
+                redirect: false
             });
             setIsLoading(false)
             if (!result.error) {
                 setErrorMessage("")
-                // const token = await getUserToken(data.email);
-                // await handLoginByToken(token) // loginWith CommerceJs
+                const token = await getUserToken(data.email);
+                await handLoginByToken(token) // loginWith CommerceJs
+                router.push("/")
                 return
             } else {
                 setErrorMessage("Incorrect email or password.")

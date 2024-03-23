@@ -4,10 +4,13 @@ import { checkUserCredentials } from "../../../lib/helpers";
 
 const options = {
   secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt"
+  },
   providers: [
     CredentialsProvider({
-      strategy: "jwt",
-      name: "Login",
+      id: "login",
+      name: "Credentials",
       credentials: {
         email: { label: "email", type: "text", placeholder: "email", name: "email" },
         password: { label: "Password", type: "password", placeholder: "Password", name: "password" }
@@ -23,24 +26,23 @@ const options = {
         }
       }
     }),
-    // CredentialsProvider({
-    //   strategy: "jwt",
-    //   id: "signup",
-    //   name: "SignUp",
+    CredentialsProvider({
+      id: "register",
+      name: "Credentials",
+      credentials: {
+        email: { label: "email", type: "text", placeholder: "email", name: "email" },
+      },
+      async authorize(credentials, req) {
+        if (credentials.email) {
+          return {
+            email: credentials.email,
+          }
+        } else {
+          return null
+        }
+      }
+    }),
 
-    //   credentials: {
-    //     email: { label: "email", type: "text", placeholder: "email", name: "email" },
-    //   },
-    //   async authorize(credentials, req) {
-    //     if (credentials.email) {
-    //       return {
-    //         email: credentials.email,
-    //       }
-    //     } else {
-    //       return null
-    //     }
-    //   }
-    // }),
   ]
 }
 

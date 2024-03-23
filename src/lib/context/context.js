@@ -56,8 +56,14 @@ export function ContextProvider({ children }) {
 
     // FUNCTIONS
 
-    const clearCartState = async () => await commerce.cart.refresh()
+    const clearCartState = async () => {
+        await commerce.cart.refresh();
+        setCartItems({
+            line_items: [],
+            loading: true
 
+        })
+    }
     const updateCart = (newCart) => {
         setCartItems((prevCart) => ({
             ...prevCart,
