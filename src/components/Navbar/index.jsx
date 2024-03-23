@@ -11,6 +11,7 @@ import {
 import { useEcommerceContext } from '@/lib/context/context'
 import Skeleton from 'react-loading-skeleton'
 import { useSession } from 'next-auth/react'
+import commerce from "../../lib/commerce"
 
 
 const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
@@ -28,7 +29,7 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                 </div>
 
                 <div className="flex-1 justify-center sm:justify-normal flex">
-                    {session.status}
+                    {`${session.status} - CMRS ${commerce.customer.isLoggedIn()}`}
                     {/* <Link prefetch={false} href="/">
                         <Image unoptimized
                             loading='eager'
