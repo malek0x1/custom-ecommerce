@@ -42,6 +42,7 @@ const Collection = () => {
                 ...addFilters
             });
             setIsFullLoading(false);
+            console.log(meta.pagination);
             if (data) {
                 setTotalProducts(meta.pagination.total);
                 setProducts(prevProducts => pageNumber === 1 ? [...data] : [...prevProducts, ...data]);
