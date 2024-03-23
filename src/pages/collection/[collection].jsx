@@ -24,6 +24,7 @@ const Collection = () => {
     useEffect(() => {
         const handleInitialProducts = async () => {
             setIsFullLoading(true);
+            setProducts([])
 
             if (router.query.collection) {
                 fetchProducts(1);
