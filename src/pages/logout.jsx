@@ -16,7 +16,6 @@ const Logout = () => {
                     redirect: false
                 });
                 await commerce.customer.logout();
-                await clearCartState()
                 router.push("/")
             } catch (error) {
                 console.error('Error signing out:', error);

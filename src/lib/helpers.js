@@ -2,6 +2,7 @@ import axios from "axios";
 import commerce from "./commerce";
 import { client } from "../lib/sanity";
 import bcrypt from 'bcryptjs';
+import { v4 as uuidv4 } from 'uuid';
 
 const BASE_URL = 'https://api.chec.io/v1';
 
@@ -121,6 +122,22 @@ export const isEmailAlreadyExist = async (email) => {
         const matchingUsers = await client.fetch(query, params);
         if (matchingUsers.length > 0) {
             return true
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error("Error checking user :", error);
+        throw new Error("Failed to check user:");
+    }
+};
+
+export const getSanityUserExternalIdByEmail = async (email) => {
+    try {
+        const query = `*[_type == "users" && email == $email]{external_id}`;
+        const params = { email };
+        const matchingUsers = await client.fetch(query, params);
+        if (matchingUsers.length > 0 && matchingUsers[0].external_id) {
+            return matchingUsers[0].external_id
         } else {
             return false;
         }
@@ -447,3 +464,58 @@ export const fetchShippingOptions = (checkoutTokenId, country, stateProvince = n
 // // ------------------
 
 
+
+
+
+export const generateCustomerId = () => {
+    return uuidv4();
+};
+export const getCommerceJsCustomerByExternalID = async (external_id) => {
+    try {
+        const res = await axios.get(`${BASE_URL}/customers?external_id=${external_id}`,
+            {
+                headers: {
+                    'X-Authorization': process.env.NEXT_PUBLIC_CHEC_PUBLIC_API_KEY,
+                    'Content-Type': 'application/json',
+                }
+            }
+
+        )
+        if (res && res.data) {
+            const { data } = res
+            if (data.data && data.data.length > 0) {
+                return data.data[0].id
+            }
+        } else {
+            return null
+        }
+
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export const getCommerceJsCustomerOrdersById = async (id) => {
+    try {
+        const res = await axios.get(`${BASE_URL}/customers/${id}/orders`,
+            {
+                headers: {
+                    'X-Authorization': process.env.NEXT_PUBLIC_CHEC_PUBLIC_API_KEY,
+                    'Content-Type': 'application/json',
+                }
+            }
+        )
+        if (res && res.data) {
+            const { data } = res
+            if (data.data && data.data.length > 0) {
+                console.log(data.data);
+                return data.data
+            }
+        } else {
+            return null
+        }
+
+    } catch (e) {
+        console.log("something went wrong while getCommerceJsCustomerOrdersById");
+    }
+}

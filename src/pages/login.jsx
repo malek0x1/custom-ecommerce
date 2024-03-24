@@ -37,17 +37,14 @@ const Login = () => {
                 email: data.email,
                 password: data.password,
                 callbackUrl: "/",
-                redirect: false
             });
-            setIsLoading(false)
             if (!result.error) {
+                setIsLoading(false)
                 setErrorMessage("")
-                const token = await getUserToken(data.email);
-                await handLoginByToken(token) // loginWith CommerceJs
-                router.push("/")
                 return
             } else {
                 setErrorMessage("Incorrect email or password.")
+                setIsLoading(false)
             }
         }
         catch (e) {

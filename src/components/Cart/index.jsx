@@ -16,6 +16,7 @@ import Link from "next/link"
 
 const Cart = ({ isOpen, setIsOpen }) => {
     const { cartItems } = useEcommerceContext()
+
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen} >
             <SheetContent className="w-full flex flex-col ">
@@ -40,7 +41,7 @@ const Cart = ({ isOpen, setIsOpen }) => {
                 <SheetFooter>
                     <SheetClose asChild>
                         {!cartItems.loading && cartItems.line_items.length != 0 && (
-                            <Link className="w-full" prefetch={false} href="/checkout">
+                            <Link className="w-full" prefetch={false} href={cartItems.hosted_checkout_url || `/checkout`}>
                                 <Button className="w-full bg-black" type="submit" label="Checkout" />
                             </Link>
                         )}

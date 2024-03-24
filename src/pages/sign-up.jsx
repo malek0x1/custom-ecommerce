@@ -38,13 +38,11 @@ const Login = () => {
         try {
             setErrorMessage("")
             const res = await axios.post("/api/authv2/register", data);
-            if (res.status == 200 && res.data.token) {
-                await handLoginByToken(res.data.token) // login with CommerceJs
+            if (res.status == 200) {
                 await signIn("register", {
                     email: data.email,
-                    redirect: false
+                    callbackUrl: "/"
                 });
-                router.push("/")
             }
         }
         catch (e) {

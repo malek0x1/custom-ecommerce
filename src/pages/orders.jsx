@@ -8,9 +8,9 @@ import {
 } from "@/components/ui/table"
 import Layout from "@/components/Layout"
 import { useEffect, useState } from "react"
-import commerce from "../lib/commerce"
 import Spinner from "@/components/Spinner"
 import { useSession } from "next-auth/react"
+import { getCommerceJsCustomerByExternalID, getCommerceJsCustomerOrdersById, getSanityUserExternalIdByEmail } from "@/lib/helpers"
 
 const Orders = () => {
     const [ordersData, setOrdersData] = useState([])
@@ -18,16 +18,18 @@ const Orders = () => {
     const session = useSession()
     useEffect(() => {
         const handleFetchUsers = async () => {
-            console.log(1);
             if (session.status == "authenticated") {
-                console.log(2);
-                const id = commerce.customer.id()
-                console.log(3);
+                console.log(session.data.user.email);
+                const userExternalId = await getSanityUserExternalIdByEmail(session.data.user.email)
+                console.log(userExternalId);
+                const id = await getCommerceJsCustomerByExternalID(userExternalId)
                 console.log(id);
+
+
                 if (id) {
-                    const allOrders = await commerce.customer.getOrders(id);
-                    if (allOrders.data && allOrders.data.length) {
-                        const orderInfo = allOrders.data.map(order => {
+                    const allOrders = await getCommerceJsCustomerOrdersById(id)
+                    if (allOrders && allOrders.length > 0) {
+                        const orderInfo = allOrders.map(order => {
                             return {
                                 id: order.id,
                                 total: order.order_value.formatted_with_symbol,
@@ -39,27 +41,10 @@ const Orders = () => {
                     }
 
                     setIsLoading(false)
+                } else {
+                    setIsLoading(false)
                 }
             }
-            // commerce.customer.about().then(x => {
-            //     commerce.customer.getOrders(x.id).then(data => {
-            //         if (data.data) {
-
-            // const orderInfo = data.data.map(order => {
-            //     return {
-            //         id: order.id,
-            //         total: order.order_value.formatted_with_symbol,
-            //         status_payment: order.status_payment || "123",
-            //     }
-            // })
-            // setIsLoading(false)
-            // setOrdersData(orderInfo)
-            //         }
-            //     })
-
-            // }).catch(e => {
-            //     console.log(e);
-            // })
         }
 
         if (typeof window !== 'undefined') {
