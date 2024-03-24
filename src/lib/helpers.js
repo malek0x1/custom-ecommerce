@@ -71,6 +71,14 @@ export async function handLoginByToken(token) {
     commerce.customer.getToken(token).then((jwt) => console.log(jwt));
 }
 
+
+export async function handleCommerceJsLoggIn(email) {
+    const token = await getUserToken(email)
+    await handLoginByToken(token)
+}
+
+
+
 export const getInitialVariants = (product) => {
     /*
     Function to get Initial Variants, it select first variant item for each variant type 

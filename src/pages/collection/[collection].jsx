@@ -10,7 +10,7 @@ import SkeletonCard from '@/components/Card/SkeletonCard';
 import Skeleton from 'react-loading-skeleton';
 
 const Collection = () => {
-    const NUMBER_TO_FETCH = 8;
+    const NUMBER_TO_FETCH = 10;
     const [products, setProducts] = useState([]);
     const [page, setPage] = useState(1);
     const [totalProducts, setTotalProducts] = useState(0);

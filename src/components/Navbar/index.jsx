@@ -48,7 +48,7 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                     style={{ flex: "2" }}
                     className="justify-center hidden sm:flex-1 sm:flex  p-2 items-center gap-3">
 
-                    {["Home", "Shop", "aboutus", "contact-us", "logout", "login", "sign-up"].map(item => {
+                    {["Home", "Shop", "about-us", "contact-us", "logout", "login", "sign-up"].map(item => {
                         if (item !== "Shop") {
                             return (
                                 <Link prefetch={false} key={item} href={`/${item}`}

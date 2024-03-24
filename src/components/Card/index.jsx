@@ -45,7 +45,7 @@ const ProductCard = ({ product }) => {
                         src={product.image.url}
                         layout="fill"
                         objectFit="contain"
-                        // unoptimized
+                        unoptimized
                         loading="lazy"
                         alt={product.name}
                     />

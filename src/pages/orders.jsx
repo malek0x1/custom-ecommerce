@@ -10,33 +10,62 @@ import Layout from "@/components/Layout"
 import { useEffect, useState } from "react"
 import commerce from "../lib/commerce"
 import Spinner from "@/components/Spinner"
+import { useSession } from "next-auth/react"
 
 const Orders = () => {
     const [ordersData, setOrdersData] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-
+    const session = useSession()
     useEffect(() => {
+        const handleFetchUsers = async () => {
+            console.log(1);
+            if (session.status == "authenticated") {
+                console.log(2);
+                const id = commerce.customer.id()
+                console.log(3);
+                console.log(id);
+                if (id) {
+                    const allOrders = await commerce.customer.getOrders(id);
+                    if (allOrders.data && allOrders.data.length) {
+                        const orderInfo = allOrders.data.map(order => {
+                            return {
+                                id: order.id,
+                                total: order.order_value.formatted_with_symbol,
+                                status_payment: order.status_payment || "123",
+                            }
+                        })
+                        setIsLoading(false)
+                        setOrdersData(orderInfo)
+                    }
 
-        commerce.customer.about().then(x => {
-            commerce.customer.getOrders(x.id).then(data => {
-                if (data.data) {
-
-                    const orderInfo = data.data.map(order => {
-                        return {
-                            id: order.id,
-                            total: order.order_value.formatted_with_symbol,
-                            status_payment: order.status_payment || "123",
-                        }
-                    })
                     setIsLoading(false)
-                    setOrdersData(orderInfo)
                 }
-            })
+            }
+            // commerce.customer.about().then(x => {
+            //     commerce.customer.getOrders(x.id).then(data => {
+            //         if (data.data) {
 
-        }).catch(e => {
-            console.log(e);
-        })
-    }, [])
+            // const orderInfo = data.data.map(order => {
+            //     return {
+            //         id: order.id,
+            //         total: order.order_value.formatted_with_symbol,
+            //         status_payment: order.status_payment || "123",
+            //     }
+            // })
+            // setIsLoading(false)
+            // setOrdersData(orderInfo)
+            //         }
+            //     })
+
+            // }).catch(e => {
+            //     console.log(e);
+            // })
+        }
+
+        if (typeof window !== 'undefined') {
+            handleFetchUsers()
+        }
+    }, [session])
     return (
         <Layout
             title="test"
@@ -50,7 +79,7 @@ const Orders = () => {
 
                 {!isLoading ? (
                     <Table>
-                        <TableCaption>A list of your recent invoices.</TableCaption>
+                        <TableCaption>list of your Orders.</TableCaption>
                         <TableHeader>
                             <TableRow>
                                 <TableHead >orderID</TableHead>
