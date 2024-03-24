@@ -7,7 +7,6 @@ import { useEcommerceContext } from "../../lib/context/context";
 import Footer from "../Footer";
 
 const font = Gideon_Roman({ subsets: ["latin"], weight: "400" });
-
 const Layout = ({ title, description, keywords, children }) => {
 
     const {
@@ -16,8 +15,6 @@ const Layout = ({ title, description, keywords, children }) => {
         isCartOpened,
         setIsCartOpened
     } = useEcommerceContext()
-
-
 
     return (
         <>

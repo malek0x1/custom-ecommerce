@@ -1,3 +1,4 @@
+
 import { Carousel, CarouselContent, CarouselItem } from '../ui/carousel'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -26,3 +27,4 @@ const Hero = ({ isLoading = true }) => {
 }
 
 export default Hero
+

@@ -6,9 +6,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "cdn.chec.io",
-      }, {
+      },
+      {
         protocol: "https",
-        hostname: "media-cdn.paulandshark.com",
+        hostname: "cdn.sanity.io",
       },
     ],
   },
