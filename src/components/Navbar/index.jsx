@@ -12,11 +12,19 @@ import { useEcommerceContext } from '@/lib/context/context'
 import Skeleton from 'react-loading-skeleton'
 import { useSession } from 'next-auth/react'
 import commerce from "../../lib/commerce"
+import { useEffect, useState } from 'react'
 
 
 const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
     const session = useSession()
 
+    const [debug, setDebug] = useState(false)
+
+    useEffect(() => {
+        if (typeof window !== 'undefined' && !debug) {
+            setDebug(true)
+        }
+    }, [])
     const { isMobileNavOpen, setIsMobileNavOpen, categories } = useEcommerceContext()
     return (
         <div className=''>
@@ -29,7 +37,7 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                 </div>
 
                 <div className="flex-1 justify-center sm:justify-normal flex">
-                    {`${session.status} - CMRS ${commerce.customer.isLoggedIn()}`}
+                    {`${session.status} - CMRS ${debug && commerce.customer.isLoggedIn()}`}
                     {/* <Link prefetch={false} href="/">
                         <Image unoptimized
                             loading='eager'
