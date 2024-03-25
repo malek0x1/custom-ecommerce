@@ -19,16 +19,16 @@ const nextConfig = {
       },
     ],
   },
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.plugins.push(new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
-        openAnalyzer: false,
-      }));
-    }
+  // webpack: (config, { isServer }) => {
+  //   if (!isServer) {
+  //     config.plugins.push(new BundleAnalyzerPlugin({
+  //       analyzerMode: 'static',
+  //       openAnalyzer: false,
+  //     }));
+  //   }
 
-    return config;
-  },
+  //   return config;
+  // },
 
 };
 

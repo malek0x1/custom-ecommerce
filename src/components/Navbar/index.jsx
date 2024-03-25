@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import MobileNav from './MobileNav'
 import {
@@ -9,9 +8,8 @@ import {
 import { useEcommerceContext } from '@/lib/context/context'
 import Skeleton from 'react-loading-skeleton'
 import { useSession } from 'next-auth/react'
-import commerce from "../../lib/commerce"
-import { useEffect, useState } from 'react'
-
+import { CiSearch, CiShoppingCart } from 'react-icons/ci'
+import { CiMenuFries } from "react-icons/ci"
 
 const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
     const session = useSession()
@@ -22,9 +20,9 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
             <MobileNav isOpen={isMobileNavOpen} setIsOpen={setIsMobileNavOpen} />
             <div className="bg-white sm:px-10 container w-full p-2  sm:p-2 flex justify-between items-center ">
                 <div className="sm:w-0 sm:overflow-hidden block sm:hidden">
-                    <div size={20} onClick={() => {
+                    <CiMenuFries size={20} onClick={() => {
                         setIsMobileNavOpen(prev => !prev)
-                    }} >brgr</div>
+                    }} />
                 </div>
 
                 <div className="flex-1 justify-center sm:justify-normal flex">
@@ -83,18 +81,16 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                     }
                 </div>
                 <div className="flex items-center gap-1 sm:flex-1 justify-end">
-                    <div size={22}
+                    <CiSearch size={22}
                         onClick={() => {
                             if (setIsSearchOpened) {
                                 setIsSearchOpened(true)
                             }
                         }}
-                    >
-                        Search
-                    </div>
-                    <div size={22} onClick={() => {
+                    />
+                    <CiShoppingCart size={22} onClick={() => {
                         setIsCartOpened(prev => !prev)
-                    }} >Cart</div>
+                    }} />
                 </div>
             </div>
         </div>

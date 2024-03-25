@@ -4,10 +4,10 @@ export default function HeroPicture({ mobileSrc, desktopSrc }) {
     const common = { alt: 'Theme Example', fill: true }
     const {
         props: { srcSet: deskTop },
-    } = getImageProps({ ...common, src: desktopSrc })
+    } = getImageProps({ ...common, src: desktopSrc, loading: "lazy" })
     const {
         props: { srcSet: mobile, ...rest },
-    } = getImageProps({ ...common, src: mobileSrc, priority: true })
+    } = getImageProps({ ...common, src: mobileSrc, priority: true, loading: "lazy" })
 
     return (
         <picture>

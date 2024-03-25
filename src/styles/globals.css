@@ -70,10 +70,11 @@ body {
 }
 
 .home-main-collections {
-    /* background-image: url("https://cdn.shopify.com/s/files/1/2714/3176/files/Category_D_Tops.webp?v=1696246680"); */
     background-size: cover;
     width: 100%;
-    background-position: center;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .variant-item {
