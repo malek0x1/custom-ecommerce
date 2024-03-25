@@ -10,7 +10,7 @@ const Hero = ({ mobileImageUrl, desktopImageUrl }) => {
         <Carousel>
             <CarouselContent >
                 <CarouselItem className="lg:basis-full pl-0">
-                    <div style={{ height: `calc(100vh - 200px)` }} className="bg-gray-300 w-full">
+                    <div style={{ height: `calc(100vh - 100px)` }} className="bg-gray-300 w-full">
                         <HeroPicture
                             desktopSrc={urlFor(desktopImageUrl.asset)}
                             mobileSrc={urlFor(mobileImageUrl.asset)}

@@ -10,6 +10,7 @@ import Skeleton from 'react-loading-skeleton'
 import { useSession } from 'next-auth/react'
 import { CiSearch, CiShoppingCart } from 'react-icons/ci'
 import { CiMenuFries } from "react-icons/ci"
+import Image from 'next/image'
 
 const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
     const session = useSession()
@@ -26,12 +27,11 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                 </div>
 
                 <div className="flex-1 justify-center sm:justify-normal flex">
-                    {`${session.status}`}
-                    {/* <Link prefetch={false} href="/">
+                    <Link prefetch={false} href="/">
                         <Image unoptimized
                             loading='eager'
                             alt="logo" className='' src="/assets/images/logo.png" width="150" height="69" />
-                    </Link> */}
+                    </Link>
                 </div>
                 <div
                     style={{ flex: "2" }}
