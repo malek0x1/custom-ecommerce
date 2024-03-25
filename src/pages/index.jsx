@@ -4,6 +4,8 @@ import { CiShoppingBasket } from "react-icons/ci";
 import { useEffect, useState } from 'react';
 import { getPageBySlug } from '@/lib/helpers';
 import { Module } from '@/components/Modules';
+import Skeleton from 'react-loading-skeleton';
+import HeroSkeleton from '@/components/Hero/HeroSkeleton';
 
 const Hero = dynamic(() => import("@/components/Hero"));
 const ImageWithDescription = dynamic(() => import("@/components/ImageWithDescription"));
@@ -31,10 +33,20 @@ export default function Home() {
       title="test"
       description="test"
     >
+
       <div className="grid gap-4">
-        {pageData?.modules?.map((module, key) => (
-          <Module key={key} module={module} />
-        ))}
+        {isFullLoading ? (
+          <>
+            <HeroSkeleton />
+            <div className="relative flex justify-between pt-4  px-2 items-center">
+              <Skeleton duration={0.8} count={1} height={20} width={120} />
+              <Skeleton duration={0.8} count={1} height={20} width={50} />
+            </div>
+          </>
+        ) :
+          pageData?.modules?.map((module, key) => (
+            <Module key={key} module={module} />
+          ))}
       </div>
 
 
