@@ -14,7 +14,7 @@ const Footer = () => {
 
     }
     return (
-        <div className='bg-gray-50 p-10'>
+        <div className='bg-gray-50'>
             <div className="container">
                 <div
                     // style={{ maxWidth: "500px" }}
