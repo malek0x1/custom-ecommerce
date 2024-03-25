@@ -1,15 +1,13 @@
 import { getImageProps } from 'next/image'
 
 export default function HeroPicture({ mobileSrc, desktopSrc }) {
-    const common = { alt: 'Theme Example', fill: true }//width: 2000, height: 2000 }
+    const common = { alt: 'Theme Example', fill: true }
     const {
         props: { srcSet: deskTop },
     } = getImageProps({ ...common, src: desktopSrc })
     const {
         props: { srcSet: mobile, ...rest },
     } = getImageProps({ ...common, src: mobileSrc })
-
-    console.log("deskTop", deskTop);
 
     return (
         <picture>

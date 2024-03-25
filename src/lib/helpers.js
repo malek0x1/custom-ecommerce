@@ -114,16 +114,16 @@ export const handleChosenVariants = (chosenVariants) => {
 
 // SANITY
 
-export const getPageSanity = async () => {
+export const getPageBySlug = async (slug) => {
     try {
-        const query = `*[_type == "page"]`;
-        const matchingUsers = await client.fetch(query);
-        return matchingUsers
-        // if (matchingUsers.length > 0 && matchingUsers[0].external_id) {
-        //     return matchingUsers[0].external_id
-        // } else {
-        //     return false;
-        // }
+        const query = `*[_type == "page" && slug.current == $slug]`;
+        const params = { slug };
+        const matchingPage = await client.fetch(query, params);
+        if (matchingPage.length > 0) {
+
+            return matchingPage[0]
+        }
+        return null
     } catch (error) {
         console.error("Error checking user :", error);
         throw new Error("Failed to check user:");
