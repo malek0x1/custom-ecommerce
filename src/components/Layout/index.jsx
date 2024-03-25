@@ -4,7 +4,6 @@ import Cart from '@/components/Cart';
 import Navbar from '@/components/Navbar';
 import Search from '../Search';
 import { useEcommerceContext } from "../../lib/context/context";
-import Footer from "../Footer";
 
 const font = Gideon_Roman({ subsets: ["latin"], weight: "400" });
 const Layout = ({ title, description, keywords, children }) => {
@@ -35,7 +34,7 @@ const Layout = ({ title, description, keywords, children }) => {
                 <div className="flex-1 w-full">
                     {children}
                 </div>
-                <Footer />
+                {/* <Footer /> */}
             </main>
         </>
     )
