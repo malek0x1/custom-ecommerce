@@ -3,53 +3,57 @@
 // import Link from 'next/link'
 // import { CircleArrowRight } from 'lucide-react'
 
+import Link from "next/link"
+import FooterCol from "./FooterCol"
+import TextField from "../TextField"
+import { CircleArrowRight } from "lucide-react"
+
 const Footer = () => {
     const handleNewsLetter = () => {
         alert("SUBMITED")
 
     }
     return (
-        <></>
-        // <div className='bg-gray-50 pb-10 pt-5'>
-        //     <div className="container">
-        //         <div
-        //             style={{ maxWidth: "500px" }}
-        //             className="flex py-4 m-auto justify-center w-full flex-col gap-3">
-        //             <p className='text-center text-md mb-2'>Join Our Newsletter</p>
-        //             <div className="flex w-full relative">
-        //                 <TextField type='email' placeholder='Email Address' />
-        //                 <div className="absolute right-3 top-3 cursor-pointer" onClick={handleNewsLetter}>
-        //                     <CircleArrowRight size={20} />
-        //                 </div>
+        <div className='bg-gray-50 p-10'>
+            <div className="container">
+                <div
+                    // style={{ maxWidth: "500px" }}
+                    className="flex py-4 m-auto justify-center w-full flex-col gap-3">
+                    <p className='text-center text-md mb-2'>Join Our Newsletter</p>
+                    <div className="flex w-full relative">
+                        <TextField type='email' placeholder='Email Address' />
+                        <div className="absolute right-3 top-3 cursor-pointer" onClick={handleNewsLetter}>
+                            <CircleArrowRight size={20} />
+                        </div>
 
-        //             </div>
-        //         </div>
+                    </div>
+                </div>
 
-        //         <div className="mt-8 flex flex-wrap justify-between gap-6">
-        //             <FooterCol title="About us" >
-        //                 <p className="text-xs text-gray-600">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est porro deleniti nulla dicta fuga. Suscipit magni alias voluptatem dolore blanditiis, sapiente officia aliquid obcaecati, libero molestias illo doloribus quod! Fuga.</p>
-        //             </FooterCol>
+                <div className="mt-8 flex flex-wrap justify-between gap-6">
+                    <FooterCol title="About us" >
+                        <p className="text-xs text-gray-600">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est porro deleniti nulla dicta fuga. Suscipit magni alias voluptatem dolore blanditiis, sapiente officia aliquid obcaecati, libero molestias illo doloribus quod! Fuga.</p>
+                    </FooterCol>
 
-        //             <FooterCol title="Usefull Links">
-        //                 {["Login", "Signup", "About us", "Privacy Polics", "Return Policy"].map(item =>
-        //                     <Link prefetch={false} key={item} href={`/${item}`} className='text-xs underline block mb-2'>
-        //                         {item}
-        //                     </Link>
-        //                 )}
-        //             </FooterCol>
-        //             <FooterCol title="Social Media" >
-        //                 {["Tiktok", "Instagram", "Facebook", "Twitter"].map(item =>
-        //                     <Link prefetch={false} key={item} href={`/${item}`} className='text-xs underline block mb-2'>
-        //                         {item}
-        //                     </Link>
-        //                 )}
-        //             </FooterCol>
-        //             <FooterCol title="About us" >
-        //                 <p className="text-xs text-gray-600">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est porro deleniti nulla dicta fuga. Suscipit magni alias voluptatem dolore blanditiis, sapiente officia aliquid obcaecati, libero molestias illo doloribus quod! Fuga.</p>
-        //             </FooterCol>
-        //         </div>
-        //     </div>
-        // </div>
+                    <FooterCol title="Usefull Links">
+                        {["Login", "Signup", "About us", "Privacy Polics", "Return Policy"].map(item =>
+                            <Link prefetch={false} key={item} href={`/${item}`} className='text-xs underline block mb-2'>
+                                {item}
+                            </Link>
+                        )}
+                    </FooterCol>
+                    <FooterCol title="Social Media" >
+                        {["Tiktok", "Instagram", "Facebook", "Twitter"].map(item =>
+                            <Link prefetch={false} key={item} href={`/${item}`} className='text-xs underline block mb-2'>
+                                {item}
+                            </Link>
+                        )}
+                    </FooterCol>
+                    <FooterCol title="About us" >
+                        <p className="text-xs text-gray-600">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est porro deleniti nulla dicta fuga. Suscipit magni alias voluptatem dolore blanditiis, sapiente officia aliquid obcaecati, libero molestias illo doloribus quod! Fuga.</p>
+                    </FooterCol>
+                </div>
+            </div>
+        </div>
     )
 }
 

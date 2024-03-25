@@ -1,8 +1,9 @@
 
 import { urlFor } from '@/lib/sanity'
-import HeroPicture from '../Picture'
 import { Carousel, CarouselContent, CarouselItem } from '../ui/carousel'
+import dynamic from 'next/dynamic'
 
+const HeroPicture = dynamic(() => import('../Picture/index'))
 
 const Hero = ({ mobileImageUrl, desktopImageUrl }) => {
     return (
