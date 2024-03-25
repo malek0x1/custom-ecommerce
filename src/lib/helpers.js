@@ -535,3 +535,29 @@ export const getCommerceJsCustomerOrdersById = async (id) => {
         console.log("something went wrong while getCommerceJsCustomerOrdersById");
     }
 }
+
+export const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
+
+    // const orderData = {
+    //     line_items: checkoutToken.live.line_items,
+    //     customer: { firstname: shippingData.firstName, lastname: shippingData.lastName, email: shippingData.email },
+    //     shipping: { name: 'International', street: shippingData.address1, town_city: shippingData.city, county_state: shippingData.shippingSubdivision, postal_zip_code: shippingData.zip, country: shippingData.shippingCountry },
+    //     fulfillment: { shipping_method: shippingData.shippingOption },
+    //     payment: {
+    //       gateway: 'stripe',
+    //       stripe: {
+    //         payment_method_id: paymentMethod.id,
+    //       },
+    //     },
+    //   };
+
+    //   onCaptureCheckout(checkoutToken.id, orderData);
+    try {
+        const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
+
+        return incomingOrder
+        refreshCart();
+    } catch (error) {
+        console.log(error.data.error.message);
+    }
+};

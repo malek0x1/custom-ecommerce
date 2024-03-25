@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import { useEcommerceContext } from "@/lib/context/context"
 import { fetchShippingCountries, fetchShippingOptions, fetchSubdivisions, generateCheckoutToken } from "@/lib/helpers"
 import SelectSkeleton from "@/components/Pages/Checkout/SelectSkeleton"
+import ProductsSummary from "@/components/ProductsSummary"
 
 const Checkout = () => {
     const { cartItems } = useEcommerceContext()
@@ -29,6 +30,7 @@ const Checkout = () => {
             try {
                 if (cartItems.id) {
                     const res = await generateCheckoutToken(cartItems.id)
+                    console.log(res);
                     setCheckoutData(res)
                     if (res && res.id) {
                         const countriesData = await fetchShippingCountries(res.id)
@@ -49,7 +51,6 @@ const Checkout = () => {
                 const subdivisions = await fetchSubdivisions(formData.chosenCountry)
                 setCountryStates(subdivisions || {})
                 setIsLoading(prev => ({ ...prev, states: false }))
-
             }
         }
         fetchStates();
@@ -70,13 +71,19 @@ const Checkout = () => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     }
-
+    // console.log(checkoutData);
+    // checkoutData.currency.code -> USD
+    // checkoutData.discount[]
+    // checkoutData.gateways[]
+    // checkoutData.line_items
+    // checkoutData.total.formatted_with_symbol
     return (
         <Layout
             title="Checkout"
             description="Complete your purchase"
         >
             <div className="container grid gap-3 mx-auto max-w-md px-4 py-8">
+                <ProductsSummary line_items={[]} />
                 {CHECKOUT_PAGE_FIELDS.map(field =>
                     <TextField
                         key={field.id}
@@ -138,7 +145,7 @@ const Checkout = () => {
                         : <></>
                 }
                 <Button
-                    disabled={formData.chosenCountry || formData.chosenCountryState || formData.chosenShippingOption}
+                    disabled={!formData.chosenCountry || !formData.chosenCountryState || !formData.chosenShippingOption}
                     label="Submit" className="w-full" />
             </div>
         </Layout>

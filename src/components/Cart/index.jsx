@@ -32,16 +32,19 @@ const Cart = ({ isOpen, setIsOpen }) => {
                 <div className="overflow-y-auto flex-1">
                     <div className="grid gap-4 py-4 ">
                         {
-                            cartItems.loading ? <Skeleton duration={0.7} className="w-full mb-2" height={100} count={2} /> : cartItems.line_items.length > 0 && cartItems.line_items.map((item, index) => (
-                                <CartItem id={item.id} key={`${item}-${JSON.stringify(item.selected_options)}`} selected_options={item.selected_options} image={item.image.url} index={index} price={item.price.formatted_with_symbol} title={item.name} quantity={item.quantity} />
-                            ))
+                            cartItems.loading ?
+                                <Skeleton duration={0.7} className="w-full mb-2" height={100} count={2} /> :
+                                cartItems.line_items.length > 0 &&
+                                cartItems.line_items.map((item, index) => (
+                                    <CartItem id={item.id} key={`${item}-${JSON.stringify(item.selected_options)}`} selected_options={item.selected_options} image={item.image.url} index={index} price={item.price.formatted_with_symbol} title={item.name} quantity={item.quantity} />
+                                ))
                         }
                     </div>
                 </div>
                 <SheetFooter>
                     <SheetClose asChild>
                         {!cartItems.loading && cartItems.line_items.length != 0 && (
-                            <Link className="w-full" prefetch={false} href={cartItems.hosted_checkout_url || `/checkout`}>
+                            <Link className="w-full" prefetch={false} href={`/checkout`}>
                                 <Button className="w-full bg-black" type="submit" label="Checkout" />
                             </Link>
                         )}

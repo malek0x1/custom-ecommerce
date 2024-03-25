@@ -3,7 +3,7 @@ import { motion } from "framer-motion"
 import commerce from "../../lib/commerce"
 import { useEcommerceContext } from "@/lib/context/context"
 
-const CartItem = ({ image, title, price, index, quantity, selected_options, id }) => {
+const CartItem = ({ image, title, price, index, quantity, selected_options, id, showDelete = true }) => {
     const handleShowVariants = () => {
         let chosenVariant = ''
         selected_options.forEach((item, index) => {
@@ -40,11 +40,14 @@ const CartItem = ({ image, title, price, index, quantity, selected_options, id }
                     <p className="text-sm mb-3">{title}</p>
                     <p className="text-thin text-xs text-gray-700">{`x${quantity} ${handleShowVariants()}`}</p>
                     <p className="text-thin text-xs text-gray-700">{price || "400$"}</p>
-                    <p
-                        style={{ fontSize: 9 }}
-                        className="text-thin text-gray-700 underline mt-2"
-                        onClick={handleRemoveItem}
-                    >DELETE</p>
+
+                    {showDelete && (
+                        <p
+                            style={{ fontSize: 9 }}
+                            className="text-thin text-gray-700 underline mt-2"
+                            onClick={handleRemoveItem}
+                        >DELETE</p>
+                    )}
                 </div>
             </div>
         </motion.div>
