@@ -23,7 +23,6 @@ export const Module = ({
         case 'carousel':
             return <ProductsCarousel collection={module.category} index={index} />
         case 'featured_category':
-            //<ImageWithDescription title={module.title} btnLabel={module?.btn_label} description={module.description} img={urlFor(module.image.asset)} />
             return (
                 <div className="flex flex-wrap sm:flex-nowrap gap-4 justify-between sm:container w-full items-center">
                     {module.items.map(item => (
