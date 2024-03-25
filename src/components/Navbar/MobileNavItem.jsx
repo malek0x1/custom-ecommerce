@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { HiOutlineChevronRight } from "react-icons/hi2";
 import { motion } from "framer-motion";
 
 const MobileNavItem = ({ label, link, index }) => {
@@ -14,7 +13,8 @@ const MobileNavItem = ({ label, link, index }) => {
         >
             <Link prefetch={false} href={link} className="flex items-center justify-between  py-4 cursor-pointer rounded-sm">
                 <p className="font-medium uppercase leading-none">{label}</p>
-                <HiOutlineChevronRight size={14} />
+                {/* <HiOutlineChevronRight size={14} /> */}
+                right
             </Link>
         </motion.div>
     )

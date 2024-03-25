@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+
 const nextConfig = {
   reactStrictMode: false,
   images: {
@@ -16,6 +18,16 @@ const nextConfig = {
         hostname: "www.tartcollections.com",
       },
     ],
+  },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.plugins.push(new BundleAnalyzerPlugin({
+        analyzerMode: 'static',
+        openAnalyzer: false,
+      }));
+    }
+
+    return config;
   },
 
 };

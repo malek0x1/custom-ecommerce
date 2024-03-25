@@ -1,7 +1,5 @@
 import Image from 'next/image'
-import { CiSearch, CiShoppingCart } from 'react-icons/ci'
 import Link from 'next/link'
-import { CiMenuFries } from "react-icons/ci"
 import MobileNav from './MobileNav'
 import {
     HoverCard,
@@ -24,9 +22,9 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
             <MobileNav isOpen={isMobileNavOpen} setIsOpen={setIsMobileNavOpen} />
             <div className="bg-white sm:px-10 container w-full p-2  sm:p-2 flex justify-between items-center ">
                 <div className="sm:w-0 sm:overflow-hidden block sm:hidden">
-                    <CiMenuFries size={20} onClick={() => {
+                    <div size={20} onClick={() => {
                         setIsMobileNavOpen(prev => !prev)
-                    }} />
+                    }} >brgr</div>
                 </div>
 
                 <div className="flex-1 justify-center sm:justify-normal flex">
@@ -85,16 +83,18 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                     }
                 </div>
                 <div className="flex items-center gap-1 sm:flex-1 justify-end">
-                    <CiSearch size={22}
+                    <div size={22}
                         onClick={() => {
                             if (setIsSearchOpened) {
                                 setIsSearchOpened(true)
                             }
                         }}
-                    />
-                    <CiShoppingCart size={22} onClick={() => {
+                    >
+                        Search
+                    </div>
+                    <div size={22} onClick={() => {
                         setIsCartOpened(prev => !prev)
-                    }} />
+                    }} >Cart</div>
                 </div>
             </div>
         </div>

@@ -1,7 +1,6 @@
 import Layout from '@/components/Layout';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { CiFilter } from "react-icons/ci";
 import commerce from "../../lib/commerce";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Card from '@/components/Card';
@@ -76,7 +75,7 @@ const Collection = () => {
                         <div
                             onClick={handleFilterOpen}
                             className="flex items-center gap-2 cursor-pointer">
-                            <CiFilter size={20} />
+                            {/* <CiFilter size={20} /> */}
                             <p className="text-xs font-light !text-gray-900">Filter and sort </p>
                         </div>
                     )}

@@ -11,7 +11,7 @@ const Footer = () => {
     return (
         <div className='bg-gray-50 pb-10 pt-5'>
             <div className="container">
-                <div
+                {/* <div
                     style={{ maxWidth: "500px" }}
                     className="flex py-4 m-auto justify-center w-full flex-col gap-3">
                     <p className='text-center text-md mb-2'>Join Our Newsletter</p>
@@ -22,7 +22,7 @@ const Footer = () => {
                         </div>
 
                     </div>
-                </div>
+                </div> */}
 
                 <div className="mt-8 flex flex-wrap justify-between gap-6">
                     <FooterCol title="About us" >

@@ -29,7 +29,7 @@ export default function Home() {
       description="test"
     >
 
-      <div className="grid gap-5">
+      <div className="flex flex-col gap-5">
         {isFullLoading ? (
           <>
             <HeroSkeleton />
