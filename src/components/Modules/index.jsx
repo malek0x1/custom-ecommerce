@@ -1,9 +1,8 @@
 import { urlFor } from '@/lib/sanity';
-import dynamic from 'next/dynamic';
 import Hero from '../Hero';
-import { Grid } from 'lucide-react';
 import ImageWithDescription from '../ImageWithDescription';
 import ProductsCarousel from '../ProductsCarousel';
+import Grid from '../Grid';
 import MainCategory from '../MainCategory';
 
 // const Grid = dynamic(() => import('../Grid/index'))
