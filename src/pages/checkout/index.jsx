@@ -1,16 +1,18 @@
 import Button from "@/components/Button"
 import Layout from "@/components/Layout"
 import TextField from "@/components/TextField"
-import { CHECKOUT_PAGE_FIELDS } from "@/lib/data"
+import { CHECKOUT_PAGE_FIELDS, MANUAL_GATEWAY } from "@/lib/data"
 import { useEffect, useState } from "react"
 import { useEcommerceContext } from "@/lib/context/context"
 import { fetchShippingCountries, fetchShippingOptions, fetchSubdivisions, generateCheckoutToken } from "@/lib/helpers"
 import SelectSkeleton from "@/components/Pages/Checkout/SelectSkeleton"
 import ProductsSummary from "@/components/ProductsSummary"
+import Radio from "@/components/Radio"
 
 const Checkout = () => {
     const { cartItems } = useEcommerceContext()
     const [checkoutData, setCheckoutData] = useState({})
+    const [chosenGateway, setChosenGateway] = useState(null)
     const [formData, setFormData] = useState({
         chosenCountry: "",
         chosenCountryState: "",
@@ -81,9 +83,15 @@ const Checkout = () => {
         <Layout
             title="Checkout"
             description="Complete your purchase"
+            isFooter={false}
+            isHeader={false}
         >
             <div className="container grid gap-3 mx-auto max-w-md px-4 py-8">
-                <ProductsSummary line_items={[]} />
+                <ProductsSummary
+                    chosenShippingOption={formData.chosenShippingOption}
+                    checkoutData={checkoutData}
+                    allShippingOptions={shippingOptions}
+                />
                 {CHECKOUT_PAGE_FIELDS.map(field =>
                     <TextField
                         key={field.id}
@@ -144,9 +152,13 @@ const Checkout = () => {
                             )
                         : <></>
                 }
+
+                <Radio chosenGateway={chosenGateway} gateways={MANUAL_GATEWAY} setChosenGateway={setChosenGateway} />
+
                 <Button
-                    disabled={!formData.chosenCountry || !formData.chosenCountryState || !formData.chosenShippingOption}
+                    disabled={!formData.chosenCountry || !formData.chosenCountryState || !formData.chosenShippingOption || !chosenGateway}
                     label="Submit" className="w-full" />
+
             </div>
         </Layout>
     )

@@ -81,3 +81,9 @@ export const invoices = [
         paymentMethod: "Credit Card",
     },
 ]
+export const MANUAL_GATEWAY = [
+    {
+        id: "1",
+        name: "Cash on Delivery",
+    }
+]

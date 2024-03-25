@@ -7,18 +7,29 @@ import {
 import { useEcommerceContext } from "@/lib/context/context"
 import CartItem from "../Cart/CartItem"
 import Skeleton from "react-loading-skeleton"
+import { useEffect, useState } from "react"
 
 
-const ProductsSummary = () => {
+const ProductsSummary = ({ checkoutData, chosenShippingOption, allShippingOptions }) => {
     const { cartItems } = useEcommerceContext()
+    const [shippingItem, setShippingItem] = useState(null)
 
+
+
+
+    useEffect(() => {
+        const getItem = allShippingOptions.filter(item => item.id == chosenShippingOption)
+        if (getItem.length > 0) {
+            setShippingItem(getItem[0])
+        }
+    }, [chosenShippingOption])
     return (
         <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
                 <AccordionTrigger>
                     <div className="flex w-full items-center justify-between">
                         <p className=" text-xs">Show Order Summary</p>
-                        <p className="font-bold text-xs">$60.00</p>
+                        <p className="font-bold text-xs">{checkoutData?.total?.formatted}</p>
                     </div>
                 </AccordionTrigger>
                 <AccordionContent>
@@ -35,15 +46,15 @@ const ProductsSummary = () => {
                         <div className="pt-5 grid gap-1">
                             <div className="flex items-center justify-between">
                                 <p>subtotal</p>
-                                <p className="font-bold">$6.00</p>
+                                <p className="font-bold">{checkoutData?.total?.formatted_with_code}</p>
                             </div>
                             <div className="flex items-center justify-between">
                                 <p>shipping</p>
-                                <p>2$</p>
+                                <p>{chosenShippingOption ? shippingItem?.price?.formatted_with_symbol : "Choose a shipping option"} </p>
                             </div>
                             <div className="flex items-center justify-between">
                                 <p>Total</p>
-                                <p className="font-bold">USD $6.00</p>
+                                <p className="font-bold">{checkoutData?.total?.formatted} USD</p>
                             </div>
                         </div>
                     </div>

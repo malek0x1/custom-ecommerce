@@ -3,7 +3,15 @@ import { motion } from "framer-motion"
 import commerce from "../../lib/commerce"
 import { useEcommerceContext } from "@/lib/context/context"
 
-const CartItem = ({ image, title, price, index, quantity, selected_options, id, showDelete = true, imageMaxWidth = "100px" }) => {
+const CartItem = ({ image,
+    title,
+    price,
+    index,
+    quantity,
+    selected_options,
+    id,
+    showDelete = true,
+    imageMaxWidth = "100px" }) => {
     const handleShowVariants = () => {
         let chosenVariant = ''
         selected_options.forEach((item, index) => {
@@ -28,7 +36,7 @@ const CartItem = ({ image, title, price, index, quantity, selected_options, id, 
         >
             <div className="flex gap-4">
                 <Image unoptimized alt="asd"
-                    src={image || "/assets/images/demo.jpg"}
+                    src={image}
                     width="100"
                     height="100"
                     className="object-cover h-full "
