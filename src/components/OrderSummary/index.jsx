@@ -10,12 +10,9 @@ import Skeleton from "react-loading-skeleton"
 import { useEffect, useState } from "react"
 
 
-const ProductsSummary = ({ checkoutData, chosenShippingOption, allShippingOptions }) => {
+const OrderSummary = ({ checkoutData, chosenShippingOption, allShippingOptions }) => {
     const { cartItems } = useEcommerceContext()
     const [shippingItem, setShippingItem] = useState(null)
-
-
-
 
     useEffect(() => {
         const getItem = allShippingOptions.filter(item => item.id == chosenShippingOption)
@@ -23,13 +20,14 @@ const ProductsSummary = ({ checkoutData, chosenShippingOption, allShippingOption
             setShippingItem(getItem[0])
         }
     }, [chosenShippingOption])
+    const total = (checkoutData?.total?.raw || 0) + (shippingItem?.price?.raw || 0)
     return (
         <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
                 <AccordionTrigger>
                     <div className="flex w-full items-center justify-between">
                         <p className=" text-xs">Show Order Summary</p>
-                        <p className="font-bold text-xs">{checkoutData?.total?.formatted}</p>
+                        <p className="font-bold text-xs">{total}$</p>
                     </div>
                 </AccordionTrigger>
                 <AccordionContent>
@@ -50,11 +48,11 @@ const ProductsSummary = ({ checkoutData, chosenShippingOption, allShippingOption
                             </div>
                             <div className="flex items-center justify-between">
                                 <p>shipping</p>
-                                <p>{chosenShippingOption ? shippingItem?.price?.formatted_with_symbol : "Choose a shipping option"} </p>
+                                <p>{chosenShippingOption ? shippingItem?.price?.formatted_with_symbol : "Shipping is not calculcated"} </p>
                             </div>
                             <div className="flex items-center justify-between">
                                 <p>Total</p>
-                                <p className="font-bold">{checkoutData?.total?.formatted} USD</p>
+                                <p className="font-bold">{total} USD</p>
                             </div>
                         </div>
                     </div>
@@ -65,4 +63,4 @@ const ProductsSummary = ({ checkoutData, chosenShippingOption, allShippingOption
     )
 }
 
-export default ProductsSummary
+export default OrderSummary

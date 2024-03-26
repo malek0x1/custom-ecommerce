@@ -19,13 +19,8 @@ const Orders = () => {
     useEffect(() => {
         const handleFetchUsers = async () => {
             if (session.status == "authenticated") {
-                console.log(session.data.user.email);
                 const userExternalId = await getSanityUserExternalIdByEmail(session.data.user.email)
-                console.log(userExternalId);
                 const id = await getCommerceJsCustomerByExternalID(userExternalId)
-                console.log(id);
-
-
                 if (id) {
                     const allOrders = await getCommerceJsCustomerOrdersById(id)
                     if (allOrders && allOrders.length > 0) {

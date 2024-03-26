@@ -2,10 +2,10 @@
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
-const Radio = ({ gateways, chosenGateway, setChosenGateway }) => {
+const Radio = ({ gateways, setFormData, name = "chosenPaymentGateway" }) => {
     return (
         <RadioGroup defaultValue="comfortable"
-            onValueChange={val => { setChosenGateway(val) }}
+            onValueChange={val => { setFormData(prev => ({ ...prev, [name]: val })) }}
         >
             {gateways.map(item => (
                 <div key={item.id} className="flex items-center space-x-2  border rounded">

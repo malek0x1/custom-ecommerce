@@ -6,17 +6,21 @@ import { useEffect, useState } from "react"
 import { useEcommerceContext } from "@/lib/context/context"
 import { fetchShippingCountries, fetchShippingOptions, fetchSubdivisions, generateCheckoutToken } from "@/lib/helpers"
 import SelectSkeleton from "@/components/Pages/Checkout/SelectSkeleton"
-import ProductsSummary from "@/components/ProductsSummary"
+import OrderSummary from "@/components/OrderSummary"
 import Radio from "@/components/Radio"
+import Spinner from "@/components/Spinner"
+import { useRouter } from "next/router"
 
 const Checkout = () => {
-    const { cartItems } = useEcommerceContext()
+    const { cartItems, clearCartState } = useEcommerceContext()
+    const router = useRouter()
     const [checkoutData, setCheckoutData] = useState({})
-    const [chosenGateway, setChosenGateway] = useState(null)
+    const [isFormSubmitLoading, setIsFormSubmitLoading] = useState(false)
     const [formData, setFormData] = useState({
         chosenCountry: "",
         chosenCountryState: "",
-        chosenShippingOption: ""
+        chosenShippingOption: "",
+        chosenGateway: ""
     })
     const [isLoading, setIsLoading] = useState({
         countries: true,
@@ -32,7 +36,6 @@ const Checkout = () => {
             try {
                 if (cartItems.id) {
                     const res = await generateCheckoutToken(cartItems.id)
-                    console.log(res);
                     setCheckoutData(res)
                     if (res && res.id) {
                         const countriesData = await fetchShippingCountries(res.id)
@@ -73,12 +76,19 @@ const Checkout = () => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     }
-    // console.log(checkoutData);
+    // checkoutData);
     // checkoutData.currency.code -> USD
     // checkoutData.discount[]
     // checkoutData.gateways[]
     // checkoutData.line_items
     // checkoutData.total.formatted_with_symbol
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsFormSubmitLoading(true)
+        console.log(formData);
+        await clearCartState()
+        router.push("/order-confirmation")
+    }
     return (
         <Layout
             title="Checkout"
@@ -86,15 +96,17 @@ const Checkout = () => {
             isFooter={false}
             isHeader={false}
         >
-            <div className="container grid gap-3 mx-auto max-w-md px-4 py-8">
-                <ProductsSummary
+            <form onSubmit={handleSubmit} className="container grid gap-3 mx-auto max-w-md px-4 py-8">
+                <OrderSummary
                     chosenShippingOption={formData.chosenShippingOption}
                     checkoutData={checkoutData}
                     allShippingOptions={shippingOptions}
                 />
                 {CHECKOUT_PAGE_FIELDS.map(field =>
                     <TextField
+                        onChange={handleInputChange}
                         key={field.id}
+                        name={field.name}
                         required={field.required}
                         placeholder={field?.placeholder}
                         type={field.type}
@@ -103,63 +115,81 @@ const Checkout = () => {
                 {isLoading.countries && Object.keys(countries).length == 0 ? (
                     <SelectSkeleton />
                 ) :
-                    <select
-                        onChange={handleInputChange}
-                        value={formData.chosenCountry}
-                        name="chosenCountry"
-                        className="p-2.5 w-full"
-                    >
-                        <option value="">-- Choose Country --</option>
-                        {Object.keys(countries).map(cntry => (
-                            <option key={cntry} value={cntry}>{countries[cntry]}</option>
-                        ))}
-                    </select>
+                    (
+                        <>
+                            <p className="text-xs">Country</p>
+                            <select
+                                onChange={handleInputChange}
+                                value={formData.chosenCountry}
+                                name="chosenCountry"
+                                className="p-2.5 w-full"
+                            >
+                                <option value="">-- Choose Country --</option>
+                                {Object.keys(countries).map(cntry => (
+                                    <option key={cntry} value={cntry}>{countries[cntry]}</option>
+                                ))}
+                            </select>
+                        </>
+
+                    )
                 }
                 {
                     formData.chosenCountry ?
                         isLoading.states ? (<SelectSkeleton />) :
-                            (<select
-                                onChange={handleInputChange}
-                                value={formData.chosenCountryState}
-                                name="chosenCountryState"
-                                className="p-2.5 w-full"
-                            >
-                                <option value="">-- Choose State --</option>
-                                {Object.keys(countryStates).map(countryStateItem => (
-                                    <option key={countryStateItem} value={countryStateItem}>{countryStates[countryStateItem]}</option>
-                                ))}
-                            </select>)
+                            (
+                                <>
+                                    <p className="text-xs">State</p>
+                                    <select
+                                        onChange={handleInputChange}
+                                        value={formData.chosenCountryState}
+                                        name="chosenCountryState"
+                                        className="p-2.5 w-full"
+                                    >
+                                        <option value="">-- Choose State --</option>
+                                        {Object.keys(countryStates).map(countryStateItem => (
+                                            <option key={countryStateItem} value={countryStateItem}>{countryStates[countryStateItem]}</option>
+                                        ))}
+                                    </select>
+                                </>
+                            )
                         : <></>
                 }
+
+
                 {
                     formData.chosenCountryState ?
                         isLoading.shipping
                             ? (<SelectSkeleton />) :
                             (
-                                <select
-                                    onChange={handleInputChange}
-                                    value={formData.chosenShippingOption}
-                                    name="chosenShippingOption"
-                                    className="p-2.5 w-full"
-                                >
-                                    <option value="">-- Choose Shipping Option --</option>
-                                    {shippingOptions.map(item => (
-                                        <option key={item.id} value={item.id}>
-                                            {item.price.formatted_with_symbol}
-                                        </option>
-                                    ))}
-                                </select>
+                                <>
+
+                                    <p className="text-xs">Shipping Options</p>
+                                    <select
+                                        onChange={handleInputChange}
+                                        value={formData.chosenShippingOption}
+                                        name="chosenShippingOption"
+                                        className="p-2.5 w-full"
+                                    >
+                                        <option value="">-- Choose Shipping Option --</option>
+                                        {shippingOptions.map(item => (
+                                            <option key={item.id} value={item.id}>
+                                                {item.price.formatted_with_symbol}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </>
                             )
                         : <></>
                 }
-
-                <Radio chosenGateway={chosenGateway} gateways={MANUAL_GATEWAY} setChosenGateway={setChosenGateway} />
+                <p className="text-xs">Payment Options</p>
+                <Radio name="chosenGateway" gateways={MANUAL_GATEWAY} setFormData={setFormData} />
 
                 <Button
-                    disabled={!formData.chosenCountry || !formData.chosenCountryState || !formData.chosenShippingOption || !chosenGateway}
-                    label="Submit" className="w-full" />
+                    disabled={!formData.chosenCountry || !formData.chosenCountryState || !formData.chosenShippingOption || !formData.chosenGateway}
+                    label={isFormSubmitLoading ? <Spinner color="white" /> : "Submit"}
+                    className="w-full" />
 
-            </div>
+            </form>
         </Layout>
     )
 }

@@ -15,7 +15,6 @@ export default function Home() {
     const handlePage = async () => {
 
       const res = await getPageBySlug("home-page")
-      console.log(res);
       if (res.modules && res.modules.length > 0) {
         setPageData(res)
       }
