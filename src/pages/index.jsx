@@ -30,7 +30,7 @@ export default function Home() {
 
       <div className="flex flex-col gap-5">
         {isFullLoading ? (
-          <>
+          <div>
             <HeroSkeleton />
             <Carousel>
               <div className="relative flex justify-between pt-4  px-2 items-center">
@@ -50,7 +50,7 @@ export default function Home() {
               </CarouselContent>
             </Carousel>
             <HeroSkeleton />
-          </>
+          </div>
         ) :
           pageData?.modules?.map((module, key) => (
             <Module key={key} module={module} />

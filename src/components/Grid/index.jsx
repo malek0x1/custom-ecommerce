@@ -56,7 +56,7 @@ const Grid = ({ collection, amount = 4 }) => {
                         </div>
                         <div className="w-full flex justify-center  items-center">
                             <Link href={`/collection/${collection}`}>
-                                <Button label="Show More" className="w-fit mt-6" />
+                                <Button label="Show More" className="w-fit px-6 text-xs uppercase mt-6" />
                             </Link>
                         </div>
                     </div>

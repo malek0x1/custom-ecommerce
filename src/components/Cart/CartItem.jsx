@@ -2,6 +2,7 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import commerce from "../../lib/commerce"
 import { useEcommerceContext } from "@/lib/context/context"
+import { Label } from "../ui/label"
 
 const CartItem = ({ image,
     title,
@@ -45,16 +46,16 @@ const CartItem = ({ image,
                     }}
                 />
                 <div className="">
-                    <p className="text-sm mb-3">{title}</p>
+                    <p className="text-sm mb-3 ">{title}</p>
                     <p className="text-thin text-xs text-gray-700">{`x${quantity} ${handleShowVariants()}`}</p>
                     <p className="text-thin text-xs text-gray-700">{price || "400$"}</p>
 
                     {showDelete && (
-                        <p
+                        <Label
                             style={{ fontSize: 9 }}
-                            className="text-thin text-gray-700 underline mt-2"
+                            className="text-thin text-primary underline mt-2"
                             onClick={handleRemoveItem}
-                        >DELETE</p>
+                        >DELETE</Label>
                     )}
                 </div>
             </div>
