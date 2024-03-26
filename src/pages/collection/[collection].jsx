@@ -7,7 +7,7 @@ import Card from '@/components/Card';
 import Filter from '@/components/Filter';
 import SkeletonCard from '@/components/Card/SkeletonCard';
 import Skeleton from 'react-loading-skeleton';
-import { CiFilter } from 'react-icons/ci';
+import Image from 'next/image';
 
 const Collection = () => {
     const NUMBER_TO_FETCH = 10;
@@ -76,7 +76,12 @@ const Collection = () => {
                         <div
                             onClick={handleFilterOpen}
                             className="flex items-center gap-2 cursor-pointer">
-                            <CiFilter size={20} />
+                            <Image
+                                src="/assets/icons/filter.svg"
+                                unoptimized
+                                width={15}
+                                height={15}
+                            />
                             <p className="text-xs font-light !text-gray-900">Filter and sort </p>
                         </div>
                     )}

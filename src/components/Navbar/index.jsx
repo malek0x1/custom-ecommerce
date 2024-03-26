@@ -7,13 +7,9 @@ import {
 } from "@/components/ui/hover-card"
 import { useEcommerceContext } from '@/lib/context/context'
 import Skeleton from 'react-loading-skeleton'
-import { useSession } from 'next-auth/react'
-import { CiSearch, CiShoppingCart } from 'react-icons/ci'
-import { CiMenuFries } from "react-icons/ci"
 import Image from 'next/image'
 
 const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
-    const session = useSession()
 
     const { isMobileNavOpen, setIsMobileNavOpen, categories } = useEcommerceContext()
     return (
@@ -21,9 +17,14 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
             <MobileNav isOpen={isMobileNavOpen} setIsOpen={setIsMobileNavOpen} />
             <div className="bg-white sm:px-10 container w-full p-2  sm:p-2 flex justify-between items-center ">
                 <div className="sm:w-0 sm:overflow-hidden block sm:hidden">
-                    <CiMenuFries size={20} onClick={() => {
-                        setIsMobileNavOpen(prev => !prev)
-                    }} />
+                    <Image
+                        src="/assets/icons/hamburger.svg"
+                        unoptimized
+                        width={25}
+                        height={25}
+                        onClick={() => {
+                            setIsMobileNavOpen(prev => !prev)
+                        }} />
                 </div>
 
                 <div className="flex-1 justify-center sm:justify-normal flex">
@@ -81,16 +82,26 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                     }
                 </div>
                 <div className="flex items-center gap-1 sm:flex-1 justify-end">
-                    <CiSearch size={22}
+                    <Image
+                        src="/assets/icons/search.svg"
+                        unoptimized
+                        width={25}
+                        height={25}
                         onClick={() => {
                             if (setIsSearchOpened) {
                                 setIsSearchOpened(true)
                             }
                         }}
                     />
-                    <CiShoppingCart size={22} onClick={() => {
-                        setIsCartOpened(prev => !prev)
-                    }} />
+                    <Image
+                        src="/assets/icons/cart.svg"
+                        unoptimized
+                        width={20}
+                        className='object-cover'
+                        height={20}
+                        onClick={() => {
+                            setIsCartOpened(prev => !prev)
+                        }} />
                 </div>
             </div>
         </div>

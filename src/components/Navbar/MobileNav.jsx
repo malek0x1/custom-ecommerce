@@ -2,7 +2,7 @@ import { useEcommerceContext } from "@/lib/context/context";
 import { Sheet, SheetClose, SheetContent, SheetHeader } from "../ui/sheet"
 import MobileNavItem from "./MobileNavItem"
 import Skeleton from "react-loading-skeleton";
-import { TfiClose } from "react-icons/tfi";
+import Image from "next/image";
 
 const MobileNav = ({ isOpen, setIsOpen }) => {
     const { categories } = useEcommerceContext()
@@ -12,7 +12,13 @@ const MobileNav = ({ isOpen, setIsOpen }) => {
             <SheetContent side="left" className="mobileNavbar flex flex-col ">
                 <SheetHeader className="text-left">
                     <SheetClose className="w-fit" >
-                        <TfiClose size={20} />
+                        <Image
+                            src="/assets/icons/close.svg"
+                            unoptimized
+                            width={25}
+                            height={25}
+                        />
+                        {/* <TfiClose size={20} /> */}
                     </SheetClose>
                 </SheetHeader>
                 <div className="overflow-y-auto flex-1">

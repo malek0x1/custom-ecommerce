@@ -6,7 +6,7 @@ import Skeleton from 'react-loading-skeleton';
 import HeroSkeleton from '@/components/Hero/HeroSkeleton';
 import SkeletonCard from '@/components/Card/SkeletonCard';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import { CiShoppingBasket } from "react-icons/ci";
+import CartIcon from "@/components/SvgComponents/Cart";
 
 export default function Home() {
   const [isFullLoading, setIsFullLoading] = useState(true)
@@ -61,7 +61,19 @@ export default function Home() {
         <div className="flex flex-col bg-gray-50 sm:flex-row justify-between items-center gap-10 py-10">
           {[1, 2, 3, 4].map(item => (
             <div key={item} className="flex-1 text-center flex px-3 justify-center items-center gap-3 flex-col">
-              <CiShoppingBasket size={40} color="#c47961" />
+              <CartIcon
+                fill="#c47961"
+              />
+              {/* <Image
+                src="/assets/icons/cart.svg"
+              unoptimized
+              width={35}
+              height={35}
+              onClick={() => {
+                setIsMobileNavOpen(prev => !prev)
+              }} /> */}
+
+
               <p className="text-lg uppercase">Free Shipping</p>
               <p className="text-xs text-gray-800 w-10/12" >We Offer Free shipping on all Us orders and all internatiols orders over 150$.</p>
             </div>
