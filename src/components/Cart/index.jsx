@@ -45,7 +45,7 @@ const Cart = ({ isOpen, setIsOpen }) => {
                     <SheetClose asChild>
                         {!cartItems.loading && cartItems.line_items.length != 0 && (
                             <Link className="w-full" prefetch={false} href={`/checkout`}>
-                                <Button className="w-full bg-black" type="submit" label="Checkout" />
+                                <Button className="w-full " type="submit" label="Checkout" />
                             </Link>
                         )}
                     </SheetClose>
