@@ -15,12 +15,15 @@ const Product = () => {
     const [isFullLoading, setIsFullLoading] = useState(true)
     const [chosenVariants, setChosenVaritants] = useState({})
     const [isLoading, setIsLoading] = useState(false)
+    const [gallery, setGallery] = useState([])
+    const [currentMainImage, setCurrentMainImage] = useState([])
 
     const { setIsCartOpened, updateCart } = useEcommerceContext()
 
     const router = useRouter()
 
     useEffect(() => {
+        // fetch product
         const handleProduct = async () => {
             const { slug } = router.query
             if (slug) {
@@ -32,6 +35,11 @@ const Product = () => {
                         // select initial variant
                         const variantsInitial = getInitialVariants(productData)
                         setChosenVaritants(variantsInitial)
+                    }
+                    // handle gallery
+                    if (productData.assets && productData.assets.length > 0) {
+                        setCurrentMainImage(productData.assets[0])
+                        setGallery(productData.assets)
                     }
                     setIsFullLoading(false)
 
@@ -52,7 +60,6 @@ const Product = () => {
         setIsLoading(false);
         setIsCartOpened(true);
     };
-
     return (
         <Layout
             title={product?.name || "Product Page"}
@@ -80,26 +87,45 @@ const Product = () => {
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     )
                     : (
                         <div className="">
-                            <div className="flex gap-10 flex-wrap sm:flex-nowrap ">
-                                <Image
-                                    style={{
-                                        maxWidth: "600px",
-                                        objectFit: "cover",
-                                        width: "100%"
-                                    }}
-                                    width={product.image.image_dimensions.width}
-                                    height={product.image.image_dimensions.height}
-                                    src={product.image.url}
-                                    unoptimized
-                                    priority="true"
-                                    alt=""
-                                />
+                            <div className="flex items-center gap-10 flex-wrap sm:flex-nowrap ">
+                                <div className="flex sm:flex-row flex-col-reverse ">
+                                    <div className="max-w-40 flex sm:flex-col flex-row space-x-2">
+                                        {gallery.length > 0 && gallery.map(item => (
+                                            <Image
+                                                key={item.id}
+                                                style={{
+                                                    maxWidth: "50px",
+                                                    objectFit: "cover",
+                                                    width: "100%"
+                                                }}
+                                                onClick={() => { setCurrentMainImage(item) }}
+                                                width={item.image_dimensions.width}
+                                                height={item.image_dimensions.height}
+                                                src={item.url}
+                                                unoptimized
+                                                priority="true"
+                                                alt=""
+                                            />
+                                        ))}
+                                    </div>
+                                    <Image
+                                        style={{
+                                            maxWidth: "600px",
+                                            objectFit: "cover",
+                                            width: "100%"
+                                        }}
+                                        width={product.image.image_dimensions.width}
+                                        height={product.image.image_dimensions.height}
+                                        src={currentMainImage?.url}
+                                        unoptimized
+                                        priority="true"
+                                        alt=""
+                                    />
+                                </div>
                                 <div className="w-full grid gap-4 mx-3"
                                     style={{
                                         maxWidth: "500px"
