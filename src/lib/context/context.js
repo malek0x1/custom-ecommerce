@@ -60,7 +60,7 @@ export function ContextProvider({ children }) {
         await commerce.cart.refresh();
         setCartItems({
             line_items: [],
-            loading: true
+            loading: false
 
         })
     }
