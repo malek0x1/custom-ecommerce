@@ -17,6 +17,7 @@ import Spinner from "@/components/Spinner";
 import { useRouter } from "next/router";
 import { signIn } from 'next-auth/react';
 import { getUserToken, handLoginByToken } from "@/lib/helpers";
+import Link from "next/link";
 
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false)
@@ -90,7 +91,9 @@ const Login = () => {
                         <Button disabled={isLoading} label={isLoading ? <Spinner color="white" /> : "Submit"} />
                     </form>
                 </Form>
-                <p className="text-thin text-gray-500 text-xs underline">Dont have an account? Create one</p>
+                <Link href="/sign-up">
+                    <p className="text-thin text-gray-500 text-xs underline">Dont have an account? Create one</p>
+                </Link>
             </div>
         </Layout>
     )

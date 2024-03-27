@@ -10,7 +10,6 @@ import OrderSummary from "@/components/OrderSummary"
 import Radio from "@/components/Radio"
 import Spinner from "@/components/Spinner"
 import { useRouter } from "next/router"
-import commerce from "../../lib/commerce"
 
 const Checkout = () => {
     const { cartItems, clearCartState } = useEcommerceContext()
@@ -84,12 +83,6 @@ const Checkout = () => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     }
-    // checkoutData);
-    // checkoutData.currency.code -> USD
-    // checkoutData.gateways[]
-    // checkoutData.line_items
-    // checkoutData.total.formatted_with_symbol
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsFormSubmitLoading(true)
@@ -105,7 +98,6 @@ const Checkout = () => {
             setIsDiscountLoading(false);
             setDiscountStatusMessage({ status: "success", message: "Discount Code Applied" })
         } catch (e) {
-            console.log("NO");
             setIsDiscountLoading(false);
             setDiscountStatusMessage({ status: "error", message: "Wrong Discount Code" })
         }
@@ -122,6 +114,8 @@ const Checkout = () => {
                 timeoutId = setTimeout(() => {
                     handleDiscount();
                 }, 700);
+            } else {
+                setIsDiscountLoading(false)
             }
         };
 

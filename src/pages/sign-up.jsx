@@ -18,6 +18,7 @@ import axios from "axios";
 import { signIn } from "next-auth/react";
 import { handLoginByToken } from "../lib/helpers";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false)
@@ -46,7 +47,6 @@ const Login = () => {
             }
         }
         catch (e) {
-            console.log(e.response.data.message);
             setErrorMessage(e.response.data.message)
         }
         setIsLoading(false)
@@ -89,7 +89,9 @@ const Login = () => {
                         <Button disabled={isLoading} label={isLoading ? <Spinner color="white" /> : "Submit"} />
                     </form>
                 </Form>
-                <p className="text-thin text-gray-500 text-xs underline">Dont have an account? Create one</p>
+                <Link href="/login">
+                    <p className="text-thin text-gray-500 text-xs underline">Dont have an account? Create one</p>
+                </Link>
             </div>
         </Layout>
     )

@@ -570,7 +570,6 @@ export const checkDiscountCode = async (checkoutId, discount) => {
         return res
     }
     catch (e) {
-        // console.log(e);
         return null
     }
 

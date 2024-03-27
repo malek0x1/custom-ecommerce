@@ -7,13 +7,13 @@ export default function HeroPicture({ mobileSrc, desktopSrc }) {
     } = getImageProps({ ...common, src: desktopSrc })
     const {
         props: { srcSet: mobile, ...rest },
-    } = getImageProps({ ...common, src: mobileSrc, priority: true, fetchPriority: "high", loading: "eager" })
+    } = getImageProps({ ...common, src: mobileSrc, loading: "eager" })
 
     return (
         <picture>
             <source media="(min-width: 900px)" srcSet={deskTop} />
             <source media="(min-width: 300px)" srcSet={mobile} />
-            <img {...rest} className='w-full object-cover' />
+            <img  {...rest} className='w-full object-cover' />
         </picture>
     )
 }

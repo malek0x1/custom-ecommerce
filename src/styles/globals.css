@@ -140,3 +140,7 @@ body {
     --ring: 15 45.6% 57.5%;
     --radius: 1rem;
 }
+
+.hero-wrapper {
+    height: calc(100vh - 200px);
+}
