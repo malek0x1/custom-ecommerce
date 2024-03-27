@@ -4,23 +4,30 @@ import TextField from "@/components/TextField"
 import { CHECKOUT_PAGE_FIELDS, MANUAL_GATEWAY } from "@/lib/data"
 import { useEffect, useState } from "react"
 import { useEcommerceContext } from "@/lib/context/context"
-import { fetchShippingCountries, fetchShippingOptions, fetchSubdivisions, generateCheckoutToken } from "@/lib/helpers"
+import { checkDiscountCode, fetchShippingCountries, fetchShippingOptions, fetchSubdivisions, generateCheckoutToken } from "@/lib/helpers"
 import SelectSkeleton from "@/components/Pages/Checkout/SelectSkeleton"
 import OrderSummary from "@/components/OrderSummary"
 import Radio from "@/components/Radio"
 import Spinner from "@/components/Spinner"
 import { useRouter } from "next/router"
+import commerce from "../../lib/commerce"
 
 const Checkout = () => {
     const { cartItems, clearCartState } = useEcommerceContext()
     const router = useRouter()
     const [checkoutData, setCheckoutData] = useState({})
     const [isFormSubmitLoading, setIsFormSubmitLoading] = useState(false)
+    const [isDiscountLoading, setIsDiscountLoading] = useState(false)
+    const [discountStatusMessage, setDiscountStatusMessage] = useState({
+        status: "",
+        message: ''
+    })
     const [formData, setFormData] = useState({
         chosenCountry: "",
         chosenCountryState: "",
         chosenShippingOption: "",
-        chosenGateway: ""
+        chosenGateway: "",
+        discount: ""
     })
     const [isLoading, setIsLoading] = useState({
         countries: true,
@@ -30,6 +37,7 @@ const Checkout = () => {
     const [countries, setCountries] = useState({})
     const [countryStates, setCountryStates] = useState({})
     const [shippingOptions, setShippingOptions] = useState([])
+    const [isHaveDiscount, setIsHaveDiscount] = useState(false)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -78,17 +86,49 @@ const Checkout = () => {
     }
     // checkoutData);
     // checkoutData.currency.code -> USD
-    // checkoutData.discount[]
     // checkoutData.gateways[]
     // checkoutData.line_items
     // checkoutData.total.formatted_with_symbol
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsFormSubmitLoading(true)
-        console.log(formData);
         await clearCartState()
         router.push("/order-confirmation")
     }
+
+    const handleDiscount = async () => {
+        try {
+            const res = await checkDiscountCode(checkoutData.id, formData.discount);
+
+            setCheckoutData(res);
+            setIsDiscountLoading(false);
+            setDiscountStatusMessage({ status: "success", message: "Discount Code Applied" })
+        } catch (e) {
+            console.log("NO");
+            setIsDiscountLoading(false);
+            setDiscountStatusMessage({ status: "error", message: "Wrong Discount Code" })
+        }
+    };
+
+    useEffect(() => {
+        let timeoutId;
+
+        const handleDiscountWithDebounce = async () => {
+            if (isHaveDiscount && formData.discount && formData.discount.length > 2) {
+                setIsDiscountLoading(true);
+                clearTimeout(timeoutId); // Clear any existing timeout
+
+                timeoutId = setTimeout(() => {
+                    handleDiscount();
+                }, 700);
+            }
+        };
+
+        handleDiscountWithDebounce();
+
+        return () => clearTimeout(timeoutId);
+    }, [formData.discount]);
     return (
         <Layout
             title="Checkout"
@@ -98,6 +138,8 @@ const Checkout = () => {
         >
             <form onSubmit={handleSubmit} className="container grid gap-3 mx-auto max-w-md px-4 py-8">
                 <OrderSummary
+                    discount={checkoutData.discount && checkoutData.discount.length === 0 ? null : checkoutData.discount}
+                    cartItems={checkoutData.line_items}
                     chosenShippingOption={formData.chosenShippingOption}
                     checkoutData={checkoutData}
                     allShippingOptions={shippingOptions}
@@ -112,6 +154,35 @@ const Checkout = () => {
                         type={field.type}
                     />
                 )}
+
+
+                {isHaveDiscount ? (
+                    <div className="" >
+                        <div className="relative">
+
+                            <TextField
+                                onChange={handleInputChange}
+                                name='discount'
+                                placeholder="Discount"
+                                type="text"
+                            />
+                            {isDiscountLoading && <div className="absolute right-3 top-3">
+                                <Spinner color="black" />
+                            </div>
+                            }
+                        </div>
+                        {discountStatusMessage.status == "success" ?
+                            <p className="text-xs text-green-500 mt-2">{discountStatusMessage.message}</p> :
+                            <p className="text-xs text-red-500 mt-2">{discountStatusMessage.message}</p>
+                        }
+                    </div>
+                ) :
+                    <p
+                        onClick={() => setIsHaveDiscount(true)}
+                        className="text-xs underline">have discount code?</p>
+                }
+
+
                 {isLoading.countries && Object.keys(countries).length == 0 ? (
                     <SelectSkeleton />
                 ) :

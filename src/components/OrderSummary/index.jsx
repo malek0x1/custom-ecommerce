@@ -4,14 +4,13 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
-import { useEcommerceContext } from "@/lib/context/context"
 import CartItem from "../Cart/CartItem"
 import Skeleton from "react-loading-skeleton"
 import { useEffect, useState } from "react"
+import Spinner from "../Spinner"
 
 
-const OrderSummary = ({ checkoutData, chosenShippingOption, allShippingOptions }) => {
-    const { cartItems } = useEcommerceContext()
+const OrderSummary = ({ checkoutData, chosenShippingOption, allShippingOptions, cartItems, discount }) => {
     const [shippingItem, setShippingItem] = useState(null)
 
     useEffect(() => {
@@ -27,16 +26,16 @@ const OrderSummary = ({ checkoutData, chosenShippingOption, allShippingOptions }
                 <AccordionTrigger>
                     <div className="flex w-full items-center justify-between">
                         <p className=" text-xs">Show Order Summary</p>
-                        <p className="font-bold text-xs">{total}$</p>
+                        {total ? <p className="font-bold text-xs">{total}$</p> : <Spinner color="black" />}
                     </div>
                 </AccordionTrigger>
                 <AccordionContent>
                     <div className="grid gap-4 py-4 ">
                         {
-                            cartItems.loading ?
+                            !cartItems ?
                                 <Skeleton duration={0.7} className="w-full mb-2" height={100} count={2} /> :
-                                cartItems.line_items.length > 0 &&
-                                cartItems.line_items.map((item, index) => (
+                                cartItems.length > 0 &&
+                                cartItems.map((item, index) => (
                                     <CartItem imageMaxWidth="60px" showDelete={false} id={item.id} key={`${item}-${JSON.stringify(item.selected_options)}`} selected_options={item.selected_options} image={item.image.url} index={index} price={item.price.formatted_with_symbol} title={item.name} quantity={item.quantity} />
                                 ))
                         }
@@ -44,12 +43,18 @@ const OrderSummary = ({ checkoutData, chosenShippingOption, allShippingOptions }
                         <div className="pt-5 grid gap-1">
                             <div className="flex items-center justify-between">
                                 <p>subtotal</p>
-                                <p className="font-bold">{checkoutData?.total?.formatted_with_code}</p>
+                                <p className="font-bold">{checkoutData?.subtotal?.formatted_with_code}</p>
                             </div>
                             <div className="flex items-center justify-between">
                                 <p>shipping</p>
                                 <p>{chosenShippingOption ? shippingItem?.price?.formatted_with_symbol : "Shipping is not calculcated"} </p>
                             </div>
+                            {discount && discount.type && (
+                                <div className="flex items-center justify-between">
+                                    <p>Discount</p>
+                                    <p>{discount.code ? `-${discount.amount_saved.raw}$` : ""} </p>
+                                </div>
+                            )}
                             <div className="flex items-center justify-between">
                                 <p>Total</p>
                                 <p className="font-bold">{total} USD</p>

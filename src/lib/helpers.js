@@ -561,3 +561,17 @@ export const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
         console.log(error.data.error.message);
     }
 };
+
+export const checkDiscountCode = async (checkoutId, discount) => {
+    try {
+        const res = commerce.checkout.checkDiscount(checkoutId, {
+            code: discount,
+        })
+        return res
+    }
+    catch (e) {
+        // console.log(e);
+        return null
+    }
+
+}
