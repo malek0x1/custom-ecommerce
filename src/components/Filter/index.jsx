@@ -8,8 +8,12 @@ const Filter = ({ chosenFilter, setChosenFilter, isOpen, setIsOpen }) => {
 
     const handleChange = (e) => {
         const { value } = e.target
-        const [getChosenFilterItem] = SORTBY_OPTIONS.filter(item => item.name == value)
-        setFilterData(getChosenFilterItem);
+        if (value) {
+            const [getChosenFilterItem] = SORTBY_OPTIONS.filter(item => item.name == value)
+            setFilterData(getChosenFilterItem);
+        } else {
+            setFilterData({})
+        }
     }
 
     return (
@@ -22,6 +26,7 @@ const Filter = ({ chosenFilter, setChosenFilter, isOpen, setIsOpen }) => {
                         onChange={handleChange}
                         value={filterData.name}
                     >
+                        <option value="">-- Choose Filter --</option>
                         {SORTBY_OPTIONS.map(item => (
                             <option key={item.id} name={item.query}>{item.name}</option>
                         ))}

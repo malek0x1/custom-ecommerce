@@ -9,6 +9,9 @@ import Button from "@/components/Button"
 import Layout from "@/components/Layout"
 import Skeleton from "react-loading-skeleton"
 import { useEcommerceContext } from "@/lib/context/context"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+
+
 
 const Product = () => {
     const [product, setproduct] = useState([])
@@ -16,8 +19,6 @@ const Product = () => {
     const [chosenVariants, setChosenVaritants] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const [gallery, setGallery] = useState([])
-    const [currentMainImage, setCurrentMainImage] = useState([])
-
     const { setIsCartOpened, updateCart } = useEcommerceContext()
 
     const router = useRouter()
@@ -38,7 +39,6 @@ const Product = () => {
                     }
                     // handle gallery
                     if (productData.assets && productData.assets.length > 0) {
-                        setCurrentMainImage(productData.assets[0])
                         setGallery(productData.assets)
                     }
                     setIsFullLoading(false)
@@ -60,6 +60,25 @@ const Product = () => {
         setIsLoading(false);
         setIsCartOpened(true);
     };
+
+
+    const [api, setApi] = useState()
+    const [current, setCurrent] = useState(0)
+    const [count, setCount] = useState(0)
+
+    useEffect(() => {
+        if (!api) {
+            return
+        }
+
+        setCount(api.scrollSnapList().length)
+        setCurrent(api.selectedScrollSnap() + 1)
+
+        api.on("select", () => {
+            setCurrent(api.selectedScrollSnap() + 1)
+        })
+    }, [api])
+
     return (
         <Layout
             title={product?.name || "Product Page"}
@@ -92,40 +111,59 @@ const Product = () => {
                     : (
                         <div className="">
                             <div className="flex items-center gap-10 flex-wrap sm:flex-nowrap ">
-                                <div className="flex sm:flex-row flex-col-reverse ">
-                                    <div className="max-w-40 flex sm:flex-col flex-row space-x-2">
+                                <div className="w-full ">
+                                    {/* <div className="max-w-40 flex sm:flex-col flex-row space-x-2">
                                         {gallery.length > 0 && gallery.map(item => (
-                                            <Image
-                                                key={item.id}
-                                                style={{
-                                                    maxWidth: "50px",
-                                                    objectFit: "cover",
-                                                    width: "100%"
-                                                }}
-                                                onClick={() => { setCurrentMainImage(item) }}
-                                                width={item.image_dimensions.width}
-                                                height={item.image_dimensions.height}
-                                                src={item.url}
-                                                unoptimized
-                                                priority="true"
-                                                alt=""
-                                            />
+                                            
                                         ))}
-                                    </div>
-                                    <Image
-                                        style={{
-                                            maxWidth: "600px",
-                                            objectFit: "cover",
-                                            width: "100%"
+                                    </div> */}
+
+                                    <Carousel
+                                        setApi={setApi}
+                                        opts={{
+                                            align: "start",
                                         }}
-                                        width={product.image.image_dimensions.width}
-                                        height={product.image.image_dimensions.height}
-                                        src={currentMainImage?.url}
-                                        unoptimized
-                                        priority="true"
-                                        alt=""
-                                    />
+                                        className="w-full"
+                                    >
+                                        <CarouselContent className="items-center">
+                                            {gallery.length > 0 && gallery.map((item, index) => (
+                                                <CarouselItem key={index} className="w-full justify-center">
+                                                    <div className="flex justify-center">
+                                                        <Image
+                                                            key={item.id}
+                                                            style={{
+                                                                maxWidth: "400px",
+                                                                objectFit: "cover",
+                                                                width: "100%"
+                                                            }}
+                                                            width={item.image_dimensions.width}
+                                                            height={item.image_dimensions.height}
+                                                            src={item.url}
+                                                            unoptimized
+                                                            priority="true"
+                                                            alt=""
+                                                        />
+
+                                                    </div>
+                                                </CarouselItem>
+                                            ))}
+
+                                        </CarouselContent>
+                                        <CarouselNext className="hidden sm:flex" />
+                                        <CarouselPrevious className="hidden sm:flex" />
+                                    </Carousel>
+                                    {count > 1 && (
+                                        <div className="flex items-center justify-center w-full gap-1 mt-1">
+                                            {Array.from(Array(count)).map((item, index) => (
+                                                <div key={index} className={`${current == index + 1 ? "bg-primary" : "bg-gray-100 "} size-2 text-white  border  rounded-full`}>
+                                                    {item}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+
                                 </div>
+
                                 <div className="w-full grid gap-4 mx-3"
                                     style={{
                                         maxWidth: "500px"

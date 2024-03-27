@@ -22,6 +22,7 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                         unoptimized
                         width={25}
                         height={25}
+                        alt="asd"
                         onClick={() => {
                             setIsMobileNavOpen(prev => !prev)
                         }} />
@@ -31,6 +32,7 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                     <Link prefetch={false} href="/">
                         <Image unoptimized
                             loading='eager'
+
                             alt="logo" className='' src="/assets/images/logo.png" width="150" height="69" />
                     </Link>
                 </div>
@@ -85,6 +87,7 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                     <Image
                         src="/assets/icons/search.svg"
                         unoptimized
+                        alt="asd"
                         width={25}
                         height={25}
                         onClick={() => {
@@ -97,6 +100,7 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                         src="/assets/icons/cart.svg"
                         unoptimized
                         width={20}
+                        alt="icon"
                         className='object-cover'
                         height={20}
                         onClick={() => {

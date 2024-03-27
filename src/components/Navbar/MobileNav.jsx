@@ -18,11 +18,10 @@ const MobileNav = ({ isOpen, setIsOpen }) => {
                             width={25}
                             height={25}
                         />
-                        {/* <TfiClose size={20} /> */}
                     </SheetClose>
                 </SheetHeader>
-                <div className="overflow-y-auto flex-1">
-                    <div className="space-y-2 pt-8">
+                <div className="overflow-y-auto overflow-x-hidden flex-1">
+                    <div className="space-y-2 pt-8 overflow-x-hidden">
                         {
                             !categories.loading ?
                                 categories.categories.length > 0 && categories.categories.map((item, index) => (

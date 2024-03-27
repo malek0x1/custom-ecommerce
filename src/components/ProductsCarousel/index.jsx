@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Carousel, CarouselContent, CarouselItem } from '../ui/carousel'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../ui/carousel'
 import commerce from "../../lib/commerce"
 import ProductCard from '../Card'
 import SkeletonCard from '../Card/SkeletonCard'
@@ -23,7 +23,11 @@ const ProductsCarousel = ({ collection }) => {
         handleProducts()
     }, [])
     return (
-        <Carousel >
+        <Carousel opts={{
+            dragFree: true,
+            containScroll: 'trimSnaps'
+        }}>
+
             {
                 isLoading ? (
                     <div className="relative flex justify-between pt-4  px-2 items-center">
@@ -59,7 +63,6 @@ const ProductsCarousel = ({ collection }) => {
                         </CarouselItem>
                     ))
                 }
-
             </CarouselContent>
         </Carousel>
     )

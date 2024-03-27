@@ -1,5 +1,4 @@
 import Image from "next/image"
-import { motion } from "framer-motion"
 import commerce from "../../lib/commerce"
 import { useEcommerceContext } from "@/lib/context/context"
 import { Label } from "../ui/label"
@@ -27,7 +26,7 @@ const CartItem = ({ image,
         const out = await commerce.cart.remove(id)
     }
     return (
-        <motion.div
+        <div
             initial={{ y: -5, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{
@@ -59,7 +58,7 @@ const CartItem = ({ image,
                     )}
                 </div>
             </div>
-        </motion.div>
+        </div>
 
     )
 }

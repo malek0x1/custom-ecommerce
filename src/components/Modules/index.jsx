@@ -1,11 +1,16 @@
 import { urlFor } from '@/lib/sanity';
 import dynamic from 'next/dynamic';
+import Hero from '../Hero';
+import Grid from '../Grid';
+import ImageWithDescription from '../ImageWithDescription';
+import ProductsCarousel from '../ProductsCarousel';
+import MainCategory from '../MainCategory';
 
-const Grid = dynamic(() => import('../Grid/index'))
-const Hero = dynamic(() => import('../Hero/index'))
-const ImageWithDescription = dynamic(() => import("@/components/ImageWithDescription"));
-const MainCategory = dynamic(() => import("@/components/MainCategory"));
-const ProductsCarousel = dynamic(() => import("@/components/ProductsCarousel"));
+// const Grid = dynamic(() => import('../Grid/index'))
+// const Hero = dynamic(() => import('../Hero/index'))
+// const ImageWithDescription = dynamic(() => import("@/components/ImageWithDescription"));
+// const MainCategory = dynamic(() => import("@/components/MainCategory"));
+// const ProductsCarousel = dynamic(() => import("@/components/ProductsCarousel"));
 
 export const Module = ({
     index,

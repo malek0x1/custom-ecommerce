@@ -65,6 +65,11 @@ const Collection = () => {
         setIsFilterOpened(true);
     };
 
+    const handleClearFilter = () => {
+        setChosenFilter({})
+    };
+
+
     return (
         <Layout>
             <Filter isOpen={isFilterOpened} setIsOpen={setIsFilterOpened} chosenFilter={chosenFilter} setChosenFilter={setChosenFilter} />
@@ -73,16 +78,29 @@ const Collection = () => {
                     {isFullLoading ? (
                         <Skeleton width={105} height={20} />
                     ) : (
-                        <div
-                            onClick={handleFilterOpen}
-                            className="flex items-center gap-2 cursor-pointer">
-                            <Image
-                                src="/assets/icons/filter.svg"
-                                unoptimized
-                                width={15}
-                                height={15}
-                            />
-                            <p className="text-xs font-light !text-gray-900">Filter and sort </p>
+                        <div className=" flex items-center gap-2">
+                            <div
+                                onClick={handleFilterOpen}
+                                className="flex items-center gap-2 cursor-pointer">
+                                <Image
+                                    src="/assets/icons/filter.svg"
+                                    unoptimized
+                                    alt="filter icon"
+                                    width={15}
+                                    height={15}
+                                />
+                                <p className="text-xs font-light !text-gray-900">Filter and sort </p>
+                            </div>
+                            {
+                                chosenFilter.name && (
+
+                                    <p
+                                        style={{
+                                            fontSize: "10px"
+                                        }}
+                                        onClick={handleClearFilter}
+                                        className="font-light !text-gray-900 underline ">clear filter </p>
+                                )}
                         </div>
                     )}
                     {isFullLoading ? (
