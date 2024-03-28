@@ -1,7 +1,6 @@
 
 import { urlFor } from '@/lib/sanity'
 import { Carousel, CarouselContent, CarouselItem } from '../ui/carousel'
-import dynamic from 'next/dynamic'
 import HeroPicture from '../Picture'
 
 

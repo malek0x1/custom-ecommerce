@@ -58,11 +58,23 @@ import Link from "next/link";
 import FooterCol from "./FooterCol";
 import TextField from "../TextField";
 import { CircleArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { getAllPagesSlugs } from "@/lib/helpers";
 
 const Footer = () => {
+    const [pages, setPages] = useState(null)
+
     const handleNewsLetter = () => {
         alert("SUBMITTED");
     };
+
+    useEffect(() => {
+        const fetchPages = async () => {
+            const pages = await getAllPagesSlugs()
+            setPages(pages)
+        }
+        fetchPages()
+    }, [])
 
     return (
         <div className='bg-gray-50'>
@@ -87,15 +99,20 @@ const Footer = () => {
                     </FooterCol>
 
                     <FooterCol title="Usefull Links">
-                        {["Login", "Signup", "About us", "Privacy Polics", "Return Policy"].map(item =>
-                            <Link prefetch={false} key={item} href={`/${item}`} className='text-xs underline block mb-2'>
-                                {item}
-                            </Link>
+                        {pages && pages.length > 0 && pages.map(item => {
+                            if (item.slug.current !== "home-page") {
+                                return <Link prefetch={false} key={item.slug.current} href={`/pages/${item.slug.current}`} className='text-xs underline block mb-2'>
+                                    {item.title}
+                                </Link>
+                            } else {
+                                return null
+                            }
+                        }
                         )}
                     </FooterCol>
                     <FooterCol title="Social Media" >
                         {["Tiktok", "Instagram", "Facebook", "Twitter"].map(item =>
-                            <Link prefetch={false} key={item} href={`/${item}`} className='text-xs underline block mb-2'>
+                            <Link prefetch={false} key={item} href={`/${item}`} className='text-xs underline block mb-2 uppercase'>
                                 {item}
                             </Link>
                         )}

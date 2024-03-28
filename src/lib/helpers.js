@@ -131,6 +131,22 @@ export const getPageBySlug = async (slug) => {
 };
 
 
+
+export const getAllPagesSlugs = async () => {
+    try {
+        const query = `*[_type == "page"]{slug,title}`;
+        const matchingPage = await client.fetch(query);
+        if (matchingPage.length > 0) {
+            return matchingPage
+        }
+        return null
+    } catch (error) {
+        console.error("Error checking user :", error);
+        throw new Error("Failed to check user:");
+    }
+};
+
+
 export const isEmailAlreadyExist = async (email) => {
     try {
         const query = `*[_type == "users" && email == $email]`;

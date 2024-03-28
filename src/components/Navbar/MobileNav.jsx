@@ -26,9 +26,10 @@ const MobileNav = ({ isOpen, setIsOpen }) => {
                 </SheetHeader>
                 <div className="overflow-y-auto overflow-x-hidden flex-1">
                     <div className="space-y-2 pt-8 overflow-x-hidden">
+
                         {
                             !categories.loading ?
-                                categories.categories.length > 0 && [...First_Issential_NAVIGATION, ...categories.categories].map((item, index) => (
+                                categories.categories.length > 0 && [...categories.categories].map((item, index) => (
                                     <div key={item.id} onClick={() => { setIsOpen(false) }} className="">
                                         <MobileNavItem index={index} label={item.name} link={`/collection/${item.slug}`} />
                                     </div>

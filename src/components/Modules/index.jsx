@@ -1,11 +1,10 @@
 import { urlFor } from '@/lib/sanity';
-import dynamic from 'next/dynamic';
 import Hero from '../Hero';
 import Grid from '../Grid';
 import ImageWithDescription from '../ImageWithDescription';
 import ProductsCarousel from '../ProductsCarousel';
 import MainCategory from '../MainCategory';
-
+import { PortableText } from '@portabletext/react'
 // const Grid = dynamic(() => import('../Grid/index'))
 // const Hero = dynamic(() => import('../Hero/index'))
 // const ImageWithDescription = dynamic(() => import("@/components/ImageWithDescription"));
@@ -27,6 +26,11 @@ export const Module = ({
             return <ImageWithDescription title={module.title} btnLabel={module?.btn_label} description={module.description} img={urlFor(module.image.asset)} />
         case 'carousel':
             return <ProductsCarousel collection={module.category} index={index} />
+        case 'customBlock':
+            return <PortableText
+                value={module.content}
+            // components={}
+            />
         case 'featured_category':
             return (
                 <div className="flex flex-wrap sm:flex-nowrap gap-4 justify-between sm:container w-full items-center">

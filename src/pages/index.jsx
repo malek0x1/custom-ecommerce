@@ -14,7 +14,6 @@ export default function Home() {
 
   useEffect(() => {
     const handlePage = async () => {
-
       const res = await getPageBySlug("home-page")
       if (res.modules && res.modules.length > 0) {
         setPageData(res)
@@ -56,7 +55,8 @@ export default function Home() {
         ) :
           pageData?.modules?.map((module, key) => (
             <Module key={key} module={module} />
-          ))}
+          ))
+        }
 
         <div className="flex flex-col bg-gray-50 sm:flex-row justify-between items-center gap-10 py-10">
           {[1, 2, 3, 4].map(item => (
@@ -64,16 +64,6 @@ export default function Home() {
               <CartIcon
                 fill="#c47961"
               />
-              {/* <Image
-                src="/assets/icons/cart.svg"
-              unoptimized
-              width={35}
-              height={35}
-              onClick={() => {
-                setIsMobileNavOpen(prev => !prev)
-              }} /> */}
-
-
               <p className="text-lg uppercase">Free Shipping</p>
               <p className="text-xs text-gray-800 w-10/12" >We Offer Free shipping on all Us orders and all internatiols orders over 150$.</p>
             </div>

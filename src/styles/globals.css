@@ -144,3 +144,9 @@ body {
 .hero-wrapper {
     height: calc(100vh - 200px);
 }
+
+.nav-links {
+    font-family: '__Gideon_Roman_3e8d4d', '__Gideon_Roman_Fallback_3e8d4d';
+    font-weight: 400;
+    font-style: normal;
+}

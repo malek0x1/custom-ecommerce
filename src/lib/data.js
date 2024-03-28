@@ -8,6 +8,12 @@ export const LOGIN_PAGE_FIELDS = [
     { id: 1, name: "email", placeholder: "Email Adress", required: true, type: "text" },
     { id: 2, name: "password", placeholder: "Password", required: true, type: "password" },
 ]
+export const CONTACT_PAGE_FIELDS = [
+    { id: 1, name: "firstname", placeholder: "First Name", required: true, type: "text" },
+    { id: 2, name: "lastname", placeholder: "Last Name", required: true, type: "text" },
+    { id: 3, name: "email", placeholder: "Email", required: true, type: "email" },
+    { id: 4, name: "message", placeholder: "Type your Message", required: true, type: "textarea" },
+]
 export const NAV_ITEMS = [
     { id: 1, placeholder: "First Name", type: "text", required: true, name: "fname" },
     { id: 2, placeholder: "Last Name", type: "text", required: true, name: "lname" },
@@ -45,7 +51,7 @@ export const MANUAL_GATEWAY = [
 ]
 
 export const First_Issential_NAVIGATION = [
-    { id: 1, name: "Home", href: "/" }
+    { id: 1, name: "Home", slug: "/" }
 ]
 export const LoggedInNavigations = [
     { id: 100, name: "My orders", slug: "/orders" },
@@ -55,9 +61,8 @@ export const LoggedOutNavigations = [
     { id: 200, name: "Account", slug: "/login" },
 ]
 
-
 export const Rest_DEMO_NAVIGATION = [
-    { id: 2, name: "About us", slug: "/about-us" },
-    { id: 2, name: "Contact us", slug: "/contact-us" },
-    { id: 3, name: "Policies", slug: "/Policies" },
+    { id: 2, name: "About us", slug: "/pages/about-us" },
+    // { id: 3, name: "Contact us", slug: "/contact-us" },
+    // { id: 4, name: "Policies", slug: "/Policies" },
 ]

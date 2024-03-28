@@ -11,6 +11,7 @@
   "dependencies": {
     "@chec/commerce.js": "^2.8.0",
     "@hookform/resolvers": "^3.3.4",
+    "@portabletext/react": "^3.0.15",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-hover-card": "^1.0.7",

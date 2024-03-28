@@ -8,8 +8,11 @@ import {
 import { useEcommerceContext } from '@/lib/context/context'
 import Skeleton from 'react-loading-skeleton'
 import Image from 'next/image'
+import { useSession } from 'next-auth/react'
+import { First_Issential_NAVIGATION, LoggedInNavigations, LoggedOutNavigations, Rest_DEMO_NAVIGATION } from '@/lib/data'
 
 const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
+    const session = useSession()
 
     const { isMobileNavOpen, setIsMobileNavOpen, categories } = useEcommerceContext()
     return (
@@ -39,47 +42,42 @@ const Navbar = ({ setIsCartOpened, setIsSearchOpened }) => {
                 <div
                     style={{ flex: "2" }}
                     className="justify-center hidden sm:flex-1 sm:flex  p-2 items-center gap-3">
+                    <HoverCard openDelay={3} >
+                        <HoverCardTrigger className=''>
+                            <p
+                                style={{
+                                    fontSize: '13px'
+                                }}
+                                className='p-2 nav-link text-black font-light uppercase tracking-wider text-xs cursor-pointer'>
+                                Shop
 
-                    {["Home", "Shop", "about-us", "contact-us", "logout", "login", "sign-up"].map(item => {
-                        if (item !== "Shop") {
-                            return (
-                                <Link prefetch={false} key={item} href={`/${item}`}
-                                    style={{
-                                        fontSize: "13px"
-                                    }}
-                                    className='nav-link p-2 text-black font-light uppercase tracking-wider'>
-                                    {item}
-                                </Link>
-                            )
-                        } else {
-                            return (
-                                <HoverCard key={item} openDelay={3} >
-                                    <HoverCardTrigger className=''>
-                                        <p
-                                            style={{
-                                                fontSize: '13px'
-                                            }}
-                                            className='p-2 nav-link text-black font-light uppercase tracking-wider text-xs cursor-pointer'>
-                                            {item}
+                            </p>
 
-                                        </p>
+                        </HoverCardTrigger>
+                        <HoverCardContent href="#ad" className="p-0 ml-10">
+                            <div className="grid gap-1 p-3">
+                                {!categories.loading ? categories.categories.map(item => (
+                                    <Link prefetch={false} key={item.id} href={`/collection/${item.slug}`} className='p-2 text-xs text-gray-700'>
+                                        {item.name}
+                                    </Link>
+                                )) :
+                                    (
+                                        <Skeleton className="gap-10" duration={0.8} count={8} height={20} />
+                                    )}
+                            </div>
+                        </HoverCardContent>
+                    </HoverCard>
 
-                                    </HoverCardTrigger>
-                                    <HoverCardContent href="#ad" className="p-0 ml-10">
-                                        <div className="grid gap-1 p-3">
-                                            {!categories.loading ? categories.categories.map(item => (
-                                                <Link prefetch={false} key={item.id} href={`/collection/${item.slug}`} className='p-2 text-xs text-gray-700'>
-                                                    {item.name}
-                                                </Link>
-                                            )) :
-                                                (
-                                                    <Skeleton className="gap-10" duration={0.8} count={8} height={20} />
-                                                )}
-                                        </div>
-                                    </HoverCardContent>
-                                </HoverCard>
-                            )
-                        }
+                    {[...First_Issential_NAVIGATION, ...Rest_DEMO_NAVIGATION, ...(session.status === "authenticated" ? LoggedInNavigations : LoggedOutNavigations)].map(item => {
+                        return (
+                            <Link key={item.id} prefetch={false} href={`${item.slug}`}
+                                style={{
+                                    fontSize: "13px"
+                                }}
+                                className='nav-link p-2 text-black font-light uppercase tracking-wider'>
+                                {item.name}
+                            </Link>
+                        )
                     })
                     }
                 </div>
