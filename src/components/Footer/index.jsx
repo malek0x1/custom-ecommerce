@@ -102,7 +102,7 @@ const Footer = () => {
                     <FooterCol title="Usefull Links">
                         {pages && pages.length > 0 && pages.map(item => {
                             if (item.slug.current !== "home-page") {
-                                return <Link prefetch={false} key={item.slug.current} href={`/pages/${item.slug.current}`} className='text-xs underline block mb-2'>
+                                return <Link prefetch={false} key={item.slug.current} href={`/pages/${item.slug.current}`} className='text-xs underline block mb-2 w-fit'>
                                     {item.title}
                                 </Link>
                             } else {
@@ -111,14 +111,14 @@ const Footer = () => {
                         }
                         )}
                         {Rest_DEMO_NAVIGATION_2.map(item => (
-                            <Link prefetch={false} key={item.id} href={`/${item.slug}`} className='text-xs underline block mb-2'>
+                            <Link prefetch={false} key={item.id} href={`/${item.slug}`} className='text-xs underline block mb-2 w-fit'>
                                 {item.name}
                             </Link>
                         ))}
                     </FooterCol>
                     <FooterCol title="Social Media" >
                         {["Tiktok", "Instagram", "Facebook", "Twitter"].map(item =>
-                            <Link prefetch={false} key={item} href={`/${item}`} className='text-xs underline block mb-2 uppercase'>
+                            <Link prefetch={false} key={item} href={`/${item}`} className='text-xs underline block mb-2 uppercase w-fit'>
                                 {item}
                             </Link>
                         )}

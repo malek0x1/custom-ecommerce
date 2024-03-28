@@ -56,8 +56,25 @@ const VerifyToken = () => {
     }, [router.query])
 
     const onSubmit = async (data) => {
-        setSentSuccessfully("Password changed")
-        alert("OK")
+        setIsLoading(true)
+        setErrorMessage("")
+        setSentSuccessfully("")
+        const { email, token } = router.query
+        const { password } = data
+        try {
+            const res = await axios.post("/api/forgot-password/update-password", {
+                token, email, password
+            })
+            setSentSuccessfully("Password changed")
+            router.push("/login")
+
+        } catch (e) {
+            console.log("Catched");
+            setErrorMessage(e.response.data.error)
+        }
+        setIsLoading(false)
+
+        // setSentSuccessfully("Password changed")
     }
 
     if (isVerified) {
@@ -69,8 +86,8 @@ const VerifyToken = () => {
                 <div
                     style={{ maxWidth: "500px", minHeight: "70vh" }}
                     className="container w-full px-4  flex justify-center items-center gap-6 flex-col">
-                    <h2 className="uppercase text-2xl tracking-wide">Login</h2>
-                    <p className="text-thin text-xs text-gray-500">Please enter your e-mail and password:</p>
+                    <h2 className="uppercase text-2xl tracking-wide">Update Password</h2>
+                    <p className="text-thin text-xs text-gray-500">Please enter your New Password:</p>
 
 
                     <Form {...form} className="">

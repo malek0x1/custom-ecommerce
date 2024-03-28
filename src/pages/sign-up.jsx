@@ -16,7 +16,6 @@ import { useState } from "react";
 import Spinner from "@/components/Spinner";
 import axios from "axios";
 import { signIn } from "next-auth/react";
-import { handLoginByToken } from "../lib/helpers";
 import { useRouter } from "next/router";
 import Link from "next/link";
 

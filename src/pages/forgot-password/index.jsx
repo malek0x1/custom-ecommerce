@@ -36,7 +36,7 @@ const ForgotPassword = () => {
             const token = await axios.post("/api/forgot-password/generate-token", { email: data.email });
             if (token.data && token.data.token) {
                 const emailObject = {
-                    msg: `<p>${process.env.NEXT_PUBLIC_BASE_URL}/forgot-password/verify/${data.email}?token=${token.data.token}</p>`,
+                    msg: `<p>${process.env.NEXT_PUBLIC_BASE_URL}forgot-password/verify/${data.email}?token=${token.data.token}</p>`,
                     fromEmail: data.email,
                     toEmail: process.env.NEXT_PUBLIC_CUSTOMER_EMAIL,
                     subject: "Forgot Password"
@@ -45,7 +45,7 @@ const ForgotPassword = () => {
                 setIsSubmitted(true)
             }
         } catch (e) {
-            setErrorMessage("something went wrong")
+            setErrorMessage(e.response.data.error)
             console.log(e);
         }
         setIsLoading(false)

@@ -179,6 +179,24 @@ export const getSanityUserExternalIdByEmail = async (email) => {
     }
 };
 
+
+export const fetchUserInfo = async (email) => {
+    try {
+        const query = `*[_type == "users" && email == $email]`;
+        const params = { email };
+        const matchingUsers = await client.fetch(query, params);
+        console.log(matchingUsers);
+        if (matchingUsers.length > 0) {
+            return matchingUsers[0]
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error("Error checking user :", error);
+        throw new Error("Failed to check user:");
+    }
+};
+
 export const checkUserCredentials = async (email, password) => {
     try {
         const query = `*[_type == "users" && email == $email]`;
@@ -336,7 +354,7 @@ export const updateUserPasswordByEmail = async (email, password) => {
             const updatedUser = { ...existingUser, password: password };
             const response = await client.createOrReplace({
                 _id: existingUser._id,
-                _type: "user",
+                _type: "users",
                 ...updatedUser,
             });
 
