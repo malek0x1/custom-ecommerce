@@ -252,18 +252,18 @@ export const generateForgotPwdToken = (email, sign) => {
 }
 
 
-export const sendEmail = async (msg, email, subject) => {
+export const sendEmailBackend = async (msg, fromEmail = "onboarding@resend.dev", toEmail, subject) => {
     try {
         const response = await axios.post("https://api.resend.com/emails",
             {
-                "from": "onboarding@resend.dev",
-                "to": email,
+                "from": 'onboarding@resend.dev',//fromEmail,
+                "to": toEmail,
                 "subject": subject,
                 "html": msg
             },
             {
                 headers: {
-                    'Authorization': 'Bearer re_iDTyQ3fT_ANvyNJyLrLYXzJ6iAqokndKD',
+                    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_RESEND_TOKEN}`,
                     'Content-Type': 'application/json'
                 }
             }
@@ -274,6 +274,22 @@ export const sendEmail = async (msg, email, subject) => {
         console.log(err);
     }
 }
+
+export const sendEmailFrontEnd = async (msg, fromEmail = "onboarding@resend.dev", toEmail, subject) => {
+    const emailObject = {
+        msg,
+        fromEmail,
+        toEmail,
+        subject
+    }
+    try {
+        const sendMsg = await axios.post("/api/email/send", emailObject)
+        return sendMsg.data
+    } catch (e) {
+        throw e
+    }
+}
+
 
 
 export const addCustomerAddress = async (cid, data) => {

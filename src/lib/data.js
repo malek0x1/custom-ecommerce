@@ -8,6 +8,13 @@ export const LOGIN_PAGE_FIELDS = [
     { id: 1, name: "email", placeholder: "Email Adress", required: true, type: "text" },
     { id: 2, name: "password", placeholder: "Password", required: true, type: "password" },
 ]
+export const FORGOT_PASSWORD_PAGE_FIELDS = [
+    { id: 1, name: "email", placeholder: "Email Adress", required: true, type: "text" },
+]
+export const UPDATE_PASSWORD_PAGE_FIELDS = [
+    { id: 1, name: "password", placeholder: "New Password", required: true, type: "password" },
+    { id: 2, name: "confirm_password", placeholder: "Confirm New Password", required: true, type: "password" },
+]
 export const CONTACT_PAGE_FIELDS = [
     { id: 1, name: "firstname", placeholder: "First Name", required: true, type: "text" },
     { id: 2, name: "lastname", placeholder: "Last Name", required: true, type: "text" },
@@ -65,4 +72,8 @@ export const Rest_DEMO_NAVIGATION = [
     { id: 2, name: "About us", slug: "/pages/about-us" },
     // { id: 3, name: "Contact us", slug: "/contact-us" },
     // { id: 4, name: "Policies", slug: "/Policies" },
+]
+export const Rest_DEMO_NAVIGATION_2 = [
+    { id: 3, name: "Contact us", slug: "contact-us" },
+    { id: 4, name: "Policies", slug: "Policies" },
 ]

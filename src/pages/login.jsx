@@ -73,7 +73,6 @@ const Login = () => {
                                     <FormItem className="">
                                         <FormControl>
                                             <TextField
-                                                required={fieldItem.required}
                                                 {...field}
                                                 placeholder={fieldItem?.placeholder}
                                                 type={fieldItem.type}
@@ -93,6 +92,9 @@ const Login = () => {
                 </Form>
                 <Link href="/sign-up">
                     <p className="text-thin text-gray-500 text-xs underline">Dont have an account? Create one</p>
+                </Link>
+                <Link href="/forgot-password">
+                    <p className="text-thin text-gray-500 text-xs underline">Forgot your password?</p>
                 </Link>
             </div>
         </Layout>

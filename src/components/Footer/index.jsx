@@ -60,6 +60,7 @@ import TextField from "../TextField";
 import { CircleArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getAllPagesSlugs } from "@/lib/helpers";
+import { Rest_DEMO_NAVIGATION_2 } from "@/lib/data";
 
 const Footer = () => {
     const [pages, setPages] = useState(null)
@@ -109,6 +110,11 @@ const Footer = () => {
                             }
                         }
                         )}
+                        {Rest_DEMO_NAVIGATION_2.map(item => (
+                            <Link prefetch={false} key={item.id} href={`/${item.slug}`} className='text-xs underline block mb-2'>
+                                {item.name}
+                            </Link>
+                        ))}
                     </FooterCol>
                     <FooterCol title="Social Media" >
                         {["Tiktok", "Instagram", "Facebook", "Twitter"].map(item =>
