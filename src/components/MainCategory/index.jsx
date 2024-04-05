@@ -7,7 +7,7 @@ const MainCategory = ({ title, description, btn_label, img }) => {
                 backgroundImage: `url("${img}")`
             }}
             className="home-main-collections relative h-96 flex items-end p-4 ">
-            <div className="absolute inset-0 bg-black opacity-10"></div>
+            <div className="absolute inset-0 bg-black opacity-15"></div>
             <div className="grid gap-3 relative z-10">
                 <p className="uppercase text-white text-2xl">{title}</p>
                 <p className="uppercase text-gray-300 text-xs w-10/12 ">{description}</p>

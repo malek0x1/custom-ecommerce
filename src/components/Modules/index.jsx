@@ -29,7 +29,6 @@ export const Module = ({
         case 'customBlock':
             return <PortableText
                 value={module.content}
-            // components={}
             />
         case 'featured_category':
             return (

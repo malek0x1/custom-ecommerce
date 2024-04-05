@@ -26,18 +26,20 @@ export async function createCustomerCommerceJs(customerData) {
     //     lastname: 'Lawless',
     //     external_id: 'MY_CRM_USER_123',
     //   };
+    console.log(customerData);
 
     try {
-        const response = await axios.post(`${BASE_URL}/customers`, customerData, {
+        await axios.post(`${BASE_URL}/customers`, customerData, {
             headers: {
                 'X-Authorization': process.env.NEXT_PUBLIC_CHEC_PUBLIC_API_KEY,
                 'Content-Type': 'application/json',
             },
         });
-        return response.data;
+        return true;
     } catch (error) {
-        console.log(error.response.data.error.message);
-        throw new Error('Error creating customer: ');
+        // console.log("createCustomerCommerceJs", error.response.data.error);
+        return false
+        // throw new Error('Error creating customer: ');
     }
 }
 
@@ -142,7 +144,8 @@ export const getAllPagesSlugs = async () => {
         return null
     } catch (error) {
         console.error("Error checking user :", error);
-        throw new Error("Failed to check user:");
+        return null
+        // throw new Error("Failed to check user:");
     }
 };
 

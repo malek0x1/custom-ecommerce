@@ -47,9 +47,24 @@ const Grid = ({ collection, amount = 4 }) => {
                 (
                     <div className="">
 
-                        <div className="flex flex-wrap">
+
+                        <div className="relative flex  justify-between px-2 pt-4 items-center">
+                            <p className="text-left text-lg uppercase tracking-wider">{collection} Collection</p>
+                            <div
+                                style={{
+                                    fontSize: "10px"
+                                }}
+                                className="underline  uppercase">
+                                {/* <Link prefetch={false} href={`/collection/${collection}`}>
+                                    Show All
+                                </Link> */}
+                            </div>
+                        </div>
+
+
+                        <div className="flex flex-wrap mt-4">
                             {products.map(product => (
-                                <div key={product.id} className="w-1/2 sm:w-1/3 md:w-1/4 px-0.5">
+                                <div key={product.id} className="sm:w-1/3 w-1/2  px-0.5">
                                     <ProductCard product={product} />
                                 </div>
                             ))}

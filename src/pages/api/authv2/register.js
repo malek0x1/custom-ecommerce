@@ -1,4 +1,6 @@
-import { createCustomerCommerceJs, createUserSanity, generateCustomerId, hashPassword, isEmailAlreadyExist } from "../../../lib/helpers";
+import { createCustomerCommerceJs, createUserSanity, generateCustomerId, getCommerceJsCustomerByExternalID, hashPassword, isEmailAlreadyExist } from "../../../lib/helpers";
+import commerce from "../../../lib/commerce"
+
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -27,14 +29,33 @@ export default async function handler(req, res) {
         };
 
         const encryptPwd = await hashPassword(password)
-        await createCustomerCommerceJs(commerceJsData)
-        await createUserSanity({ email, firstname, lastname, password: encryptPwd, external_id: newCustomerID })
+        const getCustomerByEmail = await getCommerceJsCustomerByExternalID(email)
+        try {
+            const isCreateCommerceJsCustomerSuccess = await createCustomerCommerceJs(commerceJsData)
+            console.log("isCreateCommerceJsCustomerSuccess", isCreateCommerceJsCustomerSuccess);
+            if (!isCreateCommerceJsCustomerSuccess) {
+                console.log("isCreateCommerceJsCustomerSuccess false", isCreateCommerceJsCustomerSuccess);
+
+                // TODO:
+                commerce.customer.update({
+                    email,
+                    external_id: email,
+                }, getCustomerByEmail.id).then(x => {
+                    console.log(x);
+                }).catch(e => {
+                    console.log(e);
+                })
+
+
+            }
+            await createUserSanity({ email, firstname, lastname, password: encryptPwd, external_id: newCustomerID })
+        }
+        catch (e) {
+            res.status(500).json({ error: 'Internal Server Error', message: "Something went wrong" });
+        }
         res.status(200).json({ message: 'User registered successfully' });
     } catch (error) {
         console.error('Error registering user:', error);
         res.status(500).json({ error: 'Internal Server Error', message: 'Failed to register user' });
     }
 }
-
-
-
