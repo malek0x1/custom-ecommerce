@@ -1,5 +1,4 @@
-import { createCustomerCommerceJs, createUserSanity, generateCustomerId, getCommerceJsCustomerByExternalID, hashPassword, isEmailAlreadyExist } from "../../../lib/helpers";
-import commerce from "../../../lib/commerce"
+import { createCustomerCommerceJs, createUserSanity, getCommerceJsCustomerByExternalID, hashPassword, isEmailAlreadyExist } from "../../../lib/helpers";
 
 
 export default async function handler(req, res) {
@@ -15,40 +14,30 @@ export default async function handler(req, res) {
     }
 
     try {
+        // in sanity
         const isEmailExist = await isEmailAlreadyExist(email);
         if (isEmailExist) {
             return res.status(409).json({ error: 'Conflict', message: 'Email is already associated with an existing account' });
         }
-        const newCustomerID = generateCustomerId()
 
         const commerceJsData = {
             email: email,
             firstname: firstname,
             lastname: lastname,
-            external_id: newCustomerID,
+            external_id: email,
         };
 
         const encryptPwd = await hashPassword(password)
-        const getCustomerByEmail = await getCommerceJsCustomerByExternalID(email)
+
+        // in commercejs# if its already exist means it have externalid which is the email from checkout
+        const isCustomerAlreadyExist = await getCommerceJsCustomerByExternalID(email)
+
         try {
-            const isCreateCommerceJsCustomerSuccess = await createCustomerCommerceJs(commerceJsData)
-            console.log("isCreateCommerceJsCustomerSuccess", isCreateCommerceJsCustomerSuccess);
-            if (!isCreateCommerceJsCustomerSuccess) {
-                console.log("isCreateCommerceJsCustomerSuccess false", isCreateCommerceJsCustomerSuccess);
-
-                // TODO:
-                commerce.customer.update({
-                    email,
-                    external_id: email,
-                }, getCustomerByEmail.id).then(x => {
-                    console.log(x);
-                }).catch(e => {
-                    console.log(e);
-                })
-
-
+            if (!isCustomerAlreadyExist) {
+                await createCustomerCommerceJs(commerceJsData)
             }
-            await createUserSanity({ email, firstname, lastname, password: encryptPwd, external_id: newCustomerID })
+
+            await createUserSanity({ email, firstname, lastname, password: encryptPwd, external_id: email })
         }
         catch (e) {
             res.status(500).json({ error: 'Internal Server Error', message: "Something went wrong" });

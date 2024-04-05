@@ -10,9 +10,11 @@ import OrderSummary from "@/components/OrderSummary"
 import Radio from "@/components/Radio"
 import Spinner from "@/components/Spinner"
 import { useRouter } from "next/router"
+import { useSession } from "next-auth/react"
 
 const Checkout = () => {
     const { cartItems, clearCartState } = useEcommerceContext()
+    const session = useSession()
     const router = useRouter()
     const [checkoutData, setCheckoutData] = useState({})
     const [isFormSubmitLoading, setIsFormSubmitLoading] = useState(false)
@@ -46,7 +48,9 @@ const Checkout = () => {
                     setCheckoutData(res)
                     if (res && res.id) {
                         const countriesData = await fetchShippingCountries(res.id)
-                        setCountries(countriesData || {})
+                        if (countriesData && countriesData.countries && Object.keys(countriesData.countries).length > 0) {
+                            setCountries(countriesData.countries)
+                        }
                         setIsLoading(prev => ({ ...prev, countries: false }))
                     }
                 }
@@ -176,7 +180,6 @@ const Checkout = () => {
                         className="text-xs underline">have discount code?</p>
                 }
 
-
                 {isLoading.countries && Object.keys(countries).length == 0 ? (
                     <SelectSkeleton />
                 ) :
@@ -190,6 +193,7 @@ const Checkout = () => {
                                 className="p-2.5 w-full"
                             >
                                 <option value="">-- Choose Country --</option>
+
                                 {Object.keys(countries).map(cntry => (
                                     <option key={cntry} value={cntry}>{countries[cntry]}</option>
                                 ))}

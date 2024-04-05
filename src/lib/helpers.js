@@ -15,7 +15,6 @@ const BASE_URL = 'https://api.chec.io/v1';
 on Logout commerce.customer.logout() + remove email from localstorage
 
 */
-
 // 1- Function to create a customer
 export async function createCustomerCommerceJs(customerData) {
 
@@ -26,8 +25,6 @@ export async function createCustomerCommerceJs(customerData) {
     //     lastname: 'Lawless',
     //     external_id: 'MY_CRM_USER_123',
     //   };
-    console.log(customerData);
-
     try {
         await axios.post(`${BASE_URL}/customers`, customerData, {
             headers: {
@@ -438,34 +435,50 @@ export const generateCheckoutToken = async (cartId) => {
     }
 }
 
-// export const fetchShippingCountries = async (checkoutTokenId) => {
-//     commerce.services.localeListShippingCountries(checkoutTokenId)
-//         .then((response) => {
-//             if (response && response.countries) {
-//                 return {
-//                     countries: response.countries,
-//                 }
-//             } else {
-//                 console.log('Invalid response received while fetching shipping countries');
-//                 return null
-//             }
-//         })
-//         .catch((error) => {
-//             console.error('Error fetching shipping countries:', error);
-//         });
-// }
+export const fetchShippingCountries = async (checkoutId) => {
 
-export const fetchShippingCountries = async (checkoutTokenId) => {
-    return commerce.services.localeListShippingCountries(checkoutTokenId)
-        .then((response) => {
-            if (response && response.countries) {
-                return response.countries
-            } else {
-                console.log('Invalid response received while fetching shipping countries');
-                return null
+
+    return commerce.services.localeListShippingCountries(checkoutId).then((response) => {
+        if (response && response.countries) {
+            return {
+                countries: response.countries,
             }
+        } else {
+            console.log('Invalid response received while fetching shipping countries');
+            return null
+        }
+    })
+        .catch((error) => {
+            console.error('Error fetching shipping countries:', error);
         });
 }
+
+// export const fetchShippingCountries = async (checkoutTokenId) => {
+
+//     try {
+//         const response = await axios.get(`${BASE_URL}/services/locale/${checkoutTokenId}`,
+//             {
+//                 headers: {
+//                     'X-Authorization': process.env.NEXT_PUBLIC_CHEC_PUBLIC_API_KEY,
+//                     'Content-Type': 'application/json',
+//                 }
+//             }
+
+//         )
+//         console.log(response);
+//         if (response && response.countries) {
+//             return response.countries
+//         } else {
+//             console.log('Invalid response received while fetching shipping countries');
+//             return null
+//         }
+
+//     } catch (e) {
+//         return null
+//     }
+
+
+// }
 
 export const fetchSubdivisions = (countryCode) => {
     return commerce.services.localeListSubdivisions(countryCode).then((subdivisions) => {
