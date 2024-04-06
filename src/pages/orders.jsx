@@ -10,7 +10,7 @@ import Layout from "@/components/Layout"
 import { useEffect, useState } from "react"
 import Spinner from "@/components/Spinner"
 import { useSession } from "next-auth/react"
-import { getCommerceJsCustomerByExternalID, getCommerceJsCustomerOrdersById, getSanityUserExternalIdByEmail } from "@/lib/helpers"
+import { getCommerceJsCustomerByExternalID, getCommerceJsCustomerOrdersById } from "@/lib/helpers"
 
 const Orders = () => {
     const [ordersData, setOrdersData] = useState([])
@@ -19,16 +19,17 @@ const Orders = () => {
     useEffect(() => {
         const handleFetchUsers = async () => {
             if (session.status == "authenticated") {
-                const userExternalId = await getSanityUserExternalIdByEmail(session.data.user.email)
-                const id = await getCommerceJsCustomerByExternalID(userExternalId)
+                const id = await getCommerceJsCustomerByExternalID(session.data.user.email)
                 if (id) {
                     const allOrders = await getCommerceJsCustomerOrdersById(id)
                     if (allOrders && allOrders.length > 0) {
                         const orderInfo = allOrders.map(order => {
+                            console.log(order);
                             return {
-                                id: order.id,
+                                id: order.customer_reference,
                                 total: order.order_value.formatted_with_symbol,
-                                status_payment: order.status_payment || "123",
+                                status_payment: order.status,
+                                fulfillment: order.status_fulfillment,
                             }
                         })
                         setIsLoading(false)
@@ -63,7 +64,8 @@ const Orders = () => {
                         <TableHeader>
                             <TableRow>
                                 <TableHead >orderID</TableHead>
-                                <TableHead>Status</TableHead>
+                                <TableHead>Payment Status</TableHead>
+                                <TableHead>Fulfillment</TableHead>
                                 <TableHead>Total</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -72,6 +74,7 @@ const Orders = () => {
                                 <TableRow key={invoice.id}>
                                     <TableCell className="font-medium">{invoice.id}</TableCell>
                                     <TableCell>{invoice.status_payment}</TableCell>
+                                    <TableCell>{invoice.fulfillment}</TableCell>
                                     <TableCell>{invoice.total}</TableCell>
                                 </TableRow>
                             ))

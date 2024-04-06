@@ -165,11 +165,11 @@ export const isEmailAlreadyExist = async (email) => {
 
 export const getSanityUserExternalIdByEmail = async (email) => {
     try {
-        const query = `*[_type == "users" && email == $email]{external_id}`;
+        const query = `*[_type == "users" && email == $email]{email,firstname,lastname,street_address,city,zip_code,country}`;
         const params = { email };
         const matchingUsers = await client.fetch(query, params);
-        if (matchingUsers.length > 0 && matchingUsers[0].external_id) {
-            return matchingUsers[0].external_id
+        if (matchingUsers.length > 0 && matchingUsers[0].email) {
+            return matchingUsers[0]
         } else {
             return false;
         }
@@ -597,6 +597,31 @@ export const getCommerceJsCustomerOrdersById = async (id) => {
             return null
         }
 
+    } catch (e) {
+        console.log("something went wrong while getCommerceJsCustomerOrdersById");
+    }
+}
+
+
+export const getOrderByOrderId = async (id) => {
+    try {
+        const res = await axios.get(`${BASE_URL}/orders/${id}`,
+            {
+                headers: {
+                    'X-Authorization': process.env.NEXT_PUBLIC_CHEC_PUBLIC_API_KEY,
+                    'Content-Type': 'application/json',
+                }
+            }
+        )
+        if (res && res.data) {
+            const { data } = res
+            console.log(data);
+            if (data && data.status) {
+                return data
+            }
+        } else {
+            return null
+        }
     } catch (e) {
         console.log("something went wrong while getCommerceJsCustomerOrdersById");
     }

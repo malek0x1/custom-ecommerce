@@ -4,11 +4,12 @@ import TextField from "@/components/TextField"
 import { CHECKOUT_PAGE_FIELDS, MANUAL_GATEWAY } from "@/lib/data"
 import { useEffect, useState } from "react"
 import { useEcommerceContext } from "@/lib/context/context"
-import { checkDiscountCode, fetchShippingCountries, fetchShippingOptions, fetchSubdivisions, generateCheckoutToken } from "@/lib/helpers"
+import { checkDiscountCode, fetchShippingCountries, fetchShippingOptions, fetchSubdivisions, generateCheckoutToken, getSanityUserExternalIdByEmail } from "@/lib/helpers"
 import SelectSkeleton from "@/components/Pages/Checkout/SelectSkeleton"
 import OrderSummary from "@/components/OrderSummary"
 import Radio from "@/components/Radio"
 import Spinner from "@/components/Spinner"
+import commerce from "../../lib/commerce"
 import { useRouter } from "next/router"
 import { useSession } from "next-auth/react"
 
@@ -18,6 +19,7 @@ const Checkout = () => {
     const router = useRouter()
     const [checkoutData, setCheckoutData] = useState({})
     const [isFormSubmitLoading, setIsFormSubmitLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
     const [isDiscountLoading, setIsDiscountLoading] = useState(false)
     const [discountStatusMessage, setDiscountStatusMessage] = useState({
         status: "",
@@ -28,7 +30,8 @@ const Checkout = () => {
         chosenCountryState: "",
         chosenShippingOption: "",
         chosenGateway: "",
-        discount: ""
+        discount: "",
+
     })
     const [isLoading, setIsLoading] = useState({
         countries: true,
@@ -87,11 +90,74 @@ const Checkout = () => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsFormSubmitLoading(true)
-        await clearCartState()
-        router.push("/order-confirmation")
+        const payment = {
+            payment: {
+                gateway: 'test_gateway',
+                card: {
+                    number: '4242424242424242',
+                    expiry_month: '02',
+                    expiry_year: '24',
+                    cvc: '123',
+                    postal_zip_code: '94107',
+                }
+            }
+        }
+
+
+
+        try {
+            const orderResponse = await commerce.checkout.capture(checkoutData.id, {
+                line_items: checkoutData.line_items,
+                customer: {
+                    firstname: formData.firstname,
+                    lastname: formData.lastname,
+                    email: formData.email,
+                    external_id: formData.email
+                },
+                shipping: {
+                    name: `${formData.firstname} ${formData.lastname}`,
+                    street: formData.street_address,
+                    town_city: formData.city,
+                    county_state: formData.chosenCountryState,
+                    postal_zip_code: formData.zip,
+                    country: formData.chosenCountry
+                },
+                fulfillment: {
+                    shipping_method: formData.chosenShippingOption
+                },
+                billing: {
+                    name: 'John Doe',
+                    street: '234 Fake St',
+                    town_city: 'San Francisco',
+                    county_state: 'US-CA',
+                    postal_zip_code: '94103',
+                    country: 'US'
+                },
+                ...payment,
+            })
+            router.push(`/order-confirmation/${orderResponse.id}`);
+
+
+        } catch {
+            setErrorMessage("Something went wrong")
+        }
+
+
+
+
+
+        setIsFormSubmitLoading(false)
+
+
+        return
+
+
+
+
     }
 
     const handleDiscount = async () => {
@@ -127,6 +193,30 @@ const Checkout = () => {
 
         return () => clearTimeout(timeoutId);
     }, [formData.discount]);
+
+    // prefill form
+    useEffect(() => {
+        const handlePrefillForm = async () => {
+            if (session.status == "authenticated") {
+                const { email } = session.data.user
+                const getSanityUser = await getSanityUserExternalIdByEmail(email)
+                const fieldsStructure = {
+                    firstname: getSanityUser.firstname || "",
+                    lastname: getSanityUser.lastname || "",
+                    street_address: getSanityUser.street_address || "",
+                    city: getSanityUser.city || "",
+                    zip: getSanityUser.zip_code || "",
+                    email
+                }
+                setFormData({ ...formData, ...fieldsStructure });
+
+            }
+        }
+        handlePrefillForm()
+
+    }, [session.status])
+
+
     return (
         <Layout
             title="Checkout"
@@ -146,14 +236,13 @@ const Checkout = () => {
                     <TextField
                         onChange={handleInputChange}
                         key={field.id}
+                        value={formData[field.name]}
                         name={field.name}
                         required={field.required}
                         placeholder={field?.placeholder}
                         type={field.type}
                     />
                 )}
-
-
                 {isHaveDiscount ? (
                     <div className="" >
                         <div className="relative">
@@ -252,7 +341,9 @@ const Checkout = () => {
                 }
                 <p className="text-xs">Payment Options</p>
                 <Radio name="chosenGateway" gateways={MANUAL_GATEWAY} setFormData={setFormData} />
-
+                {errorMessage && (
+                    <p>{errorMessage}</p>
+                )}
                 <Button
                     disabled={!formData.chosenCountry || !formData.chosenCountryState || !formData.chosenShippingOption || !formData.chosenGateway}
                     label={isFormSubmitLoading ? <Spinner color="white" /> : "Submit"}
