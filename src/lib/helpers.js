@@ -601,6 +601,27 @@ export const getCommerceJsCustomerOrdersById = async (id) => {
         console.log("something went wrong while getCommerceJsCustomerOrdersById");
     }
 }
+export const updateCustomerCommerceJsInfo = async (id, data) => {
+    try {
+        const res = await axios.put(`${BASE_URL}/customers/${id}`, data,
+            {
+                headers: {
+                    'X-Authorization': process.env.NEXT_PUBLIC_CHEC_PUBLIC_API_KEY,
+                    'Content-Type': 'application/json',
+                }
+            }
+        )
+        if (res && res.data && res.data.id) {
+            return true
+        }
+        else {
+            return null
+        }
+
+    } catch (e) {
+        console.log("something went wrong while updateCustomerCommerceJsInfo");
+    }
+}
 
 
 export const getOrderByOrderId = async (id) => {

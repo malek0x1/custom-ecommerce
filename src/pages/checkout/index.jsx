@@ -4,7 +4,7 @@ import TextField from "@/components/TextField"
 import { CHECKOUT_PAGE_FIELDS, MANUAL_GATEWAY } from "@/lib/data"
 import { useEffect, useState } from "react"
 import { useEcommerceContext } from "@/lib/context/context"
-import { checkDiscountCode, fetchShippingCountries, fetchShippingOptions, fetchSubdivisions, generateCheckoutToken, getSanityUserExternalIdByEmail } from "@/lib/helpers"
+import { checkDiscountCode, fetchShippingCountries, fetchShippingOptions, fetchSubdivisions, generateCheckoutToken, getSanityUserExternalIdByEmail, updateCustomerCommerceJsInfo } from "@/lib/helpers"
 import SelectSkeleton from "@/components/Pages/Checkout/SelectSkeleton"
 import OrderSummary from "@/components/OrderSummary"
 import Radio from "@/components/Radio"
@@ -139,10 +139,27 @@ const Checkout = () => {
                 },
                 ...payment,
             })
-            router.push(`/order-confirmation/${orderResponse.id}`);
+
+            // 
+            try {
+                const res = await updateCustomerCommerceJsInfo(orderResponse.customer.id, { external_id: formData.email })
+                if (res) {
+                    await clearCartState()
+                    router.push(`/order-confirmation/${orderResponse.id}`);
+                } else {
+                    setErrorMessage("Something went wrong updating user info")
+                }
+                return
+            } catch (e) {
+                console.log(e);
+            }
 
 
-        } catch {
+
+
+
+
+        } catch (e) {
             setErrorMessage("Something went wrong")
         }
 

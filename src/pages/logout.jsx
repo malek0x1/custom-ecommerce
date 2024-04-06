@@ -8,12 +8,14 @@ import Spinner from "@/components/Spinner";
 const Logout = () => {
 
     const router = useRouter()
+    const { clearCartState } = useEcommerceContext()
     useEffect(() => {
         const handleSignOut = async () => {
             try {
                 await signOut({
                     redirect: false
                 });
+                await clearCartState()
                 await commerce.customer.logout();
                 router.push("/")
             } catch (error) {
