@@ -623,6 +623,16 @@ export const updateCustomerCommerceJsInfo = async (id, data) => {
     }
 }
 
+export async function newsletterSubscribeEmail(email) {
+    try {
+        const response = await axios.post(`/api/email/newsletter`, {
+            email
+        });
+        return response.data
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
 
 export const getOrderByOrderId = async (id) => {
     try {

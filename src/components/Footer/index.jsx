@@ -61,13 +61,12 @@ import { CircleArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getAllPagesSlugs } from "@/lib/helpers";
 import { Rest_DEMO_NAVIGATION_2 } from "@/lib/data";
+import NewsLetterForm from "../NewsLetter";
 
 const Footer = () => {
     const [pages, setPages] = useState(null)
 
-    const handleNewsLetter = () => {
-        alert("SUBMITTED");
-    };
+
 
     useEffect(() => {
         const fetchPages = async () => {
@@ -80,19 +79,7 @@ const Footer = () => {
     return (
         <div className='bg-gray-50'>
             <div className="container">
-                <div
-                    style={{
-                        maxWidth: "600px"
-                    }}
-                    className="flex py-4 m-auto justify-center w-full flex-col gap-3">
-                    <p className='text-center text-md mb-2'>Join Our Newsletter</p>
-                    <div className="flex w-full relative" style={{ height: "3rem" }}>
-                        <TextField type='email' placeholder='Email Address' />
-                        <div className="absolute right-3 top-3 cursor-pointer" onClick={handleNewsLetter}>
-                            <CircleArrowRight size={20} />
-                        </div>
-                    </div>
-                </div>
+                <NewsLetterForm />
 
                 <div className="mt-8 flex flex-wrap justify-between gap-6">
                     <FooterCol title="About us" >

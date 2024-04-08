@@ -33,3 +33,7 @@ export const CONTACT_SCHEMA = z.object({
 export const FORGOT_PASSWORD_SCHEMA = z.object({
     email: z.string().email('Invalid email format').min(1, 'Email is required'),
 });
+
+export const NewsLetter_SCHEMA = z.object({
+    email: z.string().email('Invalid email format').min(1, 'Email is required'),
+});

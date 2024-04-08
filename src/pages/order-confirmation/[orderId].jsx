@@ -30,13 +30,13 @@ const OrderConfirmation = () => {
         <Layout description="" title="">
             <div className="container mb-10 py-10 max-w-3xl">
                 <div className="flex items-center justify-center flex-col gap-10">
+                    <h3 className="text-xl ">Order Recieved</h3>
                     <Image
                         alt="success"
                         src="/assets/icons/order-success.svg"
                         width={80}
                         height={80}
                     />
-                    <h3 className="text-xl ">Order Recieved</h3>
 
                     Your order Details
 

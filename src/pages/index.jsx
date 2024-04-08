@@ -24,8 +24,8 @@ export default function Home() {
   }, [])
   return (
     <Layout
-      title="test"
-      description="test"
+      title="Samia Store | Home"
+      description=""
       isFooter={!isFullLoading}
     >
 

@@ -10,6 +10,7 @@ import Layout from "@/components/Layout"
 import Skeleton from "react-loading-skeleton"
 import { useEcommerceContext } from "@/lib/context/context"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import ProductsCarousel from "@/components/ProductsCarousel"
 
 
 
@@ -79,6 +80,8 @@ const Product = () => {
         })
     }, [api])
 
+
+
     return (
         <Layout
             title={product?.name || "Product Page"}
@@ -112,12 +115,12 @@ const Product = () => {
                         <div className="">
                             <div className="flex items-center gap-10 flex-wrap sm:flex-nowrap ">
                                 <div className="w-full ">
-                                    {/* <div className="max-w-40 flex sm:flex-col flex-row space-x-2">
-                                        {gallery.length > 0 && gallery.map(item => (
-                                            
+                                    {/*
+                                     <div className="max-w-40 flex sm:flex-col flex-row space-x-2">
+                                    {gallery.length > 0 && gallery.map(item => ( 
                                         ))}
-                                    </div> */}
-
+                                    </div> 
+                                    */}
                                     <Carousel
                                         setApi={setApi}
                                         opts={{
@@ -185,6 +188,9 @@ const Product = () => {
                                     <p dangerouslySetInnerHTML={{ __html: product.description }} />
                                 </div>
                             </div>
+                            {product.categories.length > 0 && (
+                                <ProductsCarousel collection={product.categories[0].slug} />
+                            )}
                         </div>
                     )
                 }
