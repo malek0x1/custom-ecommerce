@@ -9,6 +9,7 @@ import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carouse
 import CartIcon from "@/components/SvgComponents/Cart";
 
 export default function Home() {
+
   const [isFullLoading, setIsFullLoading] = useState(true)
   const [pageData, setPageData] = useState(null)
 

@@ -1,10 +1,10 @@
 import { useEcommerceContext } from "@/lib/context/context";
-import { Sheet, SheetClose, SheetContent, SheetHeader } from "../ui/sheet"
-import MobileNavItem from "./MobileNavItem"
+import { Sheet, SheetClose, SheetContent, SheetHeader } from "../ui/sheet";
+import MobileNavItem from "./MobileNavItem";
 import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { First_Issential_NAVIGATION, LoggedInNavigations, LoggedOutNavigations } from "@/lib/data";
+import { LoggedInNavigations, LoggedOutNavigations } from "@/lib/data";
 
 const MobileNav = ({ isOpen, setIsOpen }) => {
     const { categories } = useEcommerceContext()
@@ -12,9 +12,12 @@ const MobileNav = ({ isOpen, setIsOpen }) => {
 
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen} >
-            <SheetContent side="left" className="mobileNavbar flex flex-col ">
+            <SheetContent
+
+                onOpenAutoFocus={(e) => e.preventDefault()}
+                side="left" className="mobileNavbar flex flex-col ">
                 <SheetHeader className="text-left">
-                    <SheetClose className="w-fit" >
+                    <SheetClose className="w-fit"  >
                         <Image
                             src="/assets/icons/close.svg"
                             unoptimized

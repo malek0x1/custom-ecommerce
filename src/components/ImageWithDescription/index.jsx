@@ -17,8 +17,6 @@ const ImageWithDescription = ({ img, title, description, btnLabel }) => {
             </div>
             <div className="flex p-8 md:p-10 flex-col justify-between bg-gray-50 w-full text-white gap-8">
                 <AnimatedComponent>
-
-
                     <p className="text-3xl w-60 text-gray-900">
                         {title}
                     </p>
