@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import Button from '../Button'
+import { motion } from "framer-motion"
+import AnimatedComponent from '../AnimationComponent'
 
 const ImageWithDescription = ({ img, title, description, btnLabel }) => {
     return (
@@ -14,14 +16,23 @@ const ImageWithDescription = ({ img, title, description, btnLabel }) => {
                 />
             </div>
             <div className="flex p-8 md:p-10 flex-col justify-between bg-gray-50 w-full text-white gap-8">
-                <p className="text-3xl w-60 text-gray-900">
-                    {title}
-                </p>
-                <div className="grid gap-4 text-gray-800">
-                    <p className="max-w-80">
-                        {description}
+                <AnimatedComponent>
+
+
+                    <p className="text-3xl w-60 text-gray-900">
+                        {title}
                     </p>
-                    <Button className="  hover:bg-gray-300 md:w-80" label={btnLabel || 'Discover More'} />
+                </AnimatedComponent>
+                <div className="grid gap-4 text-gray-800">
+                    <AnimatedComponent>
+                        <p className="max-w-80">
+                            {description}
+                        </p>
+                    </AnimatedComponent>
+                    <AnimatedComponent>
+
+                        <Button className="  hover:bg-gray-300 md:w-80" label={btnLabel || 'Discover More'} />
+                    </AnimatedComponent>
                 </div>
             </div>
         </div>

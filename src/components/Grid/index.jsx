@@ -64,7 +64,7 @@ const Grid = ({ collection, amount = 4 }) => {
 
                         <div className="flex flex-wrap mt-4">
                             {products.map(product => (
-                                <div key={product.id} className="sm:w-1/3 w-1/2  px-0.5">
+                                <div key={product.id} className="sm:w-1/4 w-1/2  px-0.5">
                                     <ProductCard product={product} />
                                 </div>
                             ))}
