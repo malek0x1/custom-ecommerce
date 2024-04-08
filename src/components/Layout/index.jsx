@@ -46,7 +46,7 @@ const Layout = ({ title, description, keywords, children, isFooter = true, isHea
                 <Search isOpen={isSearchOpened} setIsOpen={setIsSearchOpened} />
 
                 {isHeader && isLoading ? <Skeleton duration={0.8} count={1} height={33} className="w-full m-0" containerClassName="flex" /> :
-                    settings.announcement && <AnnouncementBar message={settings.announcement} />}
+                    settings?.announcement && <AnnouncementBar message={settings?.announcement} />}
 
                 {isHeader && (
 
