@@ -62,11 +62,10 @@ import { useEffect, useState } from "react";
 import { getAllPagesSlugs } from "@/lib/helpers";
 import { Rest_DEMO_NAVIGATION_2 } from "@/lib/data";
 import NewsLetterForm from "../NewsLetter";
+import Spinner from "../Spinner";
 
-const Footer = () => {
+const Footer = ({ isSettingsLoading, settings }) => {
     const [pages, setPages] = useState(null)
-
-
 
     useEffect(() => {
         const fetchPages = async () => {
@@ -83,9 +82,15 @@ const Footer = () => {
 
                 <div className="mt-8 flex flex-wrap justify-between gap-6">
                     <FooterCol title="About us" >
-                        <p className="text-xs text-gray-600">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est porro deleniti nulla dicta fuga. Suscipit magni alias voluptatem dolore blanditiis, sapiente officia aliquid obcaecati, libero molestias illo doloribus quod! Fuga.</p>
-                    </FooterCol>
+                        {isSettingsLoading
+                            ?
+                            <Spinner color="black" />
+                            :
+                            <p className="text-xs text-gray-600">{settings.about_us}</p>
 
+
+                        }
+                    </FooterCol>
                     <FooterCol title="Usefull Links">
                         {pages && pages.length > 0 && pages.map(item => {
                             if (item.slug.current !== "home-page") {
@@ -104,11 +109,12 @@ const Footer = () => {
                         ))}
                     </FooterCol>
                     <FooterCol title="Social Media" >
-                        {["Tiktok", "Instagram", "Facebook", "Twitter"].map(item =>
-                            <Link prefetch={false} key={item} href={`/${item}`} className='text-xs underline block mb-2 uppercase w-fit'>
-                                {item}
-                            </Link>
-                        )}
+                        {
+                            isSettingsLoading ? <Spinner color="black" /> : settings.social_media_links.map(item =>
+                                <Link prefetch={false} key={item.title} href={`${item.link}`} className='text-xs underline block mb-2 uppercase w-fit'>
+                                    {item.title}
+                                </Link>
+                            )}
                     </FooterCol>
                     <FooterCol title="About us" >
                         <p className="text-xs text-gray-600">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est porro deleniti nulla dicta fuga. Suscipit magni alias voluptatem dolore blanditiis, sapiente officia aliquid obcaecati, libero molestias illo doloribus quod! Fuga.</p>

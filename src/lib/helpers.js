@@ -113,6 +113,20 @@ export const handleChosenVariants = (chosenVariants) => {
 
 // SANITY
 
+export const getSettings = async () => {
+    try {
+        const query = `*[_type == "settings"]`;
+        const matchingPage = await client.fetch(query);
+        if (matchingPage.length > 0) {
+            return matchingPage[0]
+        }
+        return null
+    } catch (error) {
+        console.error("Error checking user :", error);
+        throw new Error("Failed to check user:");
+    }
+};
+
 export const getPageBySlug = async (slug) => {
     try {
         const query = `*[_type == "page" && slug.current == $slug]`;

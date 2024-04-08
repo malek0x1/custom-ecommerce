@@ -5,19 +5,34 @@ import Footer from "../Footer";
 import dynamic from "next/dynamic";
 import AnnouncementBar from "../AnnouncementBar";
 import Cart from "../Cart";
+import { useEffect, useState } from "react";
+import { getSettings } from "@/lib/helpers";
+import Spinner from "../Spinner";
+import Skeleton from "react-loading-skeleton";
 
 const font = Gideon_Roman({ subsets: ["latin"], weight: "400" });
 const Search = dynamic(() => import("@/components/Search"));
 const Navbar = dynamic(() => import("@/components/Navbar"));
 
 const Layout = ({ title, description, keywords, children, isFooter = true, isHeader = true }) => {
-
     const {
         isSearchOpened,
         setIsSearchOpened,
         isCartOpened,
         setIsCartOpened
     } = useEcommerceContext()
+    const [settings, setSettings] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        const handleSettings = async () => {
+            const res = await getSettings()
+            setSettings(res)
+            console.log(res);
+            setIsLoading(false)
+        }
+        handleSettings()
+    }, [])
 
     return (
         <>
@@ -30,8 +45,8 @@ const Layout = ({ title, description, keywords, children, isFooter = true, isHea
                 <Cart isOpen={isCartOpened} setIsOpen={setIsCartOpened} />
                 <Search isOpen={isSearchOpened} setIsOpen={setIsSearchOpened} />
 
-                {isHeader && <AnnouncementBar message="Free Expfress Shipping | Cash on delivery is available" />}
-
+                {isHeader && isLoading ? <Skeleton duration={0.8} count={1} height={33} className="w-full m-0" containerClassName="flex" /> :
+                    settings.announcement && <AnnouncementBar message={settings.announcement} />}
 
                 {isHeader && (
 
@@ -40,7 +55,7 @@ const Layout = ({ title, description, keywords, children, isFooter = true, isHea
                 <div className="flex-1 w-full">
                     {children}
                 </div>
-                {isFooter && <Footer />}
+                {isFooter && <Footer isSettingsLoading={isLoading} settings={settings} />}
             </main>
         </>
     )
