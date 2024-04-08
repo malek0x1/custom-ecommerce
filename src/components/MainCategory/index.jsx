@@ -5,7 +5,7 @@ const MainCategory = ({ title, description, btn_label, img }) => {
     return (
         <div
             style={{
-                backgroundImage: `url("${img}")`
+                backgroundImage: `url("${img}")`,
             }}
             className="home-main-collections relative h-96 flex items-end p-4 ">
             <div className="absolute inset-0 bg-black opacity-15"></div>
