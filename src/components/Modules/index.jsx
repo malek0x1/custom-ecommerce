@@ -32,7 +32,7 @@ export const Module = ({
             />
         case 'featured_category':
             return (
-                <div className="flex flex-wrap sm:flex-nowrap gap-4 justify-between sm:container w-full items-center">
+                <div className="flex main-categories-wrapper flex-wrap sm:flex-nowrap gap-4 justify-between sm:container w-full items-center">
                     {module.items.map(item => (
                         <MainCategory description={item.description} btn_label={item.btn_label} img={urlFor(item.image.asset)} title={item.title} key={item._key} />
                     ))}

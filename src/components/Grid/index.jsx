@@ -5,6 +5,7 @@ import Skeleton from "react-loading-skeleton"
 import ProductCard from "../Card"
 import commerce from "../../lib/commerce"
 import Link from "next/link"
+import AnimatedComponent from "../AnimationComponent"
 
 const Grid = ({ collection, amount = 4 }) => {
     const [isLoading, setIsLoading] = useState(true)
@@ -49,26 +50,26 @@ const Grid = ({ collection, amount = 4 }) => {
 
 
                         <div className="relative flex  justify-between px-2 pt-4 items-center">
-                            <p className="text-left text-lg uppercase tracking-wider">{collection} Collection</p>
+                            <AnimatedComponent>
+                                <p className="text-left text-lg uppercase tracking-wider">{collection} Collection</p>
+                            </AnimatedComponent>
                             <div
                                 style={{
                                     fontSize: "10px"
                                 }}
-                                className="underline  uppercase">
-                                {/* <Link prefetch={false} href={`/collection/${collection}`}>
-                                    Show All
-                                </Link> */}
+                                className="underline uppercase">
                             </div>
                         </div>
 
-
-                        <div className="flex flex-wrap mt-4">
-                            {products.map(product => (
-                                <div key={product.id} className="sm:w-1/4 w-1/2  px-0.5">
-                                    <ProductCard product={product} />
-                                </div>
-                            ))}
-                        </div>
+                        <AnimatedComponent>
+                            <div className="flex flex-wrap mt-4">
+                                {products.map(product => (
+                                    <div key={product.id} className="sm:w-1/4 w-1/2  px-0.5">
+                                        <ProductCard product={product} />
+                                    </div>
+                                ))}
+                            </div>
+                        </AnimatedComponent>
                         <div className="w-full flex justify-center  items-center">
                             <Link href={`/collection/${collection}`}>
                                 <Button label="Show More" className="w-fit px-6 text-xs uppercase mt-6" />

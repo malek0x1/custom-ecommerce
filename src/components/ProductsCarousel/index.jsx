@@ -5,6 +5,7 @@ import ProductCard from '../Card'
 import SkeletonCard from '../Card/SkeletonCard'
 import Link from 'next/link'
 import Skeleton from 'react-loading-skeleton'
+import AnimatedComponent from '../AnimationComponent'
 
 const ProductsCarousel = ({ collection }) => {
     const [products, setProducts] = useState([])
@@ -35,35 +36,41 @@ const ProductsCarousel = ({ collection }) => {
                         <Skeleton duration={0.8} count={1} height={20} width={50} />
                     </div>
                 ) : (
-                    <div className="relative flex  justify-between px-2 pt-4 items-center">
-                        <p className="text-left text-lg uppercase tracking-wider">Apple Collection</p>
-                        <div
-                            style={{
-                                fontSize: "10px"
-                            }}
-                            className="underline  uppercase">
-                            <Link prefetch={false} href={`/collection/${collection}`}>
-                                Show All
-                            </Link>
+                    <AnimatedComponent>
+
+                        <div className="relative flex  justify-between px-2 pt-4 items-center">
+                            <p className="text-left text-lg uppercase tracking-wider">Apple Collection</p>
+                            <div
+                                style={{
+                                    fontSize: "10px"
+                                }}
+                                className="underline  uppercase">
+                                <Link prefetch={false} href={`/collection/${collection}`}>
+                                    Show All
+                                </Link>
+                            </div>
                         </div>
-                    </div>
+                    </AnimatedComponent>
                 )
             }
-            <CarouselContent className="ml-1 gap-1 mt-4 items-center">
-                {isLoading ?
-                    [1, 2, 3, 4].map(item => (
-                        <CarouselItem key={item} className="lg:basis-1/4 pl-0 basis-1/2">
-                            <SkeletonCard />
-                        </CarouselItem>
-                    ))
-                    : products.length > 0 &&
-                    products.map(item => (
-                        <CarouselItem key={item.id} className="lg:basis-1/4 pl-0 basis-1/2">
-                            <ProductCard product={item} />
-                        </CarouselItem>
-                    ))
-                }
-            </CarouselContent>
+            <AnimatedComponent>
+
+                <CarouselContent className="ml-1 gap-1 mt-4 items-center">
+                    {isLoading ?
+                        [1, 2, 3, 4].map(item => (
+                            <CarouselItem key={item} className="lg:basis-1/4 pl-0 basis-1/2">
+                                <SkeletonCard />
+                            </CarouselItem>
+                        ))
+                        : products.length > 0 &&
+                        products.map(item => (
+                            <CarouselItem key={item.id} className="lg:basis-1/4 pl-0 basis-1/2">
+                                <ProductCard product={item} />
+                            </CarouselItem>
+                        ))
+                    }
+                </CarouselContent>
+            </AnimatedComponent>
         </Carousel>
     )
 }

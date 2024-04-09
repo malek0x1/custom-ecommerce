@@ -7,13 +7,16 @@ const ImageWithDescription = ({ img, title, description, btnLabel }) => {
     return (
         <div className="flex justify-between w-full flex-wrap-reverse md:flex-nowrap my-4">
             <div className="">
-                <Image
-                    src={img}
-                    height={600}
-                    loading="eager"
-                    alt=""
-                    width={600}
-                />
+                <AnimatedComponent>
+
+                    <Image
+                        src={img}
+                        height={600}
+                        loading="eager"
+                        alt=""
+                        width={600}
+                    />
+                </AnimatedComponent>
             </div>
             <div className="flex p-8 md:p-10 flex-col justify-between bg-gray-50 w-full text-white gap-8">
                 <AnimatedComponent>
