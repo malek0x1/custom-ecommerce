@@ -2,6 +2,7 @@
 import { urlFor } from '@/lib/sanity'
 import { Carousel, CarouselContent, CarouselItem } from '../ui/carousel'
 import HeroPicture from '../Picture'
+import AnimatedComponent from '../AnimationComponent'
 
 
 const Hero = ({ mobileImageUrl, desktopImageUrl }) => {
@@ -9,12 +10,15 @@ const Hero = ({ mobileImageUrl, desktopImageUrl }) => {
         <Carousel>
             <CarouselContent >
                 <CarouselItem className=" pl-0">
-                    <div className="bg-gray-300 w-full hero-wrapper">
-                        <HeroPicture
-                            desktopSrc={urlFor(desktopImageUrl.asset)}
-                            mobileSrc={urlFor(mobileImageUrl.asset)}
-                        />
-                    </div>
+                    <AnimatedComponent>
+
+                        <div className="bg-gray-300 w-full hero-wrapper">
+                            <HeroPicture
+                                desktopSrc={urlFor(desktopImageUrl.asset)}
+                                mobileSrc={urlFor(mobileImageUrl.asset)}
+                            />
+                        </div>
+                    </AnimatedComponent>
                 </CarouselItem>
 
             </CarouselContent>
