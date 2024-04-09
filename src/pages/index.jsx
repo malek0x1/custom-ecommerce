@@ -38,8 +38,8 @@ export default function Home() {
         }
         <div className="flex flex-col bg-gray-50 sm:flex-row justify-between items-center gap-10 py-10">
           {[1, 2, 3, 4].map(item => (
-            <AnimatedComponent>
-              <div key={item} className="flex-1 text-center flex px-3 justify-center items-center gap-3 flex-col">
+            <AnimatedComponent key={item}>
+              <div className="flex-1 text-center flex px-3 justify-center items-center gap-3 flex-col">
                 <CartIcon
                   fill="#c47961"
                 />
