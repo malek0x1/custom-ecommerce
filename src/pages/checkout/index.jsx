@@ -241,130 +241,139 @@ const Checkout = () => {
             isFooter={false}
             isHeader={false}
         >
-            <form onSubmit={handleSubmit} className="container grid gap-3 mx-auto max-w-md px-4 py-8">
-                <OrderSummary
-                    discount={checkoutData.discount && checkoutData.discount.length === 0 ? null : checkoutData.discount}
-                    cartItems={checkoutData.line_items}
-                    chosenShippingOption={formData.chosenShippingOption}
-                    checkoutData={checkoutData}
-                    allShippingOptions={shippingOptions}
-                />
-                {CHECKOUT_PAGE_FIELDS.map(field =>
-                    <TextField
-                        onChange={handleInputChange}
-                        key={field.id}
-                        value={formData[field.name]}
-                        name={field.name}
-                        required={field.required}
-                        placeholder={field?.placeholder}
-                        type={field.type}
-                    />
-                )}
-                {isHaveDiscount ? (
-                    <div className="" >
-                        <div className="relative">
+            <form onSubmit={handleSubmit} className="container mb-10">
+                <div className="flex flex-col sm:flex-row sm:gap-14 justify-between sm:flex">
 
+                    <div className="grid gap-3 flex-1 order-2 sm:py-10 sm:order-1">
+                        {CHECKOUT_PAGE_FIELDS.map(field =>
                             <TextField
                                 onChange={handleInputChange}
-                                name='discount'
-                                placeholder="Discount"
-                                type="text"
+                                key={field.id}
+                                value={formData[field.name]}
+                                name={field.name}
+                                required={field.required}
+                                placeholder={field?.placeholder}
+                                type={field.type}
                             />
-                            {isDiscountLoading && <div className="absolute right-3 top-3">
-                                <Spinner color="black" />
+                        )}
+                        {isHaveDiscount ? (
+                            <div className="" >
+                                <div className="relative">
+
+                                    <TextField
+                                        onChange={handleInputChange}
+                                        name='discount'
+                                        placeholder="Discount"
+                                        type="text"
+                                    />
+                                    {isDiscountLoading && <div className="absolute right-3 top-3">
+                                        <Spinner color="black" />
+                                    </div>
+                                    }
+                                </div>
+                                {discountStatusMessage.status == "success" ?
+                                    <p className="text-xs text-green-500 mt-2">{discountStatusMessage.message}</p> :
+                                    <p className="text-xs text-red-500 mt-2">{discountStatusMessage.message}</p>
+                                }
                             </div>
-                            }
-                        </div>
-                        {discountStatusMessage.status == "success" ?
-                            <p className="text-xs text-green-500 mt-2">{discountStatusMessage.message}</p> :
-                            <p className="text-xs text-red-500 mt-2">{discountStatusMessage.message}</p>
+                        ) :
+                            <p
+                                onClick={() => setIsHaveDiscount(true)}
+                                className="text-xs w-fit underline">have discount code?</p>
                         }
+
+                        {isLoading.countries && Object.keys(countries).length == 0 ? (
+                            <SelectSkeleton />
+                        ) :
+                            (
+                                <>
+                                    <p className="text-xs">Country</p>
+                                    <select
+                                        onChange={handleInputChange}
+                                        value={formData.chosenCountry}
+                                        name="chosenCountry"
+                                        className="p-2.5 w-full"
+                                    >
+                                        <option value="">-- Choose Country --</option>
+
+                                        {Object.keys(countries).map(cntry => (
+                                            <option key={cntry} value={cntry}>{countries[cntry]}</option>
+                                        ))}
+                                    </select>
+                                </>
+
+                            )
+                        }
+                        {
+                            formData.chosenCountry ?
+                                isLoading.states ? (<SelectSkeleton />) :
+                                    (
+                                        <>
+                                            <p className="text-xs">State</p>
+                                            <select
+                                                onChange={handleInputChange}
+                                                value={formData.chosenCountryState}
+                                                name="chosenCountryState"
+                                                className="p-2.5 w-full"
+                                            >
+                                                <option value="">-- Choose State --</option>
+                                                {Object.keys(countryStates).map(countryStateItem => (
+                                                    <option key={countryStateItem} value={countryStateItem}>{countryStates[countryStateItem]}</option>
+                                                ))}
+                                            </select>
+                                        </>
+                                    )
+                                : <></>
+                        }
+
+
+                        {
+                            formData.chosenCountryState ?
+                                isLoading.shipping
+                                    ? (<SelectSkeleton />) :
+                                    (
+                                        <>
+
+                                            <p className="text-xs">Shipping Options</p>
+                                            <select
+                                                onChange={handleInputChange}
+                                                value={formData.chosenShippingOption}
+                                                name="chosenShippingOption"
+                                                className="p-2.5 w-full"
+                                            >
+                                                <option value="">-- Choose Shipping Option --</option>
+                                                {shippingOptions.map(item => (
+                                                    <option key={item.id} value={item.id}>
+                                                        {item.price.formatted_with_symbol}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </>
+                                    )
+                                : <></>
+                        }
+                        <p className="text-xs">Payment Options</p>
+                        <Radio name="chosenGateway" gateways={MANUAL_GATEWAY} setFormData={setFormData} />
+                        {errorMessage && (
+                            <p>{errorMessage}</p>
+                        )}
+                        <Button
+                            disabled={!formData.chosenCountry || !formData.chosenCountryState || !formData.chosenShippingOption || !formData.chosenGateway}
+                            label={isFormSubmitLoading ? <Spinner color="white" /> : "Submit"}
+                            className="w-full"
+                        />
                     </div>
-                ) :
-                    <p
-                        onClick={() => setIsHaveDiscount(true)}
-                        className="text-xs underline">have discount code?</p>
-                }
 
-                {isLoading.countries && Object.keys(countries).length == 0 ? (
-                    <SelectSkeleton />
-                ) :
-                    (
-                        <>
-                            <p className="text-xs">Country</p>
-                            <select
-                                onChange={handleInputChange}
-                                value={formData.chosenCountry}
-                                name="chosenCountry"
-                                className="p-2.5 w-full"
-                            >
-                                <option value="">-- Choose Country --</option>
-
-                                {Object.keys(countries).map(cntry => (
-                                    <option key={cntry} value={cntry}>{countries[cntry]}</option>
-                                ))}
-                            </select>
-                        </>
-
-                    )
-                }
-                {
-                    formData.chosenCountry ?
-                        isLoading.states ? (<SelectSkeleton />) :
-                            (
-                                <>
-                                    <p className="text-xs">State</p>
-                                    <select
-                                        onChange={handleInputChange}
-                                        value={formData.chosenCountryState}
-                                        name="chosenCountryState"
-                                        className="p-2.5 w-full"
-                                    >
-                                        <option value="">-- Choose State --</option>
-                                        {Object.keys(countryStates).map(countryStateItem => (
-                                            <option key={countryStateItem} value={countryStateItem}>{countryStates[countryStateItem]}</option>
-                                        ))}
-                                    </select>
-                                </>
-                            )
-                        : <></>
-                }
-
-
-                {
-                    formData.chosenCountryState ?
-                        isLoading.shipping
-                            ? (<SelectSkeleton />) :
-                            (
-                                <>
-
-                                    <p className="text-xs">Shipping Options</p>
-                                    <select
-                                        onChange={handleInputChange}
-                                        value={formData.chosenShippingOption}
-                                        name="chosenShippingOption"
-                                        className="p-2.5 w-full"
-                                    >
-                                        <option value="">-- Choose Shipping Option --</option>
-                                        {shippingOptions.map(item => (
-                                            <option key={item.id} value={item.id}>
-                                                {item.price.formatted_with_symbol}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </>
-                            )
-                        : <></>
-                }
-                <p className="text-xs">Payment Options</p>
-                <Radio name="chosenGateway" gateways={MANUAL_GATEWAY} setFormData={setFormData} />
-                {errorMessage && (
-                    <p>{errorMessage}</p>
-                )}
-                <Button
-                    disabled={!formData.chosenCountry || !formData.chosenCountryState || !formData.chosenShippingOption || !formData.chosenGateway}
-                    label={isFormSubmitLoading ? <Spinner color="white" /> : "Submit"}
-                    className="w-full" />
+                    <div className="flex-1 order-1 sm:order-2 py-10 px-4 sm:bg-gray-50">
+                        <OrderSummary
+                            discount={checkoutData.discount && checkoutData.discount.length === 0 ? null : checkoutData.discount}
+                            cartItems={checkoutData.line_items}
+                            chosenShippingOption={formData.chosenShippingOption}
+                            checkoutData={checkoutData}
+                            allShippingOptions={shippingOptions}
+                        />
+                    </div>
+                </div>
 
             </form>
         </Layout>

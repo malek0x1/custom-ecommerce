@@ -52,8 +52,8 @@ const Login = () => {
     }
     return (
         <Layout
-            title="test"
-            description="test"
+            title="Signup Page"
+            description=""
         >
             <div
                 style={{ maxWidth: "500px", minHeight: "70vh" }}

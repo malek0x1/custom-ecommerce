@@ -28,7 +28,6 @@ const Layout = ({ title, description, keywords, children, isFooter = true, isHea
         const handleSettings = async () => {
             const res = await getSettings()
             setSettings(res)
-            console.log(res);
             setIsLoading(false)
         }
         handleSettings()
@@ -44,7 +43,7 @@ const Layout = ({ title, description, keywords, children, isFooter = true, isHea
             <main className={`flex flex-col w-full min-h-screen ${font.className}`}>
                 <Cart isOpen={isCartOpened} setIsOpen={setIsCartOpened} />
                 <Search isOpen={isSearchOpened} setIsOpen={setIsSearchOpened} />
-                <AnnouncementBar message={"WELCOME TO OUR STORE"} />
+                {isHeader && <AnnouncementBar message={"WELCOME TO OUR STORE"} />}
                 {/* {isHeader
                     &&
                     (isLoading ?

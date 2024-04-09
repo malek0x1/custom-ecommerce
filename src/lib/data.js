@@ -75,5 +75,31 @@ export const Rest_DEMO_NAVIGATION = [
 ]
 export const Rest_DEMO_NAVIGATION_2 = [
     { id: 3, name: "Contact us", slug: "contact-us" },
-    { id: 4, name: "Policies", slug: "Policies" },
+]
+
+export const HOME_COLS_DATA = [
+    {
+        id: 1,
+        title: "Best Quality",
+        subtitle: "We source our products from trusted suppliers to ensure the highest quality. Your satisfaction is our priority",
+        icon: "/"
+    },
+    {
+        id: 1,
+        title: "24/7 Customer Support",
+        subtitle: "Have questions or need assistance? Our friendly customer support team is available around the clock to help you",
+        icon: "/"
+    },
+    {
+        id: 1,
+        title: "Wide Selection",
+        subtitle: "Explore our extensive range of products, from everyday essentials to unique finds. There's something for everyone!",
+        icon: "/"
+    },
+    {
+        id: 1,
+        title: "Best Quality",
+        subtitle: "We source our products from trusted suppliers to ensure the highest quality. Your satisfaction is our priority",
+        icon: "/"
+    },
 ]

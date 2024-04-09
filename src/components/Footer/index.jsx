@@ -76,7 +76,7 @@ const Footer = ({ isSettingsLoading, settings }) => {
     }, [])
 
     return (
-        <div className='bg-gray-50'>
+        <div className='bg-gray-50 py-10'>
             <div className="container">
                 <NewsLetterForm />
 

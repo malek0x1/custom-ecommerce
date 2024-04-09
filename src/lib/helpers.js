@@ -644,7 +644,7 @@ export async function newsletterSubscribeEmail(email) {
         });
         return response.data
     } catch (error) {
-        console.error('Error:', error);
+        throw new Error("Error while subscribing")
     }
 }
 

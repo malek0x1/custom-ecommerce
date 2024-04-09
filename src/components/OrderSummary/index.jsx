@@ -12,6 +12,8 @@ import Spinner from "../Spinner"
 
 const OrderSummary = ({ checkoutData, chosenShippingOption, allShippingOptions, cartItems, discount }) => {
     const [shippingItem, setShippingItem] = useState(null)
+    const [value, setValue] = useState('closed');
+
 
     useEffect(() => {
         const getItem = allShippingOptions.filter(item => item.id == chosenShippingOption)
@@ -20,8 +22,17 @@ const OrderSummary = ({ checkoutData, chosenShippingOption, allShippingOptions, 
         }
     }, [chosenShippingOption])
     const total = (checkoutData?.total?.raw || 0) + (shippingItem?.price?.raw || 0)
+
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const isOpenOnWideScreen = window.screen.width >= 768;
+            setValue(isOpenOnWideScreen ? "item-1" : "closed");
+        }
+    }, [])
+
     return (
-        <Accordion type="single" collapsible>
+        <Accordion type="single" collapsible value={value} onValueChange={setValue}>
             <AccordionItem value="item-1">
                 <AccordionTrigger>
                     <div className="flex w-full items-center justify-between">

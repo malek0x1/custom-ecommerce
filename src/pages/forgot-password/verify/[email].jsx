@@ -80,7 +80,7 @@ const VerifyToken = () => {
     if (isVerified) {
         return (
             <Layout
-                title="test"
+                title="Forgot Password Verify"
                 description="test"
             >
                 <div

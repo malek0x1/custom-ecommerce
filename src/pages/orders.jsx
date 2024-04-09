@@ -49,8 +49,8 @@ const Orders = () => {
     }, [session])
     return (
         <Layout
-            title="test"
-            description="test"
+            title="My Orders"
+            description="My Orders"
         >
             <div
                 style={{ maxWidth: "500px", minHeight: "70vh" }}

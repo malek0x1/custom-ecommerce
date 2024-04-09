@@ -4,7 +4,6 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FORGOT_PASSWORD_SCHEMA } from '@/lib/YupSchemas';
-import Button from '../Button';
 import { useState } from 'react';
 import { CircleArrowRight } from 'lucide-react';
 import Spinner from '../Spinner';
@@ -25,12 +24,15 @@ const NewsLetterForm = () => {
     const onSubmit = async (data) => {
         const { email } = data
         setIsLoading(true)
+        setSuccessMessage("")
+        setErrorMessage("")
         try {
             const res = await newsletterSubscribeEmail(email);
             console.log(res);
             setSuccessMessage("Form Submitted Successfully")
         } catch (e) {
-            setErrorMessage("Form Submitted Successfully")
+
+            setErrorMessage("Something Went Wrong")
             console.log(e);
         }
 

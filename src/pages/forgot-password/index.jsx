@@ -52,7 +52,7 @@ const ForgotPassword = () => {
     }
     return (
         <Layout
-            title="test"
+            title="Forgot Password"
             description="test"
         >
             <div

@@ -5,6 +5,7 @@ import { Module } from '@/components/Modules';
 import CartIcon from "@/components/SvgComponents/Cart";
 import HomeSkeleton from "@/components/HomeSkeleton";
 import AnimatedComponent from "@/components/AnimationComponent";
+import { HOME_COLS_DATA } from "@/lib/data";
 
 export default function Home() {
 
@@ -37,14 +38,14 @@ export default function Home() {
           ))
         }
         <div className="flex flex-col bg-gray-50 sm:flex-row justify-between items-center gap-10 py-10">
-          {[1, 2, 3, 4].map(item => (
-            <AnimatedComponent key={item}>
+          {HOME_COLS_DATA.map(item => (
+            <AnimatedComponent key={item.id}>
               <div className="flex-1 text-center flex px-3 justify-center items-center gap-3 flex-col">
                 <CartIcon
                   fill="#c47961"
                 />
-                <p className="text-lg uppercase">Free Shipping</p>
-                <p className="text-xs text-gray-800 w-10/12" >We Offer Free shipping on all Us orders and all internatiols orders over 150$.</p>
+                <p className="text-lg uppercase">{item.title}</p>
+                <p className="text-xs text-gray-800 w-10/12" >{item.subtitle}</p>
               </div>
             </AnimatedComponent>
           ))}

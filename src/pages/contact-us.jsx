@@ -55,7 +55,7 @@ const Login = () => {
     }
     return (
         <Layout
-            title="test"
+            title="Contact Us"
             description="test"
         >
             <div
