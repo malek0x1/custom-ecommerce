@@ -9,6 +9,7 @@ ShadCn
 Features:
 - fully dynamic website
 - client can dynamically change anything on the website
+  - add sections/components from sanity cms 
   - Create new pages from sanitycms
   - Modify the home page sections from sanitycms
   - Add/Remove products
