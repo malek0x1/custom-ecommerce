@@ -7,7 +7,8 @@ tailwind
 ShadCn
 
 Features:
-- fully dynamic website: client can dynamically change anything on the website
+- fully dynamic website
+- client can dynamically change anything on the website
   - Create new pages from sanitycms
   - Modify the home page sections from sanitycms
   - Add/Remove products
