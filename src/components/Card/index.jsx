@@ -5,7 +5,7 @@ const ProductCard = ({ product }) => {
     return (
         <div className="bg-white overflow-hidden ">
             <Link target='_blank' prefetch={false} href={`/product/${product.permalink}`}>
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-56 overflow-hidden">
                     <Image
                         src={product.image.url}
                         layout="fill"
