@@ -3,13 +3,13 @@ import Link from 'next/link';
 
 const ProductCard = ({ product }) => {
     return (
-        <div className="bg-white overflow-hidden  rounded-md ">
+        <div className="bg-white overflow-hidden ">
             <Link target='_blank' prefetch={false} href={`/product/${product.permalink}`}>
                 <div className="relative h-48 overflow-hidden">
                     <Image
                         src={product.image.url}
                         layout="fill"
-                        objectFit="contain"
+                        objectFit="cover"
                         unoptimized
                         loading="lazy"
                         alt={product.name}
