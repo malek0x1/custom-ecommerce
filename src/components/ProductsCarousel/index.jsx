@@ -18,6 +18,7 @@ const ProductsCarousel = ({ collection }) => {
                 sortBy: "created",
                 sortDirection: "desc"
             })
+            console.log(productsData);
             setProducts(productsData.data)
             setIsLoading(false)
         }
@@ -26,7 +27,6 @@ const ProductsCarousel = ({ collection }) => {
     return (
         <Carousel opts={{
             dragFree: true,
-            containScroll: 'trimSnaps'
         }}>
 
             {
@@ -39,7 +39,7 @@ const ProductsCarousel = ({ collection }) => {
                     <AnimatedComponent>
 
                         <div className="relative flex  justify-between px-2 pt-4 items-center">
-                            <p className="text-left text-lg uppercase tracking-wider">Apple Collection</p>
+                            <p className="text-left text-lg uppercase tracking-wider">{collection} Collection</p>
                             <div
                                 style={{
                                     fontSize: "10px"
