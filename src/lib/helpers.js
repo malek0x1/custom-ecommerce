@@ -453,6 +453,7 @@ export const fetchShippingCountries = async (checkoutId) => {
 
 
     return commerce.services.localeListShippingCountries(checkoutId).then((response) => {
+        console.log(response, "fetching");
         if (response && response.countries) {
             return {
                 countries: response.countries,

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Button from '../Button'
 import { motion } from "framer-motion"
 import AnimatedComponent from '../AnimationComponent'
+import Link from 'next/link'
 
 const ImageWithDescription = ({ img, title, description, btnLabel }) => {
     return (
@@ -32,7 +33,9 @@ const ImageWithDescription = ({ img, title, description, btnLabel }) => {
                     </AnimatedComponent>
                     <AnimatedComponent>
 
-                        <Button className="  hover:bg-gray-300 md:w-80" label={btnLabel || 'Discover More'} />
+                        <Link href="/product/kWq4fu">
+                            <Button className="hover:bg-gray-300 md:w-80" label={btnLabel || 'Discover More'} />
+                        </Link>
                     </AnimatedComponent>
                 </div>
             </div>

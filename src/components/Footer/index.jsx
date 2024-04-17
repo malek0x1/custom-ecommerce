@@ -116,9 +116,9 @@ const Footer = ({ isSettingsLoading, settings }) => {
                                 </Link>
                             )}
                     </FooterCol>
-                    <FooterCol title="About us" >
+                    {/* <FooterCol title="About us" >
                         <p className="text-xs text-gray-600">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est porro deleniti nulla dicta fuga. Suscipit magni alias voluptatem dolore blanditiis, sapiente officia aliquid obcaecati, libero molestias illo doloribus quod! Fuga.</p>
-                    </FooterCol>
+                    </FooterCol> */}
                 </div>
             </div>
         </div>

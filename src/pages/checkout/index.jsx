@@ -51,6 +51,7 @@ const Checkout = () => {
                     setCheckoutData(res)
                     if (res && res.id) {
                         const countriesData = await fetchShippingCountries(res.id)
+                        console.log(countriesData, "Code");
                         if (countriesData && countriesData.countries && Object.keys(countriesData.countries).length > 0) {
                             setCountries(countriesData.countries)
                         }
@@ -232,6 +233,7 @@ const Checkout = () => {
         handlePrefillForm()
 
     }, [session.status])
+    console.log(checkoutData);
 
 
     return (
