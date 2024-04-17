@@ -3,10 +3,10 @@ import { Module } from "@/components/Modules";
 import { getAllPagesSlugs, getPageBySlug } from "@/lib/helpers";
 
 const PageSlug = ({ pageData }) => {
-    console.log(pageData);
+    // console.log(pageData);
 
     getAllPagesSlugs().then(data => {
-        console.log(data);
+        // console.log(data);
     }).catch(e => {
         console.log(e);
     })

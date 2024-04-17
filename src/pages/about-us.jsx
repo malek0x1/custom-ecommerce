@@ -14,7 +14,7 @@ const AboutUs = () => {
             const res = await getPageBySlug("about-us")
             if (res.modules && res.modules.length > 0) {
                 setPageData(res)
-                console.log(res);
+                // console.log(res);
             }
             setIsFullLoading(false)
         }

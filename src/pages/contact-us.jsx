@@ -44,7 +44,7 @@ const Login = () => {
         }
         try {
             const sendMsg = await sendEmailFrontEnd(emailObject.msg, emailObject.fromEmail, emailObject.toEmail, emailObject.subject)
-            console.log(sendMsg);
+            // console.log(sendMsg);
             setSentSuccessfully("Message Sent Successfully")
         }
         catch (e) {

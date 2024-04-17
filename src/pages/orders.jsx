@@ -24,7 +24,7 @@ const Orders = () => {
                     const allOrders = await getCommerceJsCustomerOrdersById(id)
                     if (allOrders && allOrders.length > 0) {
                         const orderInfo = allOrders.map(order => {
-                            console.log(order);
+                            // console.log(order);
                             return {
                                 id: order.customer_reference,
                                 total: order.order_value.formatted_with_symbol,

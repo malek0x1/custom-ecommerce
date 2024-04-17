@@ -199,7 +199,7 @@ export const fetchUserInfo = async (email) => {
         const query = `*[_type == "users" && email == $email]`;
         const params = { email };
         const matchingUsers = await client.fetch(query, params);
-        console.log(matchingUsers);
+        // console.log(matchingUsers);
         if (matchingUsers.length > 0) {
             return matchingUsers[0]
         } else {

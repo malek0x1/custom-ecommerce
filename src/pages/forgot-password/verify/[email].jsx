@@ -46,7 +46,7 @@ const VerifyToken = () => {
                         setIsVerfied(true)
                     }
                 } catch (e) {
-                    console.log(e);
+                    // console.log(e);
                     setErrorMessage("something went wrong")
                 }
 

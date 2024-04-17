@@ -18,7 +18,6 @@ const ProductsCarousel = ({ collection }) => {
                 sortBy: "created",
                 sortDirection: "desc"
             })
-            console.log(productsData);
             setProducts(productsData.data)
             setIsLoading(false)
         }

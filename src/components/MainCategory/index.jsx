@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import AnimatedComponent from '../AnimationComponent'
 import Button from '../Button'
+import Link from 'next/link'
 
 const MainCategory = ({ title, description, btn_label, img }) => {
     return (
@@ -17,7 +18,9 @@ const MainCategory = ({ title, description, btn_label, img }) => {
 
                     <p className="uppercase text-white text-2xl">{title}</p>
                     <p className="uppercase text-gray-100 text-xs w-10/12 my-2">{description}</p>
-                    <Button className="bg-white text-black hover:bg-gray-300 md:w-80" label={btn_label || `SHOP NOW`} />
+                    <Link href="#">
+                        <Button className="bg-white text-black hover:bg-gray-300 md:w-80" label={btn_label || `SHOP NOW`} />
+                    </Link>
                 </AnimatedComponent>
             </div>
         </div>
