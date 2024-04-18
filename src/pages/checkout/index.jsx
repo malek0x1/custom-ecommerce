@@ -233,7 +233,6 @@ const Checkout = () => {
         handlePrefillForm()
 
     }, [session.status])
-    // console.log(checkoutData);
 
 
     return (
