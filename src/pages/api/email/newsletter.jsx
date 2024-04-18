@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const subscribeWithEmail = async (email) => {
-    const url = `https://xyz.us10.list-manage.com/subscribe/post-json?u=${process.env.NEXT_PUBLIC_MAILCHIMP_NEWSLETTER_KEY}&id=f4770769df&f_id=0037c6e1f0&EMAIL=${encodeURIComponent(email)}&c=__jp2`;
+    const url = `https://xyz.us10.list-manage.com/subscribe/post-json?u=${process.env.NEXT_PUBLIC_MAILCHIMP_NEWSLETTER_KEY}&id=075ee30bea&f_id=00b3aee5f0&EMAIL=${encodeURIComponent(email)}&c=__jp2`;
     try {
         await axios.get(url);
         return true

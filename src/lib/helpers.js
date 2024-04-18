@@ -34,9 +34,7 @@ export async function createCustomerCommerceJs(customerData) {
         });
         return true;
     } catch (error) {
-        // console.log("createCustomerCommerceJs", error.response.data.error);
         return false
-        // throw new Error('Error creating customer: ');
     }
 }
 
@@ -199,7 +197,6 @@ export const fetchUserInfo = async (email) => {
         const query = `*[_type == "users" && email == $email]`;
         const params = { email };
         const matchingUsers = await client.fetch(query, params);
-        // console.log(matchingUsers);
         if (matchingUsers.length > 0) {
             return matchingUsers[0]
         } else {

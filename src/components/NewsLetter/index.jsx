@@ -28,12 +28,10 @@ const NewsLetterForm = () => {
         setErrorMessage("")
         try {
             const res = await newsletterSubscribeEmail(email);
-            console.log(res);
             setSuccessMessage("Form Submitted Successfully")
         } catch (e) {
 
             setErrorMessage("Something Went Wrong")
-            console.log(e);
         }
 
         setIsLoading(false)

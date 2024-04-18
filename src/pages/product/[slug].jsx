@@ -185,7 +185,7 @@ const Product = () => {
                                         label={isLoading ? <Spinner color="white" /> : "Add to Cart"} />
 
 
-                                    <p dangerouslySetInnerHTML={{ __html: product.description }} />
+                                    <p className="text-xs text-gray-600" dangerouslySetInnerHTML={{ __html: product.description }} />
                                 </div>
                             </div>
                             {product.categories.length > 0 && (
